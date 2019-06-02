@@ -16,3 +16,4 @@ mpi = { git = "https://github.com/bsteinb/rsmpi.git" }
 piston_window = "*"
 log = "*"
 env_logger = "*"
+bitflags = "*"
