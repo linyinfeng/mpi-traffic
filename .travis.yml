@@ -19,13 +19,13 @@ before_script:
     fi
   - |
     if [ $TRAVIS_RUST_VERSION = "stable" ]; then
-      if [ -x "$(command -v cargo-install-update)" ]; then
+      if [ ! -x "$(command -v cargo-install-update)" ]; then
         cargo install cargo-update
       fi
-      if [ -x "$(command -v cargo-tarpaulin)" ]; then
+      if [ ! -x "$(command -v cargo-tarpaulin)" ]; then
         cargo install tarpaulin
       fi
-      cargo update
+      cargo install-update --all
     fi
 
 script:
