@@ -7,7 +7,7 @@ use intersection::Intersection;
 use road::Road;
 
 pub struct City {
-    board: Board<Intersection, Road>,
-    horizontal_road_length: Vec<f64>,
-    vertical_road_length: Vec<f64>,
+    pub board: Board<Option<Intersection>, Option<Road>>,
+    pub horizontal_road_length: Vec<f64>,
+    pub vertical_road_length: Vec<f64>,
 }

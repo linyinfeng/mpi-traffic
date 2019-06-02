@@ -8,9 +8,10 @@ pub struct Road {
 
 bitflags! {
     pub struct LaneDirectionRule: u8 {
-        const STRAIGHT = 0b00000001;
-        const LEFT = 0b00000010;
-        const RIGHT = 0b00000100;
+        const STRAIGHT = 0b0000_0001;
+        const LEFT     = 0b0000_0010;
+        const RIGHT    = 0b0000_0100;
+        const BACK     = 0b0000_1000;
     }
 }
 

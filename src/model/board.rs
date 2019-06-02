@@ -13,9 +13,9 @@ where
 {
     pub fn with_size(p: P, l: L, (m, n): (usize, usize)) -> Self {
         Board {
-            point: Matrix::with_size(p, (m, n)),
-            horizontal: Matrix::with_size(l.clone(), (m, n - 1)),
-            vertical: Matrix::with_size(l, (m - 1, n)),
+            point: Matrix::with_shape(p, (m, n)),
+            horizontal: Matrix::with_shape(l.clone(), (m, n - 1)),
+            vertical: Matrix::with_shape(l, (m - 1, n)),
         }
     }
 }
