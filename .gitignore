@@ -2,6 +2,6 @@
 /.vscode
 /.idea
 *.iml
-
+/Synchronize.sh
 /target
 **/*.rs.bk
