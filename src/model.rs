@@ -2,6 +2,7 @@ pub mod board;
 pub mod common;
 pub mod intersection;
 pub mod road;
+pub mod car;
 
 use board::Board;
 use intersection::Intersection;
