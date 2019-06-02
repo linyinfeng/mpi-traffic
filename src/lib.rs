@@ -1,2 +1,2 @@
-pub mod matrix;
+pub mod util;
 pub mod model;

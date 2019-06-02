@@ -1,4 +1,5 @@
-use crate::model::common::DirectionRule;
+use crate::model::stateless::common::DirectionRule;
+use crate::model::stateless::common::Direction;
 
 pub enum Intersection {
     Crossroad {
@@ -11,13 +12,6 @@ pub enum Intersection {
         switch_rule: SwitchRule,
     },
     NoIntersection,
-}
-
-pub enum Direction {
-    Left,
-    Right,
-    Up,
-    Down,
 }
 
 pub struct CrossroadRule {

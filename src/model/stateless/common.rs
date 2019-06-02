@@ -8,3 +8,10 @@ bitflags! {
         const BACK     = 0b0000_1000;
     }
 }
+
+pub enum Direction {
+    Left,
+    Right,
+    Up,
+    Down,
+}

@@ -1,4 +1,4 @@
-use crate::model::common::DirectionRule;
+use crate::model::stateless::common::DirectionRule;
 
 #[derive(Clone, Debug)]
 pub struct Road {

@@ -1,4 +1,4 @@
-use crate::matrix::Matrix;
+use crate::util::matrix::Matrix;
 
 pub struct Board<P, L> {
     pub point: Matrix<P>,
