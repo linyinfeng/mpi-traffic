@@ -13,7 +13,10 @@ matrix:
   fast_finish: true
 
 before_script:
-  - test $TRAVIS_RUST_VERSION = "nightly" && rustup component add rustfmt
+  - |
+    if [ $TRAVIS_RUST_VERSION = "nightly" ]; then
+      rustup component add rustfmt
+    fi
   - |
     if [ $TRAVIS_RUST_VERSION = "stable" ]; then
       if [ -x "$(command -v cargo-install-update)" ]; then
@@ -26,7 +29,7 @@ before_script:
     fi
 
 script:
-  - test $TRAVIS_RUST_VERSION = "nightly" && cargo fmt -- --check
+  - test $TRAVIS_RUST_VERSION != "nightly" || cargo fmt -- --check
   - cargo clean
   - cargo build
   - cargo test
