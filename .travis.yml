@@ -2,9 +2,6 @@ language: rust
 
 dist: xenial
 
-services:
-  - docker
-
 cache:
   - cargo
 
@@ -16,21 +13,30 @@ matrix:
   fast_finish: true
 
 before_script:
-  - test $TRAVIS_RUST_VERSION != "nightly" || rustup component add rustfmt
+  - test $TRAVIS_RUST_VERSION = "nightly" && rustup component add rustfmt
+  - |
+    if [ $TRAVIS_RUST_VERSION = "stable" ]; then
+      if [ -x "$(command -v cargo-install-update)" ]; then
+        cargo install cargo-update
+      fi
+      if [ -x "$(command -v cargo-tarpaulin)" ]; then
+        cargo install tarpaulin
+      fi
+      cargo update
+    fi
 
 script:
-  - test $TRAVIS_RUST_VERSION != "nightly" || cargo fmt -- --check
-  - cargo build --verbose
-  - cargo test --verbose
+  - test $TRAVIS_RUST_VERSION = "nightly" && cargo fmt -- --check
+  - cargo clean
+  - cargo build
+  - cargo test
 
 after_success:
   - test $TRAVIS_BRANCH = "master" -a $TRAVIS_RUST_VERSION = "stable" -a $TRAVIS_PULL_REQUEST = "false" &&
     cargo doc &&
     echo '<html><head><meta http-equiv=refresh content=0;url=mpi_traffic/index.html /></head></html>' > target/doc/index.html
   - test $TRAVIS_RUST_VERSION = "stable" &&
-    docker pull xd009642/tarpaulin &&
-    docker run --security-opt seccomp=unconfined -v "$PWD:/volume" xd009642/tarpaulin sh -c
-    "cargo tarpaulin  --ciserver travis-ci --coveralls $TRAVIS_JOB_ID"
+    cargo tarpaulin  --ciserver travis-ci --coveralls $TRAVIS_JOB_ID
 
 deploy:
   provider: pages
@@ -46,5 +52,11 @@ addons:
   apt:
     update: true
     packages:
+    # for mpi and libffi
     - libmpich-dev
     - texinfo
+    # for tarpaulin
+    - libssl-dev
+    - pkg-config
+    - cmake
+    - zlib1g-dev
