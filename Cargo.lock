@@ -690,6 +690,7 @@ dependencies = [
 name = "mpi-traffic"
 version = "0.0.0"
 dependencies = [
+ "bitflags 1.0.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "env_logger 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "mpi 0.6.0 (git+https://github.com/bsteinb/rsmpi.git)",
