@@ -1,5 +1,7 @@
 language: rust
 
+dist: xenial
+
 services:
   - docker
 
@@ -40,3 +42,9 @@ deploy:
   on:
     branch: master
     condition: $TRAVIS_RUST_VERSION = stable
+
+addons:
+  apt:
+    update: true
+    packages:
+    - mpich
