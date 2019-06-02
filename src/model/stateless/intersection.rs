@@ -1,5 +1,5 @@
-use crate::model::stateless::common::DirectionRule;
 use crate::model::stateless::common::Direction;
+use crate::model::stateless::common::DirectionRule;
 
 pub enum Intersection {
     Crossroad {
