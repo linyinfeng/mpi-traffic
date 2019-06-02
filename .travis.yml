@@ -18,7 +18,7 @@ before_script:
       rustup component add rustfmt
     fi
   - |
-    if [ $TRAVIS_RUST_VERSION = "stable" ]; then
+    if [ $TRAVIS_RUST_VERSION = "stable" -a $TRAVIS_PULL_REQUEST = "false" ]; then
       if [ ! -x "$(command -v cargo-install-update)" ]; then
         cargo install cargo-update
       fi
@@ -38,7 +38,7 @@ after_success:
   - test $TRAVIS_BRANCH = "master" -a $TRAVIS_RUST_VERSION = "stable" -a $TRAVIS_PULL_REQUEST = "false" &&
     cargo doc &&
     echo '<html><head><meta http-equiv=refresh content=0;url=mpi_traffic/index.html /></head></html>' > target/doc/index.html
-  - test $TRAVIS_RUST_VERSION = "stable" &&
+  - test $TRAVIS_RUST_VERSION = "stable" -a $TRAVIS_PULL_REQUEST = "false" &&
     cargo tarpaulin  --ciserver travis-ci --coveralls $TRAVIS_JOB_ID
 
 deploy:
