@@ -1,11 +1,10 @@
 //! Module `stateless` is the static part of the simulation
 
-pub mod board;
 pub mod car;
 pub mod intersection;
 pub mod road;
 
-use board::Board;
+use crate::model::board::Board;
 use intersection::Intersection;
 use road::Road;
 
