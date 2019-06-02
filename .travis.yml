@@ -48,3 +48,4 @@ addons:
     update: true
     packages:
     - mpich
+    - texinfo
