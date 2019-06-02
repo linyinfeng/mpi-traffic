@@ -28,15 +28,34 @@ impl<T> Matrix<T> {
     pub fn get_mut(&mut self, (i, j): (usize, usize)) -> Option<&mut T> {
         self.storage.get_mut(i).and_then(|row| row.get_mut(j))
     }
+
+    pub fn shape(&self) -> (usize, usize) {
+        let col_length = self.storage.get(0).map_or(0, |row| row.len());
+        (self.storage.len(), col_length)
+    }
 }
 
 impl<T> Matrix<T>
 where
     T: Clone,
 {
-    pub fn with_size(t: T, (i, j): (usize, usize)) -> Self {
+    pub fn with_shape(t: T, (i, j): (usize, usize)) -> Self {
         Matrix {
             storage: vec![vec![t; j]; i],
         }
+    }
+}
+
+#[cfg(test)]
+mod test {
+    use super::*;
+
+    #[test]
+    fn test_matrix() {
+        let mut mat_f64 = Matrix::with_shape(3.14, (7, 9));
+        mat_f64[(3, 0)] = 4.14;
+        assert_eq!((7, 9), mat_f64.shape());
+        assert_eq!(4.14, mat_f64[(3, 0)]);
+        assert_eq!(None, mat_f64.get((9, 9)));
     }
 }
