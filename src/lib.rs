@@ -1,3 +1,4 @@
 pub mod app;
 pub mod app_view;
-pub mod matrix;
+pub mod model;
+pub mod util;
