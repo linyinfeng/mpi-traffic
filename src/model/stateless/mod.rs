@@ -2,7 +2,6 @@
 
 pub mod board;
 pub mod car;
-pub mod common;
 pub mod intersection;
 pub mod road;
 
