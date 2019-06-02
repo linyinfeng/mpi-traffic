@@ -8,6 +8,7 @@ use crate::model::board::Board;
 use intersection::Intersection;
 use road::Road;
 
+#[derive(Clone, Debug)]
 pub struct City {
     pub board: Board<Option<Intersection>, Option<Road>>,
     pub horizontal_road_length: Vec<f64>,

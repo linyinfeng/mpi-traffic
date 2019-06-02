@@ -1,21 +1,26 @@
 use crate::util::matrix::Matrix;
+use crate::util::matrix::MatrixIndex;
 
-pub struct Board<P, L> {
-    pub point: Matrix<P>,
-    pub horizontal: Matrix<L>,
-    pub vertical: Matrix<L>,
+pub type IntersectionIndex = MatrixIndex;
+pub type RoadIndex = MatrixIndex;
+
+#[derive(Clone, Debug)]
+pub struct Board<I, R> {
+    pub intersections: Matrix<I>,
+    pub horizontal_roads: Matrix<R>,
+    pub vertical_roads: Matrix<R>,
 }
 
-impl<P, L> Board<P, L>
+impl<I, R> Board<I, R>
 where
-    P: Clone,
-    L: Clone,
+    I: Clone,
+    R: Clone,
 {
-    pub fn with_size(p: P, l: L, (m, n): (usize, usize)) -> Self {
+    pub fn with_size(i: I, r: R, (m, n): (usize, usize)) -> Self {
         Board {
-            point: Matrix::with_shape(p, (m, n)),
-            horizontal: Matrix::with_shape(l.clone(), (m, n - 1)),
-            vertical: Matrix::with_shape(l, (m - 1, n)),
+            intersections: Matrix::with_shape(i, (m, n)),
+            horizontal_roads: Matrix::with_shape(r.clone(), (m, n - 1)),
+            vertical_roads: Matrix::with_shape(r, (m - 1, n)),
         }
     }
 }

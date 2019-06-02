@@ -1,5 +1,8 @@
 use bitflags::bitflags;
 
+pub type CarIndex = usize;
+pub type LaneIndex = usize;
+
 bitflags! {
     pub struct DirectionRule: u8 {
         const STRAIGHT = 0b0000_0001;
@@ -9,9 +12,16 @@ bitflags! {
     }
 }
 
+#[derive(Copy, Clone, Debug)]
 pub enum Direction {
     Left,
     Right,
     Up,
     Down,
+}
+
+#[derive(Copy, Clone, Debug)]
+pub enum LaneDirection {
+    LowToHigh,
+    HighToLow,
 }
