@@ -23,7 +23,7 @@ before_script:
         cargo install cargo-update
       fi
       if [ ! -x "$(command -v cargo-tarpaulin)" ]; then
-        cargo install tarpaulin
+        cargo install cargo-tarpaulin
       fi
       cargo install-update --all
     fi
