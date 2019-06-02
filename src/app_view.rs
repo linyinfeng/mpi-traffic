@@ -6,16 +6,12 @@ use piston_window::G2d;
 #[derive(Clone, Debug)]
 pub struct AppView;
 
-#[derive(Clone, Debug)]
-pub struct AppView;
-
 impl AppView {
     pub fn draw(
         &self,
         _app: &App,
         context: Context,
-        g2d: &mut G2d,
-        _device: &mut gfx_device_gl::Device,
+        g2d: &mut G2d
     ) {
         // unimplemented
         rectangle(

@@ -23,8 +23,8 @@ fn main() {
 
     while let Some(e) = window.next() {
         trace!("event: {:?}", e);
-        window.draw_2d(&e, |c, g, d| {
-            app_view.draw(&app, c, g, d);
+        window.draw_2d(&e, |c, g, _| {
+            app_view.draw(&app, c, g);
         });
         match e {
             Event::Input(e) => match e {
