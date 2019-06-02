@@ -10,7 +10,6 @@ cache:
 
 rust:
   - stable
-  - beta
   - nightly
 
 matrix:
