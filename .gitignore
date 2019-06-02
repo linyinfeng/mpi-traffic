@@ -1,0 +1,7 @@
+# IDE and tools
+/.vscode
+/.idea
+*.iml
+
+/target
+**/*.rs.bk

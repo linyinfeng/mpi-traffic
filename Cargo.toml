@@ -1,0 +1,18 @@
+[package]
+name = "mpi-traffic"
+version = "0.0.0"
+description = "Traffic simulation with MPI."
+repository = "https://github.com/linyinfeng/mpi-traffic"
+license = "MIT"
+readme = "README.md"
+authors = [
+    "Lin Yinfeng <lin.yinfeng@outlook.com>",
+    "samhaosss <sunhaoyl@outlook.com>"
+]
+edition = "2018"
+
+[dependencies]
+mpi = { git = "https://github.com/bsteinb/rsmpi.git" }
+piston_window = "*"
+log = "*"
+env_logger = "*"
