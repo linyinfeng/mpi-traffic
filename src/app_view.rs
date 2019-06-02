@@ -7,12 +7,7 @@ use piston_window::G2d;
 pub struct AppView;
 
 impl AppView {
-    pub fn draw(
-        &self,
-        _app: &App,
-        context: Context,
-        g2d: &mut G2d
-    ) {
+    pub fn draw(&self, _app: &App, context: Context, g2d: &mut G2d) {
         // unimplemented
         rectangle(
             [1.0, 0.0, 0.0, 1.0],     // red
