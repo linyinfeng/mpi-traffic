@@ -1,4 +1,5 @@
-use crate::model::common::DirectionRule;
+use crate::model::common::CarIndex;
+use std::collections::LinkedList;
 
 #[derive(Clone, Debug)]
 pub struct Road {
@@ -8,6 +9,5 @@ pub struct Road {
 
 #[derive(Clone, Debug)]
 pub struct Lane {
-    pub max_speed: f64,
-    pub direction_rule: DirectionRule,
+    pub cars: LinkedList<CarIndex>,
 }
