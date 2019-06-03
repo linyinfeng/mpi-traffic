@@ -45,6 +45,32 @@ impl<T> Matrix<T> {
             index: (0, 0),
         }
     }
+
+    pub fn iter(
+        &self,
+    ) -> std::iter::FlatMap<
+        std::slice::Iter<Vec<T>>,
+        std::slice::Iter<T>,
+        fn(&Vec<T>) -> std::slice::Iter<T>,
+    > {
+        fn vec_iter<T>(v: &Vec<T>) -> std::slice::Iter<T> {
+            v.iter()
+        }
+        self.storage.iter().flat_map(vec_iter)
+    }
+
+    pub fn iter_mut(
+        &mut self,
+    ) -> std::iter::FlatMap<
+        std::slice::IterMut<Vec<T>>,
+        std::slice::IterMut<T>,
+        fn(&mut Vec<T>) -> std::slice::IterMut<T>,
+    > {
+        fn vec_iter_mut<T>(v: &mut Vec<T>) -> std::slice::IterMut<T> {
+            v.iter_mut()
+        }
+        self.storage.iter_mut().flat_map(vec_iter_mut)
+    }
 }
 
 impl<T> Matrix<T>
