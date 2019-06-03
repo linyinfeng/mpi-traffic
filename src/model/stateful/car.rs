@@ -1,5 +1,6 @@
-use crate::model::board::RoadIndex;
 use crate::model::board::IntersectionIndex;
+use crate::model::board::RoadIndex;
+use crate::model::common::Direction;
 use crate::model::common::LaneDirection;
 use crate::model::common::LaneIndex;
 
@@ -34,5 +35,5 @@ pub enum Location {
         to_direction: Direction,
         to_lane: LaneIndex,
         position: (f64, f64),
-    }
+    },
 }
