@@ -34,6 +34,9 @@ pub enum Location {
         from_lane: LaneIndex,
         to_direction: Direction,
         to_lane: LaneIndex,
-        position: (f64, f64),
+        /// Position in intersection.
+        ///
+        /// Assume the path in intersection is a straight line.
+        position: f64,
     },
 }

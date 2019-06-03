@@ -8,5 +8,6 @@ pub struct Road {
 
 #[derive(Clone, Debug)]
 pub struct Lane {
+    pub max_speed: f64,
     pub direction_rule: DirectionRule,
 }

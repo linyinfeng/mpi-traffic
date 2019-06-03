@@ -4,10 +4,12 @@ use crate::model::common::DirectionRule;
 #[derive(Clone, Debug)]
 pub enum Intersection {
     Crossroad {
+        max_speed: f64,
         rules: Vec<CrossroadRule>,
         switch_rule: SwitchRule,
     },
     TJunction {
+        max_speed: f64,
         single: Direction,
         rule_set: Vec<TJunctionRule>,
         switch_rule: SwitchRule,
