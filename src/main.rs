@@ -19,11 +19,17 @@ fn main() {
     window.set_event_settings(event_settings);
 
     let mut app = App;
-    let app_view = AppView;
+    let app_view = {
+        let app_view_settings = Default::default();
+        AppView::new(app_view_settings)
+    };
 
     while let Some(e) = window.next() {
         trace!("event: {:?}", e);
         window.draw_2d(&e, |c, g, _| {
+            use piston_window::clear;
+            let clear_color = [1.0; 4]; // white
+            clear(clear_color, g);
             app_view.draw(&app, c, g);
         });
         match e {

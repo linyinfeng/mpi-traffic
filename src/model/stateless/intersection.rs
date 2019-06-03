@@ -39,8 +39,5 @@ pub struct TJunctionRule {
 
 #[derive(Clone, Debug)]
 pub enum SwitchRule {
-    LoopTimeout {
-        times: Vec<f64>,
-        lane_change_yaw: f64,
-    },
+    LoopTimeout { times: Vec<f64> },
 }
