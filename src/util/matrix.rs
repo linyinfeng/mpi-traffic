@@ -46,6 +46,7 @@ impl<T> Matrix<T> {
         }
     }
 
+    #[allow(clippy::type_complexity)]
     pub fn iter(
         &self,
     ) -> std::iter::FlatMap<
@@ -53,12 +54,14 @@ impl<T> Matrix<T> {
         std::slice::Iter<T>,
         fn(&Vec<T>) -> std::slice::Iter<T>,
     > {
+        #[allow(clippy::ptr_arg)]
         fn vec_iter<T>(v: &Vec<T>) -> std::slice::Iter<T> {
             v.iter()
         }
         self.storage.iter().flat_map(vec_iter)
     }
 
+    #[allow(clippy::type_complexity)]
     pub fn iter_mut(
         &mut self,
     ) -> std::iter::FlatMap<
@@ -66,12 +69,14 @@ impl<T> Matrix<T> {
         std::slice::IterMut<T>,
         fn(&mut Vec<T>) -> std::slice::IterMut<T>,
     > {
+        #[allow(clippy::ptr_arg)]
         fn vec_iter_mut<T>(v: &mut Vec<T>) -> std::slice::IterMut<T> {
             v.iter_mut()
         }
         self.storage.iter_mut().flat_map(vec_iter_mut)
     }
 
+    #[allow(clippy::type_complexity)]
     pub fn enumerate(
         &self,
     ) -> std::iter::Zip<
@@ -85,6 +90,7 @@ impl<T> Matrix<T> {
         self.indices().zip(self.iter())
     }
 
+    #[allow(clippy::type_complexity)]
     pub fn enumerate_mut(
         &mut self,
     ) -> std::iter::Zip<
@@ -210,13 +216,15 @@ mod test {
 
     #[test]
     fn enumerate_mut() {
-        let mut mat = Matrix::with_shape(3.14, (7, 9));
+        let shape = (7, 9);
+        let (m, n) = shape;
+        let mut mat = Matrix::with_shape(3.14, shape);
         let v = |i, j| i as f64 * 10.0 + j as f64;
         for ((i, j), item) in mat.enumerate_mut() {
             *item = v(i, j);
         }
-        for i in 0..n {
-            for j in 0..m {
+        for i in 0..m {
+            for j in 0..n {
                 assert_eq!(mat[(i, j)], v(i, j));
             }
         }
