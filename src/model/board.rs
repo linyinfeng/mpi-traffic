@@ -1,5 +1,6 @@
 use crate::util::matrix::Matrix;
 use crate::util::matrix::MatrixIndex;
+use crate::util::matrix::MatrixShape;
 
 pub type IntersectionIndex = MatrixIndex;
 pub type RoadIndex = MatrixIndex;
@@ -16,7 +17,7 @@ where
     I: Clone,
     R: Clone,
 {
-    pub fn with_size(i: I, r: R, (m, n): (usize, usize)) -> Self {
+    pub fn with_shape(i: I, r: R, (m, n): MatrixShape) -> Self {
         Board {
             intersections: Matrix::with_shape(i, (m, n)),
             horizontal_roads: Matrix::with_shape(r.clone(), (m, n - 1)),

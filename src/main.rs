@@ -1,6 +1,4 @@
 use log::trace;
-use mpi_traffic::app::App;
-use mpi_traffic::app_view::AppView;
 use piston_window::Event;
 use piston_window::EventLoop;
 use piston_window::EventSettings;
@@ -18,27 +16,21 @@ fn main() {
     let event_settings = EventSettings::new().ups(120).max_fps(60);
     window.set_event_settings(event_settings);
 
-    let mut app = App;
-    let app_view = {
-        let app_view_settings = Default::default();
-        AppView::new(app_view_settings)
-    };
-
     while let Some(e) = window.next() {
         trace!("event: {:?}", e);
-        window.draw_2d(&e, |c, g, _| {
+        window.draw_2d(&e, |_c, g, _| {
             use piston_window::clear;
             let clear_color = [1.0; 4]; // white
             clear(clear_color, g);
-            app_view.draw(&app, c, g);
+            unimplemented!()
         });
         match e {
             Event::Input(e) => match e {
                 _ => {},
             },
             Event::Loop(e) => {
-                if let Loop::Update(args) = e {
-                    app.update(args);
+                if let Loop::Update(_args) = e {
+                    unimplemented!()
                 }
             },
             _ => {},

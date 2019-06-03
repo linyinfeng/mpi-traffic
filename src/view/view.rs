@@ -1,31 +1,31 @@
-use crate::app::App;
+use crate::model::Model;
 use piston_window::context::Context;
 use piston_window::rectangle;
 use piston_window::G2d;
 
 #[derive(Clone, Debug)]
-pub struct AppView {
-    pub settings: AppViewSettings,
+pub struct View {
+    pub settings: ViewSettings,
 }
 
-impl AppView {
-    pub fn new(settings: AppViewSettings) -> Self {
+impl View {
+    pub fn new(settings: ViewSettings) -> Self {
         Self { settings }
     }
 }
 
-/// Store settings of `AppView`.
+/// Store settings of `ModelView`.
 #[derive(Clone, Debug)]
-pub struct AppViewSettings {}
+pub struct ViewSettings {}
 
-impl Default for AppViewSettings {
+impl Default for ViewSettings {
     fn default() -> Self {
         Self {}
     }
 }
 
-impl AppView {
-    pub fn draw(&self, _app: &App, context: Context, g2d: &mut G2d) {
+impl View {
+    pub fn draw(&self, _model: &Model, context: Context, g2d: &mut G2d) {
         // unimplemented
         rectangle(
             [1.0, 0.0, 0.0, 1.0],     // red
