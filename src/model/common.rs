@@ -95,7 +95,7 @@ impl AbsoluteDirection {
 }
 
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
-pub enum HorizontalOrVertical {
+pub enum AxisDirection {
     Horizontal,
     Vertical,
 }
@@ -107,15 +107,12 @@ pub enum LaneDirection {
 }
 
 impl AbsoluteDirection {
-    pub fn of_lane(
-        h_or_v: HorizontalOrVertical,
-        lane_direction: LaneDirection,
-    ) -> AbsoluteDirection {
+    pub fn of_lane(axis: AxisDirection, lane_direction: LaneDirection) -> AbsoluteDirection {
         use AbsoluteDirection::*;
-        use HorizontalOrVertical::*;
+        use AxisDirection::*;
         use LaneDirection::*;
 
-        match (h_or_v, lane_direction) {
+        match (axis, lane_direction) {
             (Horizontal, LowToHigh) => West,
             (Horizontal, HighToLow) => East,
             (Vertical, LowToHigh) => South,
@@ -164,7 +161,7 @@ pub struct Geometry {
 mod test {
     use super::*;
     use AbsoluteDirection::*;
-    use HorizontalOrVertical::*;
+    use AxisDirection::*;
     use LaneDirection::*;
     use RelativeDirection::*;
 
@@ -202,8 +199,11 @@ mod test {
             ((Horizontal, HighToLow), East),
             ((Horizontal, LowToHigh), West),
         ];
-        for ((h_or_v, lane_direction), absolute) in cases.into_iter() {
-            assert_eq!(AbsoluteDirection::of_lane(h_or_v, lane_direction), absolute);
+        for ((axis_direction, lane_direction), absolute) in cases.into_iter() {
+            assert_eq!(
+                AbsoluteDirection::of_lane(axis_direction, lane_direction),
+                absolute
+            );
         }
     }
 }

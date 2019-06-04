@@ -1,5 +1,5 @@
 use crate::model::common::Around;
-use crate::model::common::HorizontalOrVertical;
+use crate::model::common::AxisDirection;
 use crate::util::matrix::Matrix;
 use crate::util::matrix::MatrixIndex;
 use crate::util::matrix::MatrixShape;
@@ -29,21 +29,17 @@ where
 }
 
 impl<I, R> Board<I, R> {
-    pub fn get_road(&self, h_or_v: HorizontalOrVertical, index: RoadIndex) -> Option<&R> {
-        use HorizontalOrVertical::*;
-        match h_or_v {
+    pub fn get_road(&self, axis: AxisDirection, index: RoadIndex) -> Option<&R> {
+        use AxisDirection::*;
+        match axis {
             Horizontal => self.horizontal_roads.get(index),
             Vertical => self.vertical_roads.get(index),
         }
     }
 
-    pub fn get_road_mut(
-        &mut self,
-        h_or_v: HorizontalOrVertical,
-        index: RoadIndex,
-    ) -> Option<&mut R> {
-        use HorizontalOrVertical::*;
-        match h_or_v {
+    pub fn get_road_mut(&mut self, axis: AxisDirection, index: RoadIndex) -> Option<&mut R> {
+        use AxisDirection::*;
+        match axis {
             Horizontal => self.horizontal_roads.get_mut(index),
             Vertical => self.vertical_roads.get_mut(index),
         }
@@ -61,7 +57,7 @@ impl IntersectionContext {
 
 impl<I, R> Board<I, Option<R>> {
     pub fn context_of_intersection(&self, (i, j): MatrixIndex) -> IntersectionContext {
-        use HorizontalOrVertical::*;
+        use AxisDirection::*;
         let north_index = if i != 0 {
             Some((Vertical, (i - 1, j)))
         } else {
@@ -76,8 +72,8 @@ impl<I, R> Board<I, Option<R>> {
         let west_index = Some((Horizontal, (i, j)));
 
         let check_and_convert = |o| {
-            let (h_or_v, index) = o?;
-            match self.get_road(h_or_v, index) {
+            let (axis, index) = o?;
+            match self.get_road(axis, index) {
                 Some(option) => match option {
                     Some(_) => Some(index),
                     None => None,
