@@ -10,7 +10,7 @@ pub fn generate_from_roads(
     for index in board.intersections.indices() {
         let context = board.context_of_intersection(index);
         match context.road_number() {
-            0 => Err(crate::Error::NoIntersectionPattern(context)),
+            0 => Ok(()),
             1 => generate_with_1_road(board, index, &context),
             2 => generate_with_2_road(board, index, &context),
             3 => generate_with_3_road(board, index, &context),
