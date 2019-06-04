@@ -24,18 +24,9 @@ pub fn generate_with_1_road(
     _index: IntersectionIndex,
     context: &IntersectionContext,
 ) {
-    //use crate::model::common::AbsoluteDirection::*;
     let _direction_with_road = AbsoluteDirection::directions()
         .find(|&&direction| context.get(direction).is_some())
         .unwrap();
-    //    let index = match context.get(direction_with_road) {
-    //        Some(index) =>
-    //    }
-    //    let road = match direction_with_road {
-    //        North | South => &board.vertical_roads[index],
-    //        East | West => &board.horizontal_roads[index]
-    //    };
-    //    board.intersections[index] = Some(Intersection::End);
     unimplemented!()
 }
 
@@ -44,10 +35,10 @@ pub fn generate_with_2_road(
     _index: IntersectionIndex,
     context: &IntersectionContext,
 ) {
-    //use crate::model::common::AbsoluteDirection::*;
     let _directions_with_road = AbsoluteDirection::directions()
         .filter(|&&direction| context.get(direction).is_some())
         .collect::<Vec<&AbsoluteDirection>>();
+    unimplemented!()
 }
 
 pub fn generate_with_3_road(
