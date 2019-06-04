@@ -3,7 +3,6 @@ use crate::model::common::HorizontalOrVertical;
 use crate::util::matrix::Matrix;
 use crate::util::matrix::MatrixIndex;
 use crate::util::matrix::MatrixShape;
-//use crate::model::common::AbsoluteDirection;
 
 pub type IntersectionIndex = MatrixIndex;
 pub type RoadIndex = MatrixIndex;
