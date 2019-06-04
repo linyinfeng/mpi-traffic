@@ -1,5 +1,6 @@
 use std::iter::ExactSizeIterator;
 use std::iter::FusedIterator;
+use std::iter::Iterator;
 use std::ops::Index;
 use std::ops::IndexMut;
 
@@ -9,6 +10,44 @@ pub type MatrixIndex = (usize, usize);
 #[derive(Clone, Debug, Default)]
 pub struct Matrix<T> {
     storage: Vec<Vec<T>>,
+}
+
+pub struct Iter<'a, T: 'a> {
+    matrix: &'a Matrix<T>,
+    index: Indices,
+}
+
+impl<'a, T: 'a> Iterator for Iter<'a, T> {
+    type Item = &'a T;
+
+    //  &'a  T    &'b T
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(index) = self.index.next() {
+            self.matrix.get(index)
+        } else {
+            None
+        }
+    }
+}
+
+pub struct IterMut<'a, T: 'a> {
+    matrix: *mut Matrix<T>,
+    index: Indices,
+    _maker: std::marker::PhantomData<&'a mut Matrix<T>>,
+}
+
+impl<'a, T> Iterator for IterMut<'a, T> {
+    type Item = &'a mut T;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if let Some(index) = self.index.next() {
+            unsafe {
+                (*self.matrix).get_mut(index)
+            }
+        } else {
+            None
+        }
+    }
 }
 
 impl<T> Index<MatrixIndex> for Matrix<T> {
@@ -45,11 +84,24 @@ impl<T> Matrix<T> {
             index: (0, 0),
         }
     }
+    pub fn iter(&self) -> Iter<T> {
+        Iter {
+            matrix: self,
+            index: self.indices(),
+        }
+    }
+    pub fn iter_mut(&mut self) -> IterMut<T> {
+        IterMut {
+            matrix: unsafe { self as *mut Matrix<T> },
+            index: self.indices(),
+            _maker: std::marker::PhantomData,
+        }
+    }
 }
 
 impl<T> Matrix<T>
-where
-    T: Clone,
+    where
+        T: Clone,
 {
     pub fn with_shape(t: T, (i, j): MatrixShape) -> Self {
         Matrix {
@@ -96,7 +148,9 @@ impl Iterator for Indices {
 }
 
 impl FusedIterator for Indices {}
+
 impl ExactSizeIterator for Indices {}
+
 
 #[cfg(test)]
 mod test {
@@ -154,5 +208,35 @@ mod test {
                 assert_eq!(indices.next().unwrap(), (i, j));
             }
         }
+    }
+
+    #[test]
+    fn test_iter() {
+        let shape = (3, 3);
+        let test_mat = Matrix::with_shape(3.14, shape);
+        for te in test_mat.iter() {
+            assert_eq!(3.14, *te)
+        }
+    }
+
+    #[test]
+    fn test_iter_mut() {
+        let mut test_mat = Matrix::with_shape(3.14, (3, 3));
+        for da in test_mat.iter_mut() {
+            *da = 4.14;
+        }
+        test_mat.iter_mut().for_each(|x| assert_eq!(4.14, *x));
+    }
+
+    #[test]
+    fn test_iter_mut_compile() {
+        let mut test_mat = Matrix::with_shape(3.14, (3, 3));
+        let mut a = test_mat.iter_mut();
+        let mut b = test_mat.iter_mut();
+        let r1 = a.next().unwrap();
+        let r2 = b.next().unwrap();
+        *r1 = 3.1;
+        *r2 = 3.0;
+        assert_eq!(*r1, 3.0);
     }
 }
