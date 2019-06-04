@@ -64,17 +64,28 @@ impl IntersectionContext {
 impl<I, R> Board<I, Option<R>> {
     pub fn context_of_intersection(&self, (i, j): MatrixIndex) -> IntersectionContext {
         use HorizontalOrVertical::*;
-        let north_index = (Vertical, (i - 1, j));
-        let south_index = (Vertical, (i, j));
-        let east_index = (Horizontal, (i, j - 1));
-        let west_index = (Horizontal, (i, j));
+        let north_index = if i != 0 {
+            Some((Vertical, (i - 1, j)))
+        } else {
+            None
+        };
+        let south_index = Some((Vertical, (i, j)));
+        let east_index = if j != 0 {
+            Some((Horizontal, (i, j - 1)))
+        } else {
+            None
+        };
+        let west_index = Some((Horizontal, (i, j)));
 
-        let check_and_convert = |(h_or_v, index)| match self.get_road(h_or_v, index) {
-            Some(option) => match option {
-                Some(_) => Some(index),
+        let check_and_convert = |o| {
+            let (h_or_v, index) = o?;
+            match self.get_road(h_or_v, index) {
+                Some(option) => match option {
+                    Some(_) => Some(index),
+                    None => None,
+                },
                 None => None,
-            },
-            None => None,
+            }
         };
 
         IntersectionContext {

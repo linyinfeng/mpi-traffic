@@ -51,6 +51,8 @@ pub fn example_city() -> Result<City, crate::Error> {
         // All roads in the example city are 1 km long.
         horizontal_road_length: vec![10000.0, 10000.0, 10000.0],
         vertical_road_length: vec![10000.0, 10000.0, 10000.0],
+        intersection_height: vec![14.0, 14.0, 14.0, 14.0], // TODO: Can be generated
+        intersection_width: vec![14.0, 14.0, 14.0, 14.0],  // TODO: Can be generated
     })
 }
 

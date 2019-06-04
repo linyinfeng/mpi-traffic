@@ -1,4 +1,7 @@
 use log::trace;
+use mpi_traffic::controller::Controller;
+use mpi_traffic::model::generate;
+use mpi_traffic::view::{View, ViewSettings};
 use piston_window::Event;
 use piston_window::EventLoop;
 use piston_window::EventSettings;
@@ -16,21 +19,26 @@ fn main() {
     let event_settings = EventSettings::new().ups(120).max_fps(60);
     window.set_event_settings(event_settings);
 
+    let view = {
+        let view_settings = ViewSettings::new();
+        View::new(view_settings)
+    };
+    let (stateless_model, mut stateful_model) = generate::example().expect("valid example model");
+    let controller = Controller;
+
     while let Some(e) = window.next() {
         trace!("event: {:?}", e);
-        window.draw_2d(&e, |_c, g, _| {
+        window.draw_2d(&e, |c, g, _| {
             use piston_window::clear;
             let clear_color = [1.0; 4]; // white
             clear(clear_color, g);
-            unimplemented!()
+            view.draw(&stateless_model, &stateful_model, c, g);
         });
         match e {
-            Event::Input(e) => match e {
-                _ => {},
-            },
+            Event::Input(e) => controller.input(&stateless_model, &mut stateful_model, e),
             Event::Loop(e) => {
-                if let Loop::Update(_args) = e {
-                    unimplemented!()
+                if let Loop::Update(args) = e {
+                    controller.update(&stateless_model, &mut stateful_model, args);
                 }
             },
             _ => {},
