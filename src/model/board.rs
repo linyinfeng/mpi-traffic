@@ -3,6 +3,7 @@ use crate::model::common::HorizontalOrVertical;
 use crate::util::matrix::Matrix;
 use crate::util::matrix::MatrixIndex;
 use crate::util::matrix::MatrixShape;
+use crate::model::common::AbsoluteDirection;
 
 pub type IntersectionIndex = MatrixIndex;
 pub type RoadIndex = MatrixIndex;
@@ -15,9 +16,9 @@ pub struct Board<I, R> {
 }
 
 impl<I, R> Board<I, R>
-where
-    I: Clone,
-    R: Clone,
+    where
+        I: Clone,
+        R: Clone,
 {
     pub fn with_shape(i: I, r: R, (m, n): MatrixShape) -> Self {
         Board {
@@ -57,6 +58,7 @@ impl IntersectionContext {
         let count = |o: Option<_>| o.is_some() as usize;
         count(self.north) + count(self.south) + count(self.east) + count(self.west)
     }
+
 }
 
 impl<I, R> Board<I, Option<R>> {
