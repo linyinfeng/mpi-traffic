@@ -10,6 +10,16 @@ impl Road {
     pub fn is_one_way(&self) -> bool {
         self.lane_to_high.is_empty() || self.lane_to_low.is_empty()
     }
+
+    pub fn empty_side(&mut self) -> Option<&mut Vec<Lane>> {
+        if self.lane_to_high.is_empty() {
+            Some(&mut self.lane_to_high)
+        } else if self.lane_to_low.is_empty() {
+            Some(&mut self.lane_to_low)
+        } else {
+            None
+        }
+    }
 }
 
 #[derive(Clone, Debug)]
