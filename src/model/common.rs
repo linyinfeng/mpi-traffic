@@ -84,6 +84,10 @@ impl AbsoluteDirection {
             Back
         }
     }
+
+    //    pub fn horizontal_or_vertical(&self)->HorizontalOrVertical{
+    //
+    //    }
 }
 
 impl AbsoluteDirection {

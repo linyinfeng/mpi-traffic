@@ -5,9 +5,7 @@ use crate::model::common::AbsoluteDirection;
 use crate::model::stateless::Intersection;
 use crate::model::stateless::Road;
 
-pub fn generate_from_roads(
-    board: &mut Board<Option<Intersection>, Option<Road>>,
-) {
+pub fn generate_from_roads(board: &mut Board<Option<Intersection>, Option<Road>>) {
     for index in board.intersections.indices() {
         let context = board.context_of_intersection(index);
         match context.road_number() {
@@ -22,30 +20,32 @@ pub fn generate_from_roads(
 }
 
 pub fn generate_with_1_road(
-    board: &mut Board<Option<Intersection>, Option<Road>>,
-    index: IntersectionIndex,
+    _board: &mut Board<Option<Intersection>, Option<Road>>,
+    _index: IntersectionIndex,
     context: &IntersectionContext,
 ) {
-    use crate::model::common::AbsoluteDirection::*;
-    let direction_with_road = AbsoluteDirection::directions()
+    //use crate::model::common::AbsoluteDirection::*;
+    let _direction_with_road = AbsoluteDirection::directions()
         .find(|&&direction| context.get(direction).is_some())
         .unwrap();
-    let index = context.get(*direction_with_road).unwrap();
-//    let road = match direction_with_road {
-//        North | South => &board.vertical_roads[index],
-//        East | West => &board.horizontal_roads[index]
-//    };
-//    board.intersections[index] = Some(Intersection::End);
+    //    let index = match context.get(direction_with_road) {
+    //        Some(index) =>
+    //    }
+    //    let road = match direction_with_road {
+    //        North | South => &board.vertical_roads[index],
+    //        East | West => &board.horizontal_roads[index]
+    //    };
+    //    board.intersections[index] = Some(Intersection::End);
     unimplemented!()
 }
 
 pub fn generate_with_2_road(
-    board: &mut Board<Option<Intersection>, Option<Road>>,
-    index: IntersectionIndex,
+    _board: &mut Board<Option<Intersection>, Option<Road>>,
+    _index: IntersectionIndex,
     context: &IntersectionContext,
 ) {
-    use crate::model::common::AbsoluteDirection::*;
-    let directions_with_road = AbsoluteDirection::directions()
+    //use crate::model::common::AbsoluteDirection::*;
+    let _directions_with_road = AbsoluteDirection::directions()
         .filter(|&&direction| context.get(direction).is_some())
         .collect::<Vec<&AbsoluteDirection>>();
 }
