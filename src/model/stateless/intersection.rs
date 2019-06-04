@@ -1,5 +1,6 @@
-use crate::model::common::Direction;
-use crate::model::common::DirectionRule;
+use crate::model::common::AbsoluteDirection;
+use crate::model::common::Around;
+use crate::model::common::TurnRule;
 
 #[derive(Clone, Debug)]
 pub enum Intersection {
@@ -10,20 +11,16 @@ pub enum Intersection {
     },
     TJunction {
         max_speed: f64,
-        single: Direction,
+        single: AbsoluteDirection,
         rule_set: Vec<TJunctionRule>,
         switch_rule: SwitchRule,
     },
-    NoIntersection,
+    Turn,
+    Straight,
+    End, // only one road connected in and out
 }
 
-#[derive(Clone, Debug)]
-pub struct CrossroadRule {
-    pub for_up: DirectionRule,
-    pub for_down: DirectionRule,
-    pub for_left: DirectionRule,
-    pub for_right: DirectionRule,
-}
+pub type CrossroadRule = Around<TurnRule>;
 
 /// T-junction intersection has 3 arms denoted with "left", "right" and "single"
 ///
@@ -32,9 +29,9 @@ pub struct CrossroadRule {
 /// "single" as "right".
 #[derive(Clone, Debug)]
 pub struct TJunctionRule {
-    pub for_single: DirectionRule,
-    pub for_left: DirectionRule,
-    pub for_right: DirectionRule,
+    pub for_single: TurnRule,
+    pub for_left: TurnRule,
+    pub for_right: TurnRule,
 }
 
 #[derive(Clone, Debug)]

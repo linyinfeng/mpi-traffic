@@ -2,7 +2,9 @@
 pub enum Intersection {
     Crossroad { switch_state: SwitchState },
     TJunction { switch_state: SwitchState },
-    NoIntersection,
+    Turn,
+    Straight,
+    End,
 }
 
 #[derive(Clone, Debug)]

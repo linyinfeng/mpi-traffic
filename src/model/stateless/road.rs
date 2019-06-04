@@ -1,4 +1,4 @@
-use crate::model::common::DirectionRule;
+use crate::model::common::TurnRule;
 
 #[derive(Clone, Debug)]
 pub struct Road {
@@ -9,5 +9,5 @@ pub struct Road {
 #[derive(Clone, Debug)]
 pub struct Lane {
     pub max_speed: f64,
-    pub direction_rule: DirectionRule,
+    pub direction_rule: TurnRule,
 }

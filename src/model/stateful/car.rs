@@ -1,6 +1,6 @@
 use crate::model::board::IntersectionIndex;
 use crate::model::board::RoadIndex;
-use crate::model::common::Direction;
+use crate::model::common::AbsoluteDirection;
 use crate::model::common::LaneDirection;
 use crate::model::common::LaneIndex;
 
@@ -30,9 +30,9 @@ pub enum Location {
     },
     InIntersection {
         intersection: IntersectionIndex,
-        from_direction: Direction,
+        from_direction: AbsoluteDirection,
         from_lane: LaneIndex,
-        to_direction: Direction,
+        to_direction: AbsoluteDirection,
         to_lane: LaneIndex,
         /// Position in intersection.
         ///

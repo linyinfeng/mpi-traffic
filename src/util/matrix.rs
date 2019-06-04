@@ -84,18 +84,77 @@ impl<T> Matrix<T> {
             index: (0, 0),
         }
     }
-    pub fn iter(&self) -> Iter<T> {
-        Iter {
-            matrix: self,
-            index: self.indices(),
+//<<<<<<< HEAD
+//    pub fn iter(&self) -> Iter<T> {
+//        Iter {
+//            matrix: self,
+//            index: self.indices(),
+//        }
+//    }
+//    pub fn iter_mut(&mut self) -> IterMut<T> {
+//        IterMut {
+//            matrix: unsafe { self as *mut Matrix<T> },
+//            index: self.indices(),
+//            _maker: std::marker::PhantomData,
+//        }
+//=======
+
+    #[allow(clippy::type_complexity)]
+    pub fn iter(
+        &self,
+    ) -> std::iter::FlatMap<
+        std::slice::Iter<Vec<T>>,
+        std::slice::Iter<T>,
+        fn(&Vec<T>) -> std::slice::Iter<T>,
+    > {
+        #[allow(clippy::ptr_arg)]
+        fn vec_iter<T>(v: &Vec<T>) -> std::slice::Iter<T> {
+            v.iter()
         }
+        self.storage.iter().flat_map(vec_iter)
     }
-    pub fn iter_mut(&mut self) -> IterMut<T> {
-        IterMut {
-            matrix: unsafe { self as *mut Matrix<T> },
-            index: self.indices(),
-            _maker: std::marker::PhantomData,
+
+    #[allow(clippy::type_complexity)]
+    pub fn iter_mut(
+        &mut self,
+    ) -> std::iter::FlatMap<
+        std::slice::IterMut<Vec<T>>,
+        std::slice::IterMut<T>,
+        fn(&mut Vec<T>) -> std::slice::IterMut<T>,
+    > {
+        #[allow(clippy::ptr_arg)]
+        fn vec_iter_mut<T>(v: &mut Vec<T>) -> std::slice::IterMut<T> {
+            v.iter_mut()
         }
+        self.storage.iter_mut().flat_map(vec_iter_mut)
+    }
+
+    #[allow(clippy::type_complexity)]
+    pub fn enumerate(
+        &self,
+    ) -> std::iter::Zip<
+        Indices,
+        std::iter::FlatMap<
+            std::slice::Iter<Vec<T>>,
+            std::slice::Iter<T>,
+            fn(&Vec<T>) -> std::slice::Iter<T>,
+        >,
+    > {
+        self.indices().zip(self.iter())
+    }
+
+    #[allow(clippy::type_complexity)]
+    pub fn enumerate_mut(
+        &mut self,
+    ) -> std::iter::Zip<
+        Indices,
+        std::iter::FlatMap<
+            std::slice::IterMut<Vec<T>>,
+            std::slice::IterMut<T>,
+            fn(&mut Vec<T>) -> std::slice::IterMut<T>,
+        >,
+    > {
+        self.indices().zip(self.iter_mut())
     }
 }
 
@@ -210,33 +269,60 @@ mod test {
         }
     }
 
-    #[test]
-    fn test_iter() {
-        let shape = (3, 3);
-        let test_mat = Matrix::with_shape(3.14, shape);
-        for te in test_mat.iter() {
-            assert_eq!(3.14, *te)
+    //
+//    #[test]
+//    fn test_iter() {
+//        let shape = (3, 3);
+//        let test_mat = Matrix::with_shape(3.14, shape);
+//        for te in test_mat.iter() {
+//            assert_eq!(3.14, *te)
+//        }
+//    }
+//
+//    #[test]
+//    fn test_iter_mut() {
+//        let mut test_mat = Matrix::with_shape(3.14, (3, 3));
+//        for da in test_mat.iter_mut() {
+//            *da = 4.14;
+//        }
+//        test_mat.iter_mut().for_each(|x| assert_eq!(4.14, *x));
+//    }
+//
+//    #[test]
+//    fn test_iter_mut_compile() {
+//        let mut test_mat = Matrix::with_shape(3.14, (3, 3));
+//        let mut a = test_mat.iter_mut();
+//        let mut b = test_mat.iter_mut();
+//        let r1 = a.next().unwrap();
+//        let r2 = b.next().unwrap();
+//        *r1 = 3.1;
+//        *r2 = 3.0;
+//        assert_eq!(*r1, 3.0);
+//    }
+    fn enumerate_mut() {
+        let shape = (7, 9);
+        let (m, n) = shape;
+        let mut mat = Matrix::with_shape(3.14, shape);
+        let v = |i, j| i as f64 * 10.0 + j as f64;
+        for ((i, j), item) in mat.enumerate_mut() {
+            *item = v(i, j);
+        }
+        for i in 0..m {
+            for j in 0..n {
+                assert_eq!(mat[(i, j)], v(i, j));
+            }
         }
     }
 
     #[test]
-    fn test_iter_mut() {
-        let mut test_mat = Matrix::with_shape(3.14, (3, 3));
-        for da in test_mat.iter_mut() {
-            *da = 4.14;
+    fn enumerate() {
+        let mut mat = Matrix::with_shape(3.14, (7, 9));
+        let v = |i, j| i as f64 * 10.0 + j as f64;
+        for ((i, j), item) in mat.enumerate_mut() {
+            *item = v(i, j);
         }
-        test_mat.iter_mut().for_each(|x| assert_eq!(4.14, *x));
-    }
-
-    #[test]
-    fn test_iter_mut_compile() {
-        let mut test_mat = Matrix::with_shape(3.14, (3, 3));
-        let mut a = test_mat.iter_mut();
-        let mut b = test_mat.iter_mut();
-        let r1 = a.next().unwrap();
-        let r2 = b.next().unwrap();
-        *r1 = 3.1;
-        *r2 = 3.0;
-        assert_eq!(*r1, 3.0);
+        for ((i, j), item) in mat.enumerate() {
+            assert_eq!(*item, v(i, j));
+        }
     }
 }

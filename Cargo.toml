@@ -16,6 +16,7 @@ piston_window = "*"
 log = "*"
 env_logger = "*"
 bitflags = "*"
+quick-error = "*"
 
 [dependencies.mpi]
 git = "https://github.com/bsteinb/rsmpi.git"
