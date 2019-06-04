@@ -16,23 +16,28 @@ impl View {
 }
 
 /// Store settings of `ModelView`.
-#[derive(Clone, Debug)]
-pub struct ViewSettings {}
+#[derive(Default, Clone, Debug)]
+pub struct ViewSettings {
+    padding: f64,
+}
 
-impl Default for ViewSettings {
-    fn default() -> Self {
-        Self {}
+impl ViewSettings {
+    pub fn new() -> Self {
+        Self { padding: 10.0 }
     }
 }
 
 impl View {
     pub fn draw(
         &self,
-        _stateless_model: &stateless::Model,
+        stateless_model: &stateless::Model,
         _stateful_model: &stateful::Model,
         context: Context,
         g2d: &mut G2d,
     ) {
+        // Draw city
+        let _city_geometry = stateless_model.city.geometry();
+
         // unimplemented
         rectangle(
             [1.0, 0.0, 0.0, 1.0],     // red

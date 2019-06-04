@@ -30,7 +30,7 @@ pub enum RelativeDirection {
 }
 
 impl AbsoluteDirection {
-    pub fn turn_opposite(self) -> AbsoluteDirection {
+    pub fn turn_back(self) -> AbsoluteDirection {
         use AbsoluteDirection::*;
         match self {
             East => West,
@@ -67,7 +67,7 @@ impl AbsoluteDirection {
             Left => self.turn_left(),
             Right => self.turn_right(),
             Front => self,
-            Back => self.turn_opposite(),
+            Back => self.turn_back(),
         }
     }
 
@@ -152,6 +152,12 @@ impl<T> Around<T> {
             East => &mut self.east,
         }
     }
+}
+
+#[derive(Copy, Clone, Debug)]
+pub struct Geometry {
+    pub height: f64,
+    pub width: f64,
 }
 
 #[cfg(test)]
