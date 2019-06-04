@@ -6,6 +6,12 @@ pub struct Road {
     pub lane_to_low: Vec<Lane>,
 }
 
+impl Road {
+    pub fn is_one_way(&self) -> bool {
+        self.lane_to_high.is_empty() || self.lane_to_low.is_empty()
+    }
+}
+
 #[derive(Clone, Debug)]
 pub struct Lane {
     pub max_speed: f64,

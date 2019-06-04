@@ -44,7 +44,7 @@ pub fn example_city() -> Result<City, crate::Error> {
     board.vertical_roads[(1, 1)] = Some(two_lane_road.clone());
     board.vertical_roads[(1, 2)] = Some(two_lane_road.clone());
 
-    intersection::generate_from_roads(&mut board)?;
+    intersection::generate_from_roads(&mut board);
     Ok(City {
         board,
         lane_width: 3.5, // National standard of city road
