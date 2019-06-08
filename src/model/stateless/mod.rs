@@ -7,6 +7,7 @@ pub mod road;
 use crate::model::board::Board;
 use crate::model::board::IntersectionIndex;
 use crate::model::board::RoadIndex;
+use crate::model::common::AxisDirection;
 use crate::model::common::Geometry;
 use crate::model::common::Position;
 pub use car::Car;
@@ -73,6 +74,29 @@ impl City {
             self.vertical_road_length.iter().take(i).sum::<f64>() +
             self.vertical_road_length[i] / 2.0;
         Position { x, y }
+    }
+
+    pub fn road_center(&self, direction: AxisDirection, index: RoadIndex) -> Position {
+        use AxisDirection::*;
+        match direction {
+            Horizontal => self.horizontal_road_center(index),
+            Vertical => self.vertical_road_center(index),
+        }
+    }
+
+    pub fn road_length(&self, direction: AxisDirection, (i, j): RoadIndex) -> f64 {
+        use AxisDirection::*;
+        match direction {
+            Horizontal => self.horizontal_road_length[j],
+            Vertical => self.vertical_road_length[i],
+        }
+    }
+
+    pub fn intersection_geometry(&self, (i, j): IntersectionIndex) -> Geometry {
+        Geometry {
+            width: self.intersection_width[j],
+            height: self.intersection_height[i],
+        }
     }
 }
 

@@ -44,6 +44,25 @@ impl<I, R> Board<I, R> {
             Vertical => self.vertical_roads.get_mut(index),
         }
     }
+
+    pub fn roads(&self) -> impl Iterator<Item = (AxisDirection, &R)> {
+        use AxisDirection::*;
+        std::iter::repeat(Horizontal)
+            .zip(self.horizontal_roads.iter())
+            .chain(std::iter::repeat(Vertical).zip(self.vertical_roads.iter()))
+    }
+
+    pub fn enumerate_roads(&self) -> impl Iterator<Item = (RoadIndex, (AxisDirection, &R))> {
+        use AxisDirection::*;
+        self.horizontal_roads
+            .indices()
+            .zip(std::iter::repeat(Horizontal).zip(self.horizontal_roads.iter()))
+            .chain(
+                self.vertical_roads
+                    .indices()
+                    .zip(std::iter::repeat(Vertical).zip(self.vertical_roads.iter())),
+            )
+    }
 }
 
 pub type IntersectionContext = Around<Option<RoadIndex>>;
