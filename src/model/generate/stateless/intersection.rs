@@ -11,7 +11,7 @@ pub const TIME_OUT: f64 = 30.0;
 pub const WAIT_TIME: f64 = 3.0;
 pub const MAX_SPEED: f64 = 60.0;
 
-pub fn generate_from_roads(board: &mut Board<Option<Intersection>, Option<Road>>) {
+pub fn generate_intersections(board: &mut Board<Option<Intersection>, Option<Road>>) {
     board.intersections.indices().for_each(|index| {
         board.intersections[index] =
             generate_with_context(board, &board.context_of_intersection(index))
@@ -33,14 +33,12 @@ fn generate_with_context(
 }
 
 fn is_in_same_axis(context: &IntersectionContext) -> bool {
-    assert!(context.road_number() == 2);
     let mut directions = AbsoluteDirection::directions()
         .filter_map(|&direction| context.get(direction).map(|_| direction));
     directions.next().unwrap().turn_back() == directions.next().unwrap()
 }
 
 fn generate_with_2_road(context: &IntersectionContext) -> Intersection {
-    assert!(context.road_number() == 2);
     if is_in_same_axis(context) {
         Intersection::Straight
     } else {
@@ -52,9 +50,10 @@ fn generate_with_3_road(
     _board: &Board<Option<Intersection>, Option<Road>>,
     context: &IntersectionContext,
 ) -> Intersection {
-    let single_opposite_direction = AbsoluteDirection::directions()
+    let single = AbsoluteDirection::directions()
         .find(|&&direction| context.get(direction).is_none())
-        .unwrap();
+        .unwrap()
+        .turn_back();
     let rule_set = vec![
         TJunctionRule {
             for_single: TurnRule::LEFT | TurnRule::RIGHT | TurnRule::BACK,
@@ -78,7 +77,7 @@ fn generate_with_3_road(
 
     Intersection::TJunction {
         max_speed: MAX_SPEED,
-        single: single_opposite_direction.turn_back(),
+        single,
         rule_set,
         switch_rule,
     }
