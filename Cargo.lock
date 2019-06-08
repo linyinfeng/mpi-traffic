@@ -665,6 +665,7 @@ dependencies = [
  "mpi 0.6.0 (git+https://github.com/bsteinb/rsmpi.git)",
  "piston_window 0.96.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "quick-error 1.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]

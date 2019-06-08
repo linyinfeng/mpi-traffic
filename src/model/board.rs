@@ -52,6 +52,13 @@ impl<I, R> Board<I, R> {
             .chain(std::iter::repeat(Vertical).zip(self.vertical_roads.iter()))
     }
 
+    pub fn roads_mut(&mut self) -> impl Iterator<Item = (AxisDirection, &mut R)> {
+        use AxisDirection::*;
+        std::iter::repeat(Horizontal)
+            .zip(self.horizontal_roads.iter_mut())
+            .chain(std::iter::repeat(Vertical).zip(self.vertical_roads.iter_mut()))
+    }
+
     pub fn enumerate_roads(&self) -> impl Iterator<Item = (RoadIndex, (AxisDirection, &R))> {
         use AxisDirection::*;
         self.horizontal_roads
