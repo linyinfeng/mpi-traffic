@@ -1,64 +1,125 @@
 use crate::model::board::Board;
 use crate::model::board::IntersectionContext;
-use crate::model::board::IntersectionIndex;
 use crate::model::common::AbsoluteDirection;
+use crate::model::common::TurnRule;
+use crate::model::stateless::intersection::TJunctionRule;
+use crate::model::stateless::intersection::{CrossroadRule, SwitchRule};
 use crate::model::stateless::Intersection;
 use crate::model::stateless::Road;
 
+pub const TIME_OUT: f64 = 30.0;
+pub const WAIT_TIME: f64 = 3.0;
+pub const MAX_SPEED: f64 = 60.0;
+
 pub fn generate_from_roads(board: &mut Board<Option<Intersection>, Option<Road>>) {
-    board
-        .intersections
-        .indices()
-        .map(|index| (index, board.context_of_intersection(index)))
-        .for_each(|(index, context)| board[index] = generate_with_context(&context, board));
+    board.intersections.indices().for_each(|index| {
+        board.intersections[index] =
+            generate_with_context(board, &board.context_of_intersection(index))
+    })
 }
 
-pub fn generate_with_context(
+fn generate_with_context(
+    board: &Board<Option<Intersection>, Option<Road>>,
     context: &IntersectionContext,
-    _board: &Board<Option<Intersection>, Option<Road>>,
 ) -> Option<Intersection> {
     match context.road_number() {
         0 => None,
         1 => Some(Intersection::End),
-        2 => unimplemented!(),
-        3 => unimplemented!(),
-        4 => unimplemented!(),
+        2 => Some(generate_with_2_road(context)),
+        3 => Some(generate_with_3_road(board, context)),
+        4 => Some(generate_with_4_road(board, context)),
         _ => unreachable!(),
     }
 }
 
-pub fn generate_with_1_road(
-    board: &mut Board<Option<Intersection>, Option<Road>>,
-    index: IntersectionIndex,
+fn is_in_same_axis(context: &IntersectionContext) -> bool {
+    assert!(context.road_number() == 2);
+    let mut directions = AbsoluteDirection::directions()
+        .filter_map(|&direction| context.get(direction).map(|_| direction));
+    directions.next().unwrap().turn_back() == directions.next().unwrap()
+}
+
+fn generate_with_2_road(context: &IntersectionContext) -> Intersection {
+    assert!(context.road_number() == 2);
+    if is_in_same_axis(context) {
+        Intersection::Straight
+    } else {
+        Intersection::Turn
+    }
+}
+
+fn generate_with_3_road(
+    _board: &Board<Option<Intersection>, Option<Road>>,
     context: &IntersectionContext,
-) {
-    board.intersections[index] = Some(Intersection::End);
+) -> Intersection {
+    let single_opposite_direction = AbsoluteDirection::directions()
+        .find(|&&direction| context.get(direction).is_none())
+        .unwrap();
+    let rule_set = vec![
+        TJunctionRule {
+            for_single: TurnRule::LEFT | TurnRule::RIGHT | TurnRule::BACK,
+            for_left: TurnRule::RIGHT | TurnRule::BACK,
+            for_right: TurnRule::FRONT | TurnRule::BACK,
+        },
+        TJunctionRule {
+            for_single: TurnRule::BACK | TurnRule::RIGHT,
+            for_left: TurnRule::RIGHT | TurnRule::BACK,
+            for_right: TurnRule::FRONT | TurnRule::BACK | TurnRule::LEFT,
+        },
+        TJunctionRule {
+            for_single: TurnRule::BACK | TurnRule::RIGHT,
+            for_left: TurnRule::FRONT | TurnRule::RIGHT | TurnRule::BACK,
+            for_right: TurnRule::FRONT | TurnRule::BACK,
+        },
+    ];
+    let switch_rule = SwitchRule::LoopTimeout {
+        times: vec![TIME_OUT, WAIT_TIME],
+    };
+
+    Intersection::TJunction {
+        max_speed: MAX_SPEED,
+        single: single_opposite_direction.turn_back(),
+        rule_set,
+        switch_rule,
+    }
 }
 
-pub fn generate_with_2_road(
-    _board: &mut Board<Option<Intersection>, Option<Road>>,
-    _index: IntersectionIndex,
-    context: &IntersectionContext,
-) {
-    let _directions_with_road = AbsoluteDirection::directions()
-        .filter(|&&direction| context.get(direction).is_some())
-        .map(|&direction| direction)
-        .collect::<Vec<AbsoluteDirection>>();
-    unimplemented!()
-}
-
-pub fn generate_with_3_road(
-    _board: &mut Board<Option<Intersection>, Option<Road>>,
-    _index: IntersectionIndex,
+fn generate_with_4_road(
+    _board: &Board<Option<Intersection>, Option<Road>>,
     _context: &IntersectionContext,
-) {
-    unimplemented!()
-}
-
-pub fn generate_with_4_road(
-    _board: &mut Board<Option<Intersection>, Option<Road>>,
-    _index: IntersectionIndex,
-    _context: &IntersectionContext,
-) {
-    unimplemented!()
+) -> Intersection {
+    let rules = vec![
+        CrossroadRule {
+            north: TurnRule::FRONT | TurnRule::RIGHT | TurnRule::BACK,
+            south: TurnRule::FRONT | TurnRule::RIGHT | TurnRule::BACK,
+            east: TurnRule::RIGHT | TurnRule::BACK,
+            west: TurnRule::RIGHT | TurnRule::BACK,
+        },
+        CrossroadRule {
+            east: TurnRule::FRONT | TurnRule::RIGHT | TurnRule::BACK,
+            west: TurnRule::FRONT | TurnRule::RIGHT | TurnRule::BACK,
+            north: TurnRule::RIGHT | TurnRule::BACK,
+            south: TurnRule::RIGHT | TurnRule::BACK,
+        },
+        CrossroadRule {
+            north: TurnRule::LEFT | TurnRule::RIGHT | TurnRule::BACK,
+            south: TurnRule::LEFT | TurnRule::RIGHT | TurnRule::BACK,
+            east: TurnRule::RIGHT | TurnRule::BACK,
+            west: TurnRule::RIGHT | TurnRule::BACK,
+        },
+        CrossroadRule {
+            east: TurnRule::LEFT | TurnRule::RIGHT | TurnRule::BACK,
+            west: TurnRule::LEFT | TurnRule::RIGHT | TurnRule::BACK,
+            south: TurnRule::RIGHT | TurnRule::BACK,
+            north: TurnRule::RIGHT | TurnRule::BACK,
+        },
+    ];
+    let switch_rule = SwitchRule::LoopTimeout {
+        times: vec![TIME_OUT, WAIT_TIME],
+    };
+    Intersection::Crossroad {
+        max_speed: MAX_SPEED,
+        rules,
+        switch_rule,
+    }
 }

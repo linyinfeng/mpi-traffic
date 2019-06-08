@@ -15,9 +15,9 @@ pub struct Board<I, R> {
 }
 
 impl<I, R> Board<I, R>
-    where
-        I: Clone,
-        R: Clone,
+where
+    I: Clone,
+    R: Clone,
 {
     pub fn with_shape(i: I, r: R, (m, n): MatrixShape) -> Self {
         Board {
@@ -71,15 +71,6 @@ impl IntersectionContext {
     pub fn road_number(&self) -> usize {
         let count = |o: Option<_>| o.is_some() as usize;
         count(self.north) + count(self.south) + count(self.east) + count(self.west)
-    }
-    pub fn is_in_same_axis(&self) -> bool {
-        use crate::model::common::AbsoluteDirection;
-        assert!(self.road_number() == 2);
-        let indexs = AbsoluteDirection::directions()
-            .map(|&direction| self.get(direction))
-            .filter(|&index| index.is_some())
-            .collect();
-        unimplemented!()
     }
 }
 
