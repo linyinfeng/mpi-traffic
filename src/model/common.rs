@@ -159,10 +159,16 @@ impl<T> Around<T> {
     }
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone, Debug, PartialEq)]
 pub struct Geometry {
-    pub height: f64,
     pub width: f64,
+    pub height: f64,
+}
+
+#[derive(Copy, Clone, Debug, PartialEq)]
+pub struct Position {
+    pub x: f64,
+    pub y: f64,
 }
 
 #[cfg(test)]
