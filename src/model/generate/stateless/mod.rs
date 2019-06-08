@@ -50,8 +50,8 @@ pub fn example_city() -> Result<City, crate::Error> {
         board,
         lane_width: 3.5, // National standard of city road
         // All roads in the example city are 500 m long.
-        horizontal_road_length: vec![500.0, 500.0],
-        vertical_road_length: vec![500.0, 500.0],
+        horizontal_road_length: vec![100.0, 100.0],
+        vertical_road_length: vec![100.0, 100.0],
         intersection_height: vec![20.0, 20.0, 20.0], // TODO: Can be generated
         intersection_width: vec![20.0, 20.0, 20.0],  // TODO: Can be generated
     })
