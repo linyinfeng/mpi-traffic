@@ -5,6 +5,6 @@ pub mod stateful;
 pub mod stateless;
 
 pub struct Model {
-    stateless: stateless::Model,
-    stateful: stateful::Model,
+    pub stateless: stateless::Model,
+    pub stateful: stateful::Model,
 }

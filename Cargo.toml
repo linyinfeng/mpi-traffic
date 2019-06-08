@@ -17,6 +17,7 @@ log = "*"
 env_logger = "*"
 bitflags = "*"
 quick-error = "*"
+rand="*"
 
 [dependencies.mpi]
 git = "https://github.com/bsteinb/rsmpi.git"
