@@ -2,9 +2,9 @@ use crate::model::board::Board;
 use crate::model::board::IntersectionContext;
 use crate::model::common::AbsoluteDirection;
 use crate::model::common::TurnRule;
+use crate::model::stateless::intersection::TJunctionRule;
 use crate::model::stateless::intersection::{CrossroadRule, SwitchRule};
 use crate::model::stateless::Intersection;
-use crate::model::stateless::intersection::TJunctionRule;
 use crate::model::stateless::Road;
 
 pub const TIME_OUT: f64 = 30.0;
@@ -52,7 +52,8 @@ fn generate_with_3_road(
 ) -> Intersection {
     let single = AbsoluteDirection::directions()
         .find(|&&direction| context.get(direction).is_none())
-        .unwrap().turn_back();
+        .unwrap()
+        .turn_back();
     let rule_set = vec![
         TJunctionRule {
             for_single: TurnRule::LEFT | TurnRule::RIGHT | TurnRule::BACK,

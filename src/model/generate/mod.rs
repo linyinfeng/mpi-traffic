@@ -1,9 +1,9 @@
 use crate::model::board::Board;
 use crate::model::generate::stateful::generate_from_stateless;
 use crate::model::generate::stateless::generate_stateless_model;
-use crate::model::Model;
 use crate::model::stateful as m_stateful;
 use crate::model::stateless as m_stateless;
+use crate::model::Model;
 use crate::util::matrix::MatrixShape;
 
 pub mod stateful;
