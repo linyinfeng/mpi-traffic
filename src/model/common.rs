@@ -84,6 +84,14 @@ impl AbsoluteDirection {
             Back
         }
     }
+
+    pub fn axis_direction(self) -> AxisDirection {
+        use AbsoluteDirection::*;
+        match self {
+            East | West => AxisDirection::Horizontal,
+            North | South => AxisDirection::Vertical,
+        }
+    }
 }
 
 impl AbsoluteDirection {
