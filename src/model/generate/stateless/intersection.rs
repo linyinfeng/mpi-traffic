@@ -6,23 +6,31 @@ use crate::model::stateless::Intersection;
 use crate::model::stateless::Road;
 
 pub fn generate_from_roads(board: &mut Board<Option<Intersection>, Option<Road>>) {
-    for index in board.intersections.indices() {
-        let context = board.context_of_intersection(index);
-        match context.road_number() {
-            0 => (),
-            1 => generate_with_1_road(board, index, &context),
-            2 => generate_with_2_road(board, index, &context),
-            3 => generate_with_3_road(board, index, &context),
-            4 => generate_with_4_road(board, index, &context),
-            _ => unreachable!(),
-        }
+    board
+        .intersections
+        .indices()
+        .map(|index| (index, board.context_of_intersection(index)))
+        .for_each(|(index, context)| board[index] = generate_with_context(&context, board));
+}
+
+pub fn generate_with_context(
+    context: &IntersectionContext,
+    _board: &Board<Option<Intersection>, Option<Road>>,
+) -> Option<Intersection> {
+    match context.road_number() {
+        0 => None,
+        1 => Some(Intersection::End),
+        2 => unimplemented!(),
+        3 => unimplemented!(),
+        4 => unimplemented!(),
+        _ => unreachable!(),
     }
 }
 
 pub fn generate_with_1_road(
     board: &mut Board<Option<Intersection>, Option<Road>>,
     index: IntersectionIndex,
-    _context: &IntersectionContext,
+    context: &IntersectionContext,
 ) {
     board.intersections[index] = Some(Intersection::End);
 }

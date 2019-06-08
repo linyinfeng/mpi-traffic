@@ -20,6 +20,16 @@ pub enum Intersection {
     End, // only one road connected in and out
 }
 
+impl Intersection {
+    pub fn default_crossroad() -> Self {
+        Intersection::Crossroad {
+            max_speed: unimplemented!(),
+            rules: unimplemented!(),
+            switch_rule: unimplemented!(),
+        }
+    }
+}
+
 pub type CrossroadRule = Around<TurnRule>;
 
 /// T-junction intersection has 3 arms denoted with "left", "right" and "single"
