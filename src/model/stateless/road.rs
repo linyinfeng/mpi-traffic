@@ -10,6 +10,10 @@ impl Road {
     pub fn is_one_way(&self) -> bool {
         self.lane_to_high.is_empty() || self.lane_to_low.is_empty()
     }
+
+    pub fn lane_number(&self) -> usize {
+        self.lane_to_high.len() + self.lane_to_low.len()
+    }
 }
 
 #[derive(Clone, Debug)]

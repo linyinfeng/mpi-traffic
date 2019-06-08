@@ -44,15 +44,16 @@ pub fn example_city() -> Result<City, crate::Error> {
     board.vertical_roads[(1, 1)] = Some(two_lane_road.clone());
     board.vertical_roads[(1, 2)] = Some(two_lane_road.clone());
 
-    intersection::generate_from_roads(&mut board);
+    // TODO: intersection generation unfinished
+    // intersection::generate_from_roads(&mut board);
     Ok(City {
         board,
         lane_width: 3.5, // National standard of city road
-        // All roads in the example city are 1 km long.
-        horizontal_road_length: vec![10000.0, 10000.0, 10000.0],
-        vertical_road_length: vec![10000.0, 10000.0, 10000.0],
-        intersection_height: vec![14.0, 14.0, 14.0, 14.0], // TODO: Can be generated
-        intersection_width: vec![14.0, 14.0, 14.0, 14.0],  // TODO: Can be generated
+        // All roads in the example city are 500 m long.
+        horizontal_road_length: vec![500.0, 500.0],
+        vertical_road_length: vec![500.0, 500.0],
+        intersection_height: vec![20.0, 20.0, 20.0], // TODO: Can be generated
+        intersection_width: vec![20.0, 20.0, 20.0],  // TODO: Can be generated
     })
 }
 
