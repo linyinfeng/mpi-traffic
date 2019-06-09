@@ -2,9 +2,9 @@ pub use city::fix::LaneAddStrategy;
 pub use city::road::GenerationStrategy;
 
 use crate::model::board::Board;
-use crate::model::stateless::{Car, Road};
 use crate::model::stateless::City;
 use crate::model::stateless::Model;
+use crate::model::stateless::{Car, Road};
 use crate::util::matrix::MatrixShape;
 
 mod car;

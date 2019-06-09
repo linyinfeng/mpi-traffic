@@ -9,9 +9,9 @@ use piston_window::WindowSettings;
 
 use mpi_traffic::controller::Controller;
 use mpi_traffic::model::generate;
-use mpi_traffic::model::generate::ModelGenerationSettings;
-use mpi_traffic::model::generate::stateless::{GenerationStrategy, LaneAddStrategy};
 use mpi_traffic::model::generate::stateless::StatelessModelGenerationSettings;
+use mpi_traffic::model::generate::stateless::{GenerationStrategy, LaneAddStrategy};
+use mpi_traffic::model::generate::ModelGenerationSettings;
 use mpi_traffic::view::{View, ViewSettings};
 
 fn main() {
@@ -52,13 +52,13 @@ fn main() {
         match e {
             Event::Input(e, _) => {
                 controller.input(&stateless_model, &mut stateful_model, e);
-            }
+            },
             Event::Loop(e) => {
                 if let Loop::Update(args) = e {
                     controller.update(&stateless_model, &mut stateful_model, args);
                 }
-            }
-            _ => {}
+            },
+            _ => {},
         }
     }
 }

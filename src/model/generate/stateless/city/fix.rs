@@ -112,19 +112,16 @@ impl AddLane for BaseLaneAdd {
 // TODO fix more
 fn fix_lane_direction_rule(board: &mut Board<Option<Intersection>, Option<Road>>) {
     for (_, road) in board.roads_mut() {
-        match road {
-            &mut Some(ref mut road) => {
-                assert!(!road.lane_to_low.is_empty() || !road.lane_to_high.is_empty());
-                fix_road_side(&mut road.lane_to_low);
-                fix_road_side(&mut road.lane_to_high);
-                if road.lane_to_high.is_empty() {
-                    road.lane_to_low[0].direction_rule -= TurnRule::BACK;
-                }
-                if road.lane_to_low.is_empty() {
-                    road.lane_to_high[0].direction_rule -= TurnRule::BACK;
-                }
+        if let Some(ref mut road) = road {
+            assert!(!road.lane_to_low.is_empty() || !road.lane_to_high.is_empty());
+            fix_road_side(&mut road.lane_to_low);
+            fix_road_side(&mut road.lane_to_high);
+            if road.lane_to_high.is_empty() {
+                road.lane_to_low[0].direction_rule -= TurnRule::BACK;
             }
-            _ => (),
+            if road.lane_to_low.is_empty() {
+                road.lane_to_high[0].direction_rule -= TurnRule::BACK;
+            }
         }
     }
 }
