@@ -1,4 +1,8 @@
 use log::trace;
+use mpi_traffic::controller::Controller;
+use mpi_traffic::model::generate;
+use mpi_traffic::model::generate::ModelGenerationSettings;
+use mpi_traffic::view::{View, ViewSettings};
 use piston_window::color;
 use piston_window::Event;
 use piston_window::EventLoop;
@@ -6,15 +10,10 @@ use piston_window::EventSettings;
 use piston_window::Loop;
 use piston_window::PistonWindow;
 use piston_window::WindowSettings;
-
-use mpi_traffic::controller::Controller;
-use mpi_traffic::model::generate;
-use mpi_traffic::model::generate::stateless::StatelessModelGenerationSettings;
-use mpi_traffic::model::generate::stateless::{GenerationStrategy, LaneAddStrategy};
-use mpi_traffic::model::generate::ModelGenerationSettings;
-use mpi_traffic::view::{View, ViewSettings};
+use structopt::StructOpt;
 
 fn main() {
+    let settings = MpiTrafficOpt::from_args();
     env_logger::init();
 
     let mut window: PistonWindow = WindowSettings::new("MPI Traffic", [1000, 500])
@@ -28,15 +27,8 @@ fn main() {
         let view_settings = ViewSettings::new();
         View::new(view_settings)
     };
-    let settings = ModelGenerationSettings {
-        stateless_model_settings: StatelessModelGenerationSettings {
-            lane_width: 3.5,
-            board_shape: (4, 4),
-            road_generation_strategy: GenerationStrategy::Random,
-            lane_add_strategy: LaneAddStrategy::Base,
-        },
-    };
-    let mut model = generate::generate_model(settings);
+
+    let model = generate::generate_model(settings.model_generation_settings);
     let stateless_model = model.stateless;
     let mut stateful_model = model.stateful;
     let controller = Controller;
@@ -61,4 +53,11 @@ fn main() {
             _ => {},
         }
     }
+}
+
+#[derive(StructOpt)]
+#[structopt(name = "mpi-traffic", about = "Simple traffic simulation with MPI..")]
+struct MpiTrafficOpt {
+    #[structopt(flatten)]
+    pub model_generation_settings: ModelGenerationSettings,
 }

@@ -117,11 +117,30 @@ pub enum LaneDirection {
     HighToLow,
 }
 
+impl Distribution<LaneDirection> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> LaneDirection {
+        use LaneDirection::*;
+        match rng.gen_range(0, 2) {
+            0 => LowToHigh,
+            1 => HighToLow,
+            _ => unreachable!(),
+        }
+    }
+}
+
 impl LaneDirection {
     pub fn lane_directions() -> std::slice::Iter<'static, LaneDirection> {
         use LaneDirection::*;
         static LANE_DIRECTIONS: [LaneDirection; 2] = [LowToHigh, HighToLow];
         LANE_DIRECTIONS.iter()
+    }
+
+    pub fn opposite(self) -> LaneDirection {
+        use LaneDirection::*;
+        match self {
+            LowToHigh => HighToLow,
+            HighToLow => LowToHigh,
+        }
     }
 
     pub fn absolute_in_out_to_lane(
