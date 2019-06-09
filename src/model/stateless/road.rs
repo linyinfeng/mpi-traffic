@@ -1,3 +1,4 @@
+use crate::model::common::LaneDirection;
 use crate::model::common::TurnRule;
 
 #[derive(Clone, Debug)]
@@ -13,6 +14,20 @@ impl Road {
 
     pub fn lane_number(&self) -> usize {
         self.lane_to_high.len() + self.lane_to_low.len()
+    }
+
+    pub fn lanes_to_direction(&self, lane_direction: LaneDirection) -> &Vec<Lane> {
+        match lane_direction {
+            LaneDirection::HighToLow => &self.lane_to_low,
+            LaneDirection::LowToHigh => &self.lane_to_high,
+        }
+    }
+
+    pub fn lanes_to_direction_mut(&mut self, lane_direction: LaneDirection) -> &mut Vec<Lane> {
+        match lane_direction {
+            LaneDirection::HighToLow => &mut self.lane_to_low,
+            LaneDirection::LowToHigh => &mut self.lane_to_high,
+        }
     }
 }
 

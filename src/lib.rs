@@ -5,3 +5,4 @@ pub mod util;
 pub mod view;
 
 pub use error::Error;
+pub use model::Model;

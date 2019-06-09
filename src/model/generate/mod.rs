@@ -1,10 +1,11 @@
 use crate::model::board::Board;
 use crate::model::generate::stateful::generate_from_stateless;
-use crate::model::generate::stateless::generate_stateless_model;
+use crate::model::generate::stateless::{
+    generate_stateless_model, StatelessModelGenerationSettings,
+};
 use crate::model::stateful as m_stateful;
 use crate::model::stateless as m_stateless;
 use crate::model::Model;
-use crate::util::matrix::MatrixShape;
 
 pub mod stateful;
 pub mod stateless;
@@ -22,9 +23,13 @@ pub fn example() -> Result<(m_stateless::Model, m_stateful::Model), crate::Error
     Ok((stateless, stateful))
 }
 
+pub struct ModelGenerationSettings {
+    pub stateless_model_settings: StatelessModelGenerationSettings,
+}
+
 // TODO design generation external configuration
-pub fn generate_model(board_shape: MatrixShape) -> Model {
-    let stateless_model = generate_stateless_model(board_shape);
+pub fn generate_model(model_settings: ModelGenerationSettings) -> Model {
+    let stateless_model = generate_stateless_model(model_settings.stateless_model_settings);
     let stateful_model = generate_from_stateless(&stateless_model);
     Model {
         stateless: stateless_model,
