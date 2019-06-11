@@ -29,20 +29,28 @@ where
 }
 
 impl<I, R> Board<I, R> {
-    pub fn get_road(&self, axis: AxisDirection, index: RoadIndex) -> Option<&R> {
+    pub fn get_roads(&self, axis: AxisDirection) -> &Matrix<R> {
         use AxisDirection::*;
         match axis {
-            Horizontal => self.horizontal_roads.get(index),
-            Vertical => self.vertical_roads.get(index),
+            Horizontal => &self.horizontal_roads,
+            Vertical => &self.vertical_roads,
         }
     }
 
-    pub fn get_road_mut(&mut self, axis: AxisDirection, index: RoadIndex) -> Option<&mut R> {
+    pub fn get_roads_mut(&mut self, axis: AxisDirection) -> &mut Matrix<R> {
         use AxisDirection::*;
         match axis {
-            Horizontal => self.horizontal_roads.get_mut(index),
-            Vertical => self.vertical_roads.get_mut(index),
+            Horizontal => &mut self.horizontal_roads,
+            Vertical => &mut self.vertical_roads,
         }
+    }
+
+    pub fn get_road(&self, axis: AxisDirection, index: RoadIndex) -> Option<&R> {
+        self.get_roads(axis).get(index)
+    }
+
+    pub fn get_road_mut(&mut self, axis: AxisDirection, index: RoadIndex) -> Option<&mut R> {
+        self.get_roads_mut(axis).get_mut(index)
     }
 
     pub fn roads(&self) -> impl Iterator<Item = (AxisDirection, &R)> {

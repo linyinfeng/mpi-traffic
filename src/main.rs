@@ -1,6 +1,7 @@
 use log::trace;
 use mpi_traffic::controller::Controller;
 use mpi_traffic::model::generate;
+use mpi_traffic::model::generate::ModelGenerationSettings;
 use mpi_traffic::view::{View, ViewSettings};
 use piston_window::color;
 use piston_window::Event;
@@ -9,8 +10,10 @@ use piston_window::EventSettings;
 use piston_window::Loop;
 use piston_window::PistonWindow;
 use piston_window::WindowSettings;
+use structopt::StructOpt;
 
 fn main() {
+    let settings = MpiTrafficOpt::from_args();
     env_logger::init();
 
     let mut window: PistonWindow = WindowSettings::new("MPI Traffic", [1000, 500])
@@ -24,7 +27,10 @@ fn main() {
         let view_settings = ViewSettings::new();
         View::new(view_settings)
     };
-    let (stateless_model, mut stateful_model) = generate::example().expect("valid example model");
+
+    let model = generate::generate_model(settings.model_generation_settings);
+    let stateless_model = model.stateless;
+    let mut stateful_model = model.stateful;
     let controller = Controller;
 
     while let Some(e) = window.next() {
@@ -47,4 +53,11 @@ fn main() {
             _ => {},
         }
     }
+}
+
+#[derive(StructOpt)]
+#[structopt(name = "mpi-traffic", about = "Simple traffic simulation with MPI..")]
+struct MpiTrafficOpt {
+    #[structopt(flatten)]
+    pub model_generation_settings: ModelGenerationSettings,
 }

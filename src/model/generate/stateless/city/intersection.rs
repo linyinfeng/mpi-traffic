@@ -2,32 +2,36 @@ use crate::model::board::Board;
 use crate::model::board::IntersectionContext;
 use crate::model::common::AbsoluteDirection;
 use crate::model::common::TurnRule;
+use crate::model::generate::stateless::StatelessModelGenerationSettings;
 use crate::model::stateless::intersection::TJunctionRule;
 use crate::model::stateless::intersection::{CrossroadRule, SwitchRule};
 use crate::model::stateless::Intersection;
 use crate::model::stateless::Road;
 
 pub const TIME_OUT: f64 = 30.0;
-pub const WAIT_TIME: f64 = 3.0;
 pub const MAX_SPEED: f64 = 60.0;
 
-pub fn generate_intersections(board: &mut Board<Option<Intersection>, Option<Road>>) {
-    board.intersections.indices().for_each(|index| {
-        board.intersections[index] =
-            generate_with_context(board, &board.context_of_intersection(index))
-    })
+pub fn generate_intersections(
+    board: &mut Board<Option<Intersection>, Option<Road>>,
+    settings: &StatelessModelGenerationSettings,
+) {
+    for index in board.intersections.indices() {
+        let context = board.context_of_intersection(index);
+        if context.road_number() != 0 {
+            board.intersections[index] = Some(generate_with_context(&context, settings));
+        }
+    }
 }
 
 fn generate_with_context(
-    board: &Board<Option<Intersection>, Option<Road>>,
     context: &IntersectionContext,
-) -> Option<Intersection> {
+    settings: &StatelessModelGenerationSettings,
+) -> Intersection {
     match context.road_number() {
-        0 => None,
-        1 => Some(Intersection::End),
-        2 => Some(generate_with_2_road(context)),
-        3 => Some(generate_with_3_road(board, context)),
-        4 => Some(generate_with_4_road(board, context)),
+        1 => Intersection::End,
+        2 => generate_with_2_road(context),
+        3 => generate_with_3_road(context, settings),
+        4 => generate_with_4_road(settings),
         _ => unreachable!(),
     }
 }
@@ -47,8 +51,8 @@ fn generate_with_2_road(context: &IntersectionContext) -> Intersection {
 }
 
 fn generate_with_3_road(
-    _board: &Board<Option<Intersection>, Option<Road>>,
     context: &IntersectionContext,
+    settings: &StatelessModelGenerationSettings,
 ) -> Intersection {
     let single = AbsoluteDirection::directions()
         .find(|&&direction| context.get(direction).is_none())
@@ -72,21 +76,18 @@ fn generate_with_3_road(
         },
     ];
     let switch_rule = SwitchRule::LoopTimeout {
-        times: vec![TIME_OUT, WAIT_TIME],
+        times: vec![settings.time_out],
     };
 
     Intersection::TJunction {
-        max_speed: MAX_SPEED,
+        max_speed: settings.intersection_max_speed,
         single,
         rule_set,
         switch_rule,
     }
 }
 
-fn generate_with_4_road(
-    _board: &Board<Option<Intersection>, Option<Road>>,
-    _context: &IntersectionContext,
-) -> Intersection {
+fn generate_with_4_road(settings: &StatelessModelGenerationSettings) -> Intersection {
     let rules = vec![
         CrossroadRule {
             north: TurnRule::FRONT | TurnRule::RIGHT | TurnRule::BACK,
@@ -114,10 +115,10 @@ fn generate_with_4_road(
         },
     ];
     let switch_rule = SwitchRule::LoopTimeout {
-        times: vec![TIME_OUT, WAIT_TIME],
+        times: vec![settings.time_out],
     };
     Intersection::Crossroad {
-        max_speed: MAX_SPEED,
+        max_speed: settings.intersection_max_speed,
         rules,
         switch_rule,
     }
