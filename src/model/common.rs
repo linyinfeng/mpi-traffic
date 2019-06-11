@@ -1,3 +1,6 @@
+use rand::distributions::{Distribution, Standard};
+use rand::Rng;
+
 use bitflags::bitflags;
 
 pub type CarIndex = usize;
@@ -114,6 +117,76 @@ pub enum LaneDirection {
     HighToLow,
 }
 
+impl Distribution<LaneDirection> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> LaneDirection {
+        use LaneDirection::*;
+        match rng.gen_range(0, 2) {
+            0 => LowToHigh,
+            1 => HighToLow,
+            _ => unreachable!(),
+        }
+    }
+}
+
+impl LaneDirection {
+    pub fn lane_directions() -> std::slice::Iter<'static, LaneDirection> {
+        use LaneDirection::*;
+        static LANE_DIRECTIONS: [LaneDirection; 2] = [LowToHigh, HighToLow];
+        LANE_DIRECTIONS.iter()
+    }
+
+    pub fn opposite(self) -> LaneDirection {
+        use LaneDirection::*;
+        match self {
+            LowToHigh => HighToLow,
+            HighToLow => LowToHigh,
+        }
+    }
+
+    pub fn absolute_in_out_to_lane(
+        absolute_direction: AbsoluteDirection,
+        in_out: InOutDirection,
+    ) -> Self {
+        use AbsoluteDirection::*;
+        use InOutDirection::*;
+        use LaneDirection::*;
+        match absolute_direction {
+            North | East => match in_out {
+                In => HighToLow,
+                Out => LowToHigh,
+            },
+            South | West => match in_out {
+                In => LowToHigh,
+                Out => HighToLow,
+            },
+        }
+    }
+}
+
+#[derive(Debug, Copy, Clone, Eq, Hash, PartialEq)]
+pub enum InOutDirection {
+    In,
+    Out,
+}
+
+impl InOutDirection {
+    pub fn in_or_out(absolute_direction: AbsoluteDirection, lane_direction: LaneDirection) -> Self {
+        use AbsoluteDirection::*;
+        use InOutDirection::*;
+        use LaneDirection::*;
+        match absolute_direction {
+            North | East => match lane_direction {
+                LowToHigh => Out,
+                HighToLow => In,
+            },
+            South | West => match lane_direction {
+                LowToHigh => In,
+                HighToLow => Out,
+            },
+        }
+    }
+}
+
 impl AbsoluteDirection {
     pub fn of_lane(axis: AxisDirection, lane_direction: LaneDirection) -> AbsoluteDirection {
         use AbsoluteDirection::*;
@@ -125,6 +198,19 @@ impl AbsoluteDirection {
             (Horizontal, HighToLow) => East,
             (Vertical, LowToHigh) => South,
             (Vertical, HighToLow) => North,
+        }
+    }
+}
+
+impl Distribution<AbsoluteDirection> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> AbsoluteDirection {
+        use AbsoluteDirection::*;
+        match rng.gen_range(0, 4) {
+            0 => North,
+            1 => South,
+            2 => East,
+            3 => West,
+            _ => unreachable!(),
         }
     }
 }
@@ -173,11 +259,12 @@ pub struct Position {
 
 #[cfg(test)]
 mod test {
-    use super::*;
     use AbsoluteDirection::*;
     use AxisDirection::*;
     use LaneDirection::*;
     use RelativeDirection::*;
+
+    use super::*;
 
     #[test]
     fn turn() {
