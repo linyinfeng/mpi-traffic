@@ -1,10 +1,9 @@
-use crate::model::board::{Board, IntersectionContext};
-use crate::model::common::LaneDirection;
-use crate::model::common::TurnRule;
-use crate::model::common::{AbsoluteDirection, InOutDirection};
-use crate::model::generate::stateless::city::road::basic_lane;
-use crate::model::generate::stateless::StatelessModelGenerationSettings;
-use crate::model::stateless::{Intersection, Lane, Road};
+use crate::model::{
+    board::{Board, IntersectionContext},
+    common::{AbsoluteDirection, InOutDirection, LaneDirection, TurnRule},
+    generate::stateless::{city::road::basic_lane, StatelessModelGenerationSettings},
+    stateless::{Intersection, Lane, Road},
+};
 
 pub fn fix(
     board: &mut Board<Option<Intersection>, Option<Road>>,

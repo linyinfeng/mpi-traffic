@@ -1,6 +1,8 @@
-use crate::model::board::Board;
-use crate::model::stateful::{City, Model};
-use crate::model::stateless;
+use crate::model::{
+    board::Board,
+    stateful::{City, Model},
+    stateless,
+};
 
 pub fn generate_from_stateless(stateless_model: &stateless::Model) -> Model {
     stub(stateless_model)

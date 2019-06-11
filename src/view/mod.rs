@@ -1,15 +1,15 @@
-use crate::model::common::AxisDirection;
-use crate::model::common::Geometry;
-use crate::model::stateful;
-use crate::model::stateless;
+use crate::model::{
+    common::{AxisDirection, Geometry},
+    stateful, stateless,
+};
 use log::trace;
-use piston_window::color;
-use piston_window::context::Context;
-use piston_window::rectangle;
-use piston_window::types::Color;
-use piston_window::types::Matrix2d;
-use piston_window::G2d;
-use piston_window::Transformed;
+use piston_window::{
+    color,
+    context::Context,
+    rectangle,
+    types::{Color, Matrix2d},
+    G2d, Transformed,
+};
 
 #[derive(Clone, Debug)]
 pub struct View {

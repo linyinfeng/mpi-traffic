@@ -1,15 +1,10 @@
 use log::trace;
-use mpi_traffic::controller::Controller;
-use mpi_traffic::model::generate;
-use mpi_traffic::model::generate::ModelGenerationSettings;
-use mpi_traffic::view::{View, ViewSettings};
-use piston_window::color;
-use piston_window::Event;
-use piston_window::EventLoop;
-use piston_window::EventSettings;
-use piston_window::Loop;
-use piston_window::PistonWindow;
-use piston_window::WindowSettings;
+use mpi_traffic::{
+    controller::Controller,
+    model::generate::{self, ModelGenerationSettings},
+    view::{View, ViewSettings},
+};
+use piston_window::{color, Event, EventLoop, EventSettings, Loop, PistonWindow, WindowSettings};
 use structopt::StructOpt;
 
 fn main() {

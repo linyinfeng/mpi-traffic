@@ -1,12 +1,12 @@
-use crate::model::board::Board;
-use crate::model::board::IntersectionContext;
-use crate::model::common::AbsoluteDirection;
-use crate::model::common::TurnRule;
-use crate::model::generate::stateless::StatelessModelGenerationSettings;
-use crate::model::stateless::intersection::TJunctionRule;
-use crate::model::stateless::intersection::{CrossroadRule, SwitchRule};
-use crate::model::stateless::Intersection;
-use crate::model::stateless::Road;
+use crate::model::{
+    board::{Board, IntersectionContext},
+    common::{AbsoluteDirection, TurnRule},
+    generate::stateless::StatelessModelGenerationSettings,
+    stateless::{
+        intersection::{CrossroadRule, SwitchRule, TJunctionRule},
+        Intersection, Road,
+    },
+};
 
 pub const TIME_OUT: f64 = 30.0;
 pub const MAX_SPEED: f64 = 60.0;

@@ -1,8 +1,10 @@
-use crate::model::generate::stateful::generate_from_stateless;
-use crate::model::generate::stateless::{
-    generate_stateless_model, StatelessModelGenerationSettings,
+use crate::model::{
+    generate::{
+        stateful::generate_from_stateless,
+        stateless::{generate_stateless_model, StatelessModelGenerationSettings},
+    },
+    Model,
 };
-use crate::model::Model;
 use structopt::StructOpt;
 
 pub mod stateful;

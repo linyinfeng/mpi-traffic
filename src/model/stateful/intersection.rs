@@ -1,4 +1,6 @@
-#[derive(Clone, Debug)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum Intersection {
     Crossroad { switch_state: SwitchState },
     TJunction { switch_state: SwitchState },
@@ -7,7 +9,7 @@ pub enum Intersection {
     End,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum SwitchState {
     LoopTimeout {
         remain_time: f64,

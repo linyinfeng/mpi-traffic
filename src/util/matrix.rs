@@ -1,12 +1,13 @@
-use std::iter::ExactSizeIterator;
-use std::iter::FusedIterator;
-use std::ops::Index;
-use std::ops::IndexMut;
+use serde::{Deserialize, Serialize};
+use std::{
+    iter::{ExactSizeIterator, FusedIterator},
+    ops::{Index, IndexMut},
+};
 
 pub type MatrixShape = (usize, usize);
 pub type MatrixIndex = (usize, usize);
 
-#[derive(Clone, Debug, Default)]
+#[derive(Deserialize, Serialize, Clone, Debug, Default)]
 pub struct Matrix<T> {
     storage: Vec<Vec<T>>,
 }
