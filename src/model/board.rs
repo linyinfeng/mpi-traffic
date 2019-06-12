@@ -98,12 +98,12 @@ impl<I, R> Board<I, Option<R>> {
             None
         };
         let south_index = Some((Vertical, (i, j)));
-        let east_index = if j != 0 {
+        let west_index = if j != 0 {
             Some((Horizontal, (i, j - 1)))
         } else {
             None
         };
-        let west_index = Some((Horizontal, (i, j)));
+        let east_index = Some((Horizontal, (i, j)));
 
         let check_and_convert = |o| {
             let (axis, index) = o?;
