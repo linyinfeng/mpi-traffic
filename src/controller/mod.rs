@@ -1,6 +1,6 @@
 use crate::model::{stateful, stateless};
-use piston_window::{Input, UpdateArgs};
 use log::trace;
+use piston_window::{Input, UpdateArgs};
 
 pub mod car_map;
 
@@ -11,9 +11,7 @@ pub struct Controller {
 
 impl Controller {
     pub fn new() -> Self {
-        Self {
-            elapsed_time: 0.0,
-        }
+        Self { elapsed_time: 0.0 }
     }
 
     pub fn update(
@@ -34,11 +32,7 @@ impl Controller {
         {
             if let Some(stateful_intersection) = stateful_intersection.as_mut() {
                 let stateless_intersection = stateless_intersection.as_ref().unwrap();
-                self.update_intersection(
-                    stateful_intersection,
-                    stateless_intersection,
-                    args,
-                );
+                self.update_intersection(stateful_intersection, stateless_intersection, args);
                 stateful_intersection.update_current(stateless_intersection);
             }
         }
