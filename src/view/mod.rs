@@ -143,11 +143,23 @@ impl View {
         let mut center_y = -center_distance / 2.0;
         // high to low first
         for lane_to_low in road.lane_to_low.iter() {
-            self.draw_lane(lane_to_low, length, lane_width, transform.trans(0.0, center_y).rot_deg(180.0), g2d);
+            self.draw_lane(
+                lane_to_low,
+                length,
+                lane_width,
+                transform.trans(0.0, center_y).rot_deg(180.0),
+                g2d,
+            );
             center_y += lane_width;
         }
         for lane_to_high in road.lane_to_high.iter() {
-            self.draw_lane(lane_to_high, length, lane_width, transform.trans(0.0, center_y), g2d);
+            self.draw_lane(
+                lane_to_high,
+                length,
+                lane_width,
+                transform.trans(0.0, center_y),
+                g2d,
+            );
             center_y += lane_width;
         }
     }
@@ -172,7 +184,10 @@ impl View {
         self.draw_turn_rule_as_sign(
             lane.direction_rule,
             self.settings.road_sign_color,
-            transform.trans(half_length - half_width, 0.0).rot_deg(90.0).zoom(sign_half_size),
+            transform
+                .trans(half_length - half_width, 0.0)
+                .rot_deg(90.0)
+                .zoom(sign_half_size),
             g2d,
         );
     }
