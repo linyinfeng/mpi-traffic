@@ -21,17 +21,17 @@ pub struct StatelessModelGenerationSettings {
     pub board_shape_cols: usize,
 
     #[structopt(
-        name = "stateless-model-generation-min-lane-width",
+        name = "stateless-model-generation-min-road-length",
         default_value = "50",
-        long = "stateless-model-generation-min-lane-width"
+        long = "stateless-model-generation-min-road-length"
     )]
-    pub min_lane_length: f64,
+    pub min_road_length: f64,
     #[structopt(
-        name = "stateless-model-generation-max-lane-width",
+        name = "stateless-model-generation-max-road-length",
         default_value = "100",
-        long = "stateless-model-generation-max-lane-width"
+        long = "stateless-model-generation-max-road-length"
     )]
-    pub max_lane_length: f64,
+    pub max_road_length: f64,
     #[structopt(
         name = "stateless-model-generation-lane-width",
         default_value = "3.5",

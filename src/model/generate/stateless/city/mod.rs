@@ -38,7 +38,7 @@ pub fn generate_city(city_settings: &StatelessModelGenerationSettings) -> City {
 fn rand_road_length(road_num: usize, settings: &StatelessModelGenerationSettings) -> Vec<f64> {
     let mut rng = rand::thread_rng();
     (0..road_num)
-        .map(|_| rng.gen_range(settings.min_lane_length, settings.max_lane_length))
+        .map(|_| rng.gen_range(settings.min_road_length, settings.max_road_length))
         .collect()
 }
 

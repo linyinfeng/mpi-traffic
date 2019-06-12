@@ -1,6 +1,9 @@
 use crate::model::{
     board::{Board, IntersectionContext},
-    common::{AbsoluteDirection, InOutDirection, LaneDirection, TurnRule},
+    common::{
+        AbsoluteDirection, AxisDirection, InOutDirection, LaneDirection, RelativeDirection,
+        TurnRule,
+    },
     generate::stateless::{city::road::basic_lane, StatelessModelGenerationSettings},
     stateless::{Intersection, Lane, Road},
 };
@@ -84,7 +87,6 @@ fn add_lane(
         .as_mut()
         .unwrap()
         .lanes_to_direction_mut(lane_direction)
-        // TODO FIX
         .push(basic_lane(lane_max_speed));
 }
 
@@ -102,11 +104,67 @@ fn fix_lane_direction_rule(board: &mut Board<Option<Intersection>, Option<Road>>
             }
         }
     }
+    for intersection_index in board.intersections.indices() {
+        fix_rode_side_with_context(board, &board.context_of_intersection(intersection_index));
+    }
 }
 
 fn fix_road_side(lanes: &mut [Lane]) {
     if lanes.len() > 1 {
         lanes[0].direction_rule -= TurnRule::RIGHT;
+        lanes
+            .iter_mut()
+            .skip(1)
+            .for_each(|lane| lane.direction_rule -= TurnRule::LEFT | TurnRule::BACK);
         lanes[lanes.len() - 1].direction_rule -= TurnRule::LEFT;
+    }
+}
+
+fn fix_rode_side_with_context(
+    board: &mut Board<Option<Intersection>, Option<Road>>,
+    context: &IntersectionContext,
+) {
+    use AxisDirection::*;
+    use RelativeDirection::*;
+
+    let direction_with_road = AbsoluteDirection::directions()
+        .filter(|&&direction| context.get(direction).is_some())
+        .collect::<Vec<_>>();
+    let direction_without_road = AbsoluteDirection::directions()
+        .filter(|&&direction| context.get(direction).is_none())
+        .collect::<Vec<_>>();
+    for &&direction in direction_with_road.iter() {
+        let road_index = context.get(direction).unwrap();
+        let lane_into_intersection = match direction.axis_direction() {
+            Horizontal => match direction {
+                AbsoluteDirection::West => LaneDirection::LowToHigh,
+                AbsoluteDirection::East => LaneDirection::HighToLow,
+                _ => unreachable!(),
+            },
+            Vertical => match direction {
+                AbsoluteDirection::North => LaneDirection::HighToLow,
+                AbsoluteDirection::South => LaneDirection::LowToHigh,
+                _ => unreachable!(),
+            },
+        };
+        let lanes_to_be_fixed = board.get_roads_mut(direction.axis_direction())[road_index]
+            .as_mut()
+            .unwrap()
+            .lanes_to_direction_mut(lane_into_intersection);
+        let len = lanes_to_be_fixed.len();
+        if len == 0 {
+            continue
+        }
+
+        for &&other_direction in direction_without_road.iter() {
+            match direction.should_turn(other_direction) {
+                Front => unreachable!(),
+                Left => lanes_to_be_fixed[len - 1].direction_rule -= TurnRule::RIGHT,
+                Right => lanes_to_be_fixed[0].direction_rule -= TurnRule::LEFT,
+                Back => lanes_to_be_fixed.iter_mut().for_each(|lane| {
+                    lane.direction_rule -= TurnRule::FRONT;
+                }),
+            };
+        }
     }
 }
