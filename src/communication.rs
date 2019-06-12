@@ -1,4 +1,8 @@
-use mpi::{datatype::PartitionMut, traits::CommunicatorCollectives};
+use mpi::{
+    collective::{CommunicatorCollectives, Root},
+    datatype::PartitionMut,
+    topology::Rank,
+};
 use quick_error::quick_error;
 use serde::{Deserialize, Serialize};
 use std::{convert::TryInto, num::TryFromIntError};
@@ -52,4 +56,34 @@ where
             bincode::deserialize(single).map_err(CommunicationError::Bincode)
         })
         .collect()
+}
+
+pub fn bincode_broadcast<R, T>(
+    rank: Rank,
+    root: R,
+    send_item: Option<T>,
+) -> Result<T, CommunicationError>
+where
+    R: Root,
+    T: Serialize + for<'a> Deserialize<'a>,
+{
+    match send_item {
+        Some(item) => {
+            assert_eq!(root.root_rank(), rank);
+            let mut serialized = bincode::serialize(&item)?;
+            let mut length = serialized.len();
+            root.broadcast_into(&mut length);
+            root.broadcast_into(&mut serialized[..]);
+            Ok(item)
+        },
+        None => {
+            assert_ne!(root.root_rank(), rank);
+            let mut length = 0usize;
+            root.broadcast_into(&mut length);
+            let mut buffer = vec![0u8; length];
+            root.broadcast_into(&mut buffer[..]);
+            let item = bincode::deserialize(&buffer[..])?;
+            Ok(item)
+        },
+    }
 }
