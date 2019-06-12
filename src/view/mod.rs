@@ -1,5 +1,5 @@
 use crate::model::{
-    common::{AxisDirection, Geometry, LaneDirection, TurnRule},
+    common::{AbsoluteDirection, AxisDirection, Geometry, LaneDirection, TurnRule},
     stateful, stateless,
 };
 use log::trace;
@@ -54,7 +54,7 @@ impl View {
     pub fn draw(
         &self,
         stateless_model: &stateless::Model,
-        _stateful_model: &stateful::Model,
+        stateful_model: &stateful::Model,
         context: Context,
         g2d: &mut G2d,
     ) {
@@ -115,13 +115,20 @@ impl View {
                 );
             }
         }
-        for ((i, j), intersection) in stateless_model.city.board.intersections.enumerate() {
+        for (((i, j), intersection), state) in stateless_model
+            .city
+            .board
+            .intersections
+            .enumerate()
+            .zip(stateful_model.city.board.intersections.iter())
+        {
             if let Some(intersection) = intersection.as_ref() {
                 let geometry = stateless_model.city.intersection_geometry((i, j));
                 let center = stateless_model.city.intersection_center((i, j));
                 self.draw_intersection(
                     geometry,
                     intersection,
+                    state.as_ref().unwrap(),
                     model_context.transform.trans(center.x, center.y),
                     g2d,
                 );
@@ -211,6 +218,7 @@ impl View {
         &self,
         g: Geometry,
         _intersection: &stateless::Intersection,
+        state: &stateful::Intersection,
         transform: Matrix2d,
         g2d: &mut G2d,
     ) {
@@ -222,6 +230,34 @@ impl View {
             transform,
             g2d,
         );
+        let sign_size = if half_height < half_width {
+            half_height
+        } else {
+            half_width
+        };
+        let half_sign_size = sign_size / 2.0;
+        let sign_x = half_width - half_sign_size;
+        let sign_y = half_height - half_sign_size;
+        let draws = [
+            (AbsoluteDirection::North, -sign_x, -sign_y, 180.0),
+            (AbsoluteDirection::East, sign_x, -sign_y, 270.0),
+            (AbsoluteDirection::South, sign_x, sign_y, 0.0),
+            (AbsoluteDirection::West, -sign_x, sign_y, 90.0),
+        ];
+        if let Some(current) = match state {
+            stateful::Intersection::Crossroad { current, .. } => Some(current),
+            stateful::Intersection::TJunction { current, .. } => Some(current),
+            _ => None,
+        } {
+            for &(d, x, y, rot) in draws.iter() {
+                self.draw_turn_rule_as_sign(
+                    *current.get(d),
+                    self.settings.intersection_sign_color,
+                    transform.trans(x, y).zoom(half_sign_size).rot_deg(rot),
+                    g2d,
+                );
+            }
+        }
     }
 
     /// Draw turn rule in (-1.0, -1.0) to (1.0, 1.0) or top left to down right

@@ -13,7 +13,9 @@ pub enum Intersection {
         rule_set: Vec<TJunctionRule>,
         switch_rule: SwitchRule,
     },
-    Turn,
+    Turn {
+        max_speed: f64,
+    },
     Straight,
     End, // only one road connected in and out
 }

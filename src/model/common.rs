@@ -10,6 +10,7 @@ pub type CarIndex = usize;
 pub type LaneIndex = usize;
 
 bitflags! {
+    #[derive(Serialize, Deserialize, Default)]
     pub struct TurnRule: u8 {
         const FRONT = 0b0000_0001;
         const LEFT  = 0b0000_0010;
@@ -218,7 +219,7 @@ impl Distribution<AbsoluteDirection> for Standard {
     }
 }
 
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq, Default)]
 pub struct Around<T> {
     pub north: T,
     pub west: T,

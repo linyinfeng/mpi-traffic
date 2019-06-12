@@ -29,6 +29,10 @@ where
 }
 
 impl<I, R> Board<I, R> {
+    pub fn shape(&self) -> MatrixShape {
+        self.intersections.shape()
+    }
+
     pub fn get_roads(&self, axis: AxisDirection) -> &Matrix<R> {
         use AxisDirection::*;
         match axis {

@@ -6,10 +6,9 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Car {
+    pub location: Option<Location>, // if location is None, the car is not in city
     pub velocity: f64,
-    pub heading: f64,
     pub acceleration: f64,
-    pub location: Location,
 }
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
@@ -17,7 +16,7 @@ pub enum Location {
     OnLane {
         road: RoadIndex,
         direction: LaneDirection,
-        lain: LaneIndex,
+        lane: LaneIndex,
         position: f64,
     },
     ChangingLane {
@@ -26,7 +25,8 @@ pub enum Location {
         from: LaneIndex,
         to: LaneIndex,
         position: f64,
-        lane_change_position: f64,
+        /// Position in lane changing.
+        lane_changed_proportion: f64,
     },
     InIntersection {
         intersection: IntersectionIndex,
@@ -34,9 +34,9 @@ pub enum Location {
         from_lane: LaneIndex,
         to_direction: AbsoluteDirection,
         to_lane: LaneIndex,
-        /// Position in intersection.
+        /// Proportion in intersection.
         ///
         /// Assume the path in intersection is a straight line.
-        position: f64,
+        in_intersection_proportion: f64,
     },
 }

@@ -29,7 +29,7 @@ fn generate_with_context(
 ) -> Intersection {
     match context.road_number() {
         1 => Intersection::End,
-        2 => generate_with_2_road(context),
+        2 => generate_with_2_road(context, settings),
         3 => generate_with_3_road(context, settings),
         4 => generate_with_4_road(settings),
         _ => unreachable!(),
@@ -42,11 +42,16 @@ fn is_in_same_axis(context: &IntersectionContext) -> bool {
     directions.next().unwrap().turn_back() == directions.next().unwrap()
 }
 
-fn generate_with_2_road(context: &IntersectionContext) -> Intersection {
+fn generate_with_2_road(
+    context: &IntersectionContext,
+    settings: &StatelessModelGenerationSettings,
+) -> Intersection {
     if is_in_same_axis(context) {
         Intersection::Straight
     } else {
-        Intersection::Turn
+        Intersection::Turn {
+            max_speed: settings.intersection_max_speed,
+        }
     }
 }
 
