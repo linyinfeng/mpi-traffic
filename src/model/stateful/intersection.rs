@@ -34,32 +34,19 @@ impl Intersection {
             (
                 Intersection::Crossroad {
                     current,
-                    switch_state:
-                        SwitchState::LoopTimeout {
-                            rule_index,
-                            ..
-                        },
+                    switch_state: SwitchState::LoopTimeout { rule_index, .. },
                 },
-                stateless::Intersection::Crossroad {
-                    rules,
-                    ..
-                },
+                stateless::Intersection::Crossroad { rules, .. },
             ) => {
                 *current = rules[*rule_index];
             },
             (
                 Intersection::TJunction {
                     current,
-                    switch_state:
-                        SwitchState::LoopTimeout {
-                            rule_index,
-                            ..
-                        },
+                    switch_state: SwitchState::LoopTimeout { rule_index, .. },
                 },
                 stateless::Intersection::TJunction {
-                    single,
-                    rule_set,
-                    ..
+                    single, rule_set, ..
                 },
             ) => {
                 let rule = &rule_set[*rule_index];
