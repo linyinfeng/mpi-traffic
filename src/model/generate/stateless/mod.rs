@@ -19,6 +19,19 @@ pub struct StatelessModelGenerationSettings {
         long = "stateless-model-generation-board-shape-cols"
     )]
     pub board_shape_cols: usize,
+
+    #[structopt(
+        name = "stateless-model-generation-min-road-length",
+        default_value = "50",
+        long = "stateless-model-generation-min-road-length"
+    )]
+    pub min_road_length: f64,
+    #[structopt(
+        name = "stateless-model-generation-max-road-length",
+        default_value = "100",
+        long = "stateless-model-generation-max-road-length"
+    )]
+    pub max_road_length: f64,
     #[structopt(
         name = "stateless-model-generation-lane-width",
         default_value = "3.5",
@@ -145,39 +158,6 @@ pub struct StatelessModelGenerationSettings {
         long = "stateless-model-generation-straight-long-way-lane-num"
     )]
     pub straight_long_way_lane_num: usize,
-}
-
-impl Default for StatelessModelGenerationSettings {
-    fn default() -> Self {
-        StatelessModelGenerationSettings {
-            board_shape_rows: 4,
-            board_shape_cols: 5,
-            lane_width: 3.5,
-
-            initial_car_number: 20,
-            min_max_velocity: 28.0,
-            max_max_velocity: 70.0,
-            min_max_acceleration: 2.78,
-            max_max_acceleration: 5.56,
-            min_max_break_acceleration: 6.0,
-            max_max_break_acceleration: 10.0,
-            min_lane_change_time: 3.0,
-            max_lane_change_time: 5.0,
-            min_cushion: 15.0,
-            max_cushion: 30.0,
-
-            time_out: 30.0, // TODO: Rename this
-            intersection_max_speed: 30.0,
-
-            lane_max_speed: 80.0,
-            straight_long_way_proportion: 0.5,
-            one_way_proportion: 0.3,
-            empty_proportion: 0.05,
-            one_way_lane_num: 1,
-            default_lane_num: 1,
-            straight_long_way_lane_num: 2,
-        }
-    }
 }
 
 pub fn generate_stateless_model(settings: StatelessModelGenerationSettings) -> Model {

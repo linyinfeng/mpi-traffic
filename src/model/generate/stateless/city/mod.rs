@@ -28,17 +28,17 @@ pub fn generate_city(city_settings: &StatelessModelGenerationSettings) -> City {
     City {
         board,
         lane_width: city_settings.lane_width,
-        horizontal_road_length: rand_road_length(board_shape.1 - 1),
-        vertical_road_length: rand_road_length(board_shape.0 - 1),
+        horizontal_road_length: rand_road_length(board_shape.1 - 1, city_settings),
+        vertical_road_length: rand_road_length(board_shape.0 - 1, city_settings),
         intersection_height,
         intersection_width,
     }
 }
 
-fn rand_road_length(road_num: usize) -> Vec<f64> {
+fn rand_road_length(road_num: usize, settings: &StatelessModelGenerationSettings) -> Vec<f64> {
     let mut rng = rand::thread_rng();
     (0..road_num)
-        .map(|_| rng.gen_range(MIN_LANE_LENGTH, MAX_LANE_LENGTH))
+        .map(|_| rng.gen_range(settings.min_road_length, settings.max_road_length))
         .collect()
 }
 

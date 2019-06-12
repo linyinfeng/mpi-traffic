@@ -50,20 +50,20 @@ impl AbsoluteDirection {
     pub fn turn_left(self) -> AbsoluteDirection {
         use AbsoluteDirection::*;
         match self {
-            East => South,
-            West => North,
-            North => East,
-            South => West,
+            East => North,
+            West => South,
+            North => West,
+            South => East,
         }
     }
 
     pub fn turn_right(self) -> AbsoluteDirection {
         use AbsoluteDirection::*;
         match self {
-            East => North,
-            West => South,
-            North => West,
-            South => East,
+            East => South,
+            West => North,
+            North => East,
+            South => West,
         }
     }
 
@@ -155,11 +155,11 @@ impl LaneDirection {
         use InOutDirection::*;
         use LaneDirection::*;
         match absolute_direction {
-            North | East => match in_out {
+            South | East => match in_out {
                 In => HighToLow,
                 Out => LowToHigh,
             },
-            South | West => match in_out {
+            North | West => match in_out {
                 In => LowToHigh,
                 Out => HighToLow,
             },
@@ -273,14 +273,14 @@ mod test {
     #[test]
     fn turn() {
         let cases = vec![
-            ((North, East), Left),
-            ((East, South), Left),
-            ((South, West), Left),
-            ((West, North), Left),
-            ((North, West), Right),
-            ((West, South), Right),
-            ((South, East), Right),
-            ((East, North), Right),
+            ((North, East), Right),
+            ((East, South), Right),
+            ((South, West), Right),
+            ((West, North), Right),
+            ((North, West), Left),
+            ((West, South), Left),
+            ((South, East), Left),
+            ((East, North), Left),
             ((North, North), Front),
             ((West, West), Front),
             ((South, South), Front),
