@@ -19,5 +19,5 @@ pub struct City {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Model {
     pub city: City,
-    pub cars: Vec<Car>,
+    pub cars: Vec<Option<Car>>,
 }

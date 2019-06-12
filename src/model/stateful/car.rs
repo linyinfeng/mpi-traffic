@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Car {
-    pub location: Option<Location>, // if location is None, the car is not in city
+    pub location: Location,
     pub velocity: f64,
     pub acceleration: f64,
 }
