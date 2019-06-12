@@ -1,7 +1,7 @@
+pub mod communication;
 pub mod controller;
 pub mod error;
 pub mod model;
-pub mod mpi;
 pub mod util;
 pub mod view;
 
