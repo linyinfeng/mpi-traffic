@@ -154,11 +154,11 @@ impl LaneDirection {
         use InOutDirection::*;
         use LaneDirection::*;
         match absolute_direction {
-            North | East => match in_out {
+            South | East => match in_out {
                 In => HighToLow,
                 Out => LowToHigh,
             },
-            South | West => match in_out {
+            North | West => match in_out {
                 In => LowToHigh,
                 Out => HighToLow,
             },
