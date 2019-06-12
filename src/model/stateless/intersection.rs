@@ -17,7 +17,9 @@ pub enum Intersection {
         max_speed: f64,
     },
     Straight,
-    End, // only one road connected in and out
+    End {
+        max_speed: f64,
+    }, // only one road connected in and out
 }
 
 pub type CrossroadRule = Around<TurnRule>;

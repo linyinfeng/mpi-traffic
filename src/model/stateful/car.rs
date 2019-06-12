@@ -1,6 +1,6 @@
 use crate::model::{
     board::{IntersectionIndex, RoadIndex},
-    common::{AbsoluteDirection, LaneDirection, LaneIndex},
+    common::{AbsoluteDirection, AxisDirection, LaneDirection, LaneIndex},
 };
 use serde::{Deserialize, Serialize};
 
@@ -14,26 +14,28 @@ pub struct Car {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum Location {
     OnLane {
-        road: RoadIndex,
-        direction: LaneDirection,
-        lane: LaneIndex,
+        road_direction: AxisDirection,
+        road_index: RoadIndex,
+        lane_direction: LaneDirection,
+        lane_index: LaneIndex,
         position: f64,
     },
     ChangingLane {
-        road: RoadIndex,
-        direction: LaneDirection,
-        from: LaneIndex,
-        to: LaneIndex,
+        road_direction: AxisDirection,
+        road_index: RoadIndex,
+        lane_direction: LaneDirection,
+        from_lane_index: LaneIndex,
+        to_lane_index: LaneIndex,
         position: f64,
         /// Position in lane changing.
         lane_changed_proportion: f64,
     },
     InIntersection {
-        intersection: IntersectionIndex,
+        intersection_index: IntersectionIndex,
         from_direction: AbsoluteDirection,
-        from_lane: LaneIndex,
+        from_lane_index: LaneIndex,
         to_direction: AbsoluteDirection,
-        to_lane: LaneIndex,
+        to_lane_index: LaneIndex,
         /// Proportion in intersection.
         ///
         /// Assume the path in intersection is a straight line.

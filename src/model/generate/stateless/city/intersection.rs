@@ -28,7 +28,9 @@ fn generate_with_context(
     settings: &StatelessModelGenerationSettings,
 ) -> Intersection {
     match context.road_number() {
-        1 => Intersection::End,
+        1 => Intersection::End {
+            max_speed: settings.intersection_max_speed,
+        },
         2 => generate_with_2_road(context, settings),
         3 => generate_with_3_road(context, settings),
         4 => generate_with_4_road(settings),

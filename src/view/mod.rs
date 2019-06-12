@@ -1,4 +1,5 @@
 use crate::model::{
+    board::RoadIndex,
     common::{AbsoluteDirection, AxisDirection, Geometry, LaneDirection, TurnRule},
     stateful, stateless,
 };
@@ -33,6 +34,9 @@ pub struct ViewSettings {
     pub lane_sign_padding: f64, // a lane is typically 3.5 meters wide
     pub intersection_color: Color,
     pub intersection_sign_color: Color,
+    pub car_color: Color,
+    pub car_length: f64,
+    pub car_width: f64,
 }
 
 impl ViewSettings {
@@ -46,6 +50,9 @@ impl ViewSettings {
             lane_sign_padding: 0.2,
             intersection_color: color::grey(0.5),
             intersection_sign_color: color::WHITE,
+            car_color: color::hex("ff0066"),
+            car_length: 4.5,
+            car_width: 1.7,
         }
     }
 }
@@ -97,20 +104,17 @@ impl View {
         let lane_width = stateless_model.city.lane_width;
         for ((i, j), (direction, road)) in stateless_model.city.board.enumerate_roads() {
             if let Some(road) = road.as_ref() {
-                use AxisDirection::*;
                 let length = stateless_model.city.road_length(direction, (i, j));
-                let center = stateless_model.city.road_center(direction, (i, j));
                 self.draw_road(
                     lane_width,
                     length,
                     road,
-                    model_context
-                        .transform
-                        .trans(center.x, center.y)
-                        .rot_deg(match direction {
-                            Horizontal => 0.0,
-                            Vertical => 90.0,
-                        }),
+                    self.transform_to_road_center(
+                        model_context.transform,
+                        &stateless_model.city,
+                        direction,
+                        (i, j),
+                    ),
                     g2d,
                 );
             }
@@ -398,5 +402,123 @@ impl View {
                 );
             }
         }
+    }
+
+    pub fn draw_car(
+        &self,
+        _stateless: &stateless::Car,
+        stateful: &stateful::Car,
+        city: &stateless::City,
+        transform: Matrix2d,
+        g2d: &mut G2d,
+    ) {
+        match stateful.location {
+            stateful::car::Location::OnLane {
+                road_direction,
+                road_index,
+                lane_direction,
+                lane_index,
+                position,
+            } => {
+                let length = city.road_length(road_direction, road_index);
+                let x = -length / 2.0 + position;
+                self.draw_car_only(
+                    self.transform_to_lane_center(
+                        transform,
+                        city,
+                        road_direction,
+                        road_index,
+                        lane_direction,
+                        lane_index,
+                    )
+                    .trans(x, 0.0),
+                    g2d,
+                );
+            },
+            stateful::car::Location::ChangingLane {
+                road_direction: _,
+                road_index: _,
+                lane_direction: _,
+                from_lane_index: _,
+                to_lane_index: _,
+                position: _,
+                lane_changed_proportion: _,
+            } => unimplemented!(),
+            stateful::car::Location::InIntersection {
+                intersection_index: _,
+                from_direction: _,
+                from_lane_index: _,
+                to_direction: _,
+                to_lane_index: _,
+                in_intersection_proportion: _,
+            } => unimplemented!(),
+        }
+    }
+
+    /// Draw a car under centralized coordinate system
+    pub fn draw_car_only(&self, transform: Matrix2d, g2d: &mut G2d) {
+        let height = self.settings.car_length;
+        let width = self.settings.car_width;
+        let half_height = height / 2.0;
+        let half_width = width / 2.0;
+        rectangle(
+            self.settings.car_color,
+            [-half_width, -half_height, width, height],
+            transform,
+            g2d,
+        );
+    }
+
+    fn transform_to_road_center(
+        &self,
+        transform: Matrix2d,
+        city: &stateless::City,
+        direction: AxisDirection,
+        index: RoadIndex,
+    ) -> Matrix2d {
+        use AxisDirection::*;
+        let center = city.road_center(direction, index);
+        transform
+            .trans(center.x, center.y)
+            .rot_deg(match direction {
+                Horizontal => 0.0,
+                Vertical => 90.0,
+            })
+    }
+
+    fn transform_to_lane_center(
+        &self,
+        transform: Matrix2d,
+        city: &stateless::City,
+        road_direction: AxisDirection,
+        road_index: RoadIndex,
+        lane_direction: LaneDirection,
+        lane_index: usize,
+    ) -> Matrix2d {
+        let road = city
+            .board
+            .get_road(road_direction, road_index)
+            .unwrap()
+            .as_ref()
+            .unwrap();
+        let offset = self.lane_center_offset(road, city.lane_width, lane_direction, lane_index);
+        self.transform_to_road_center(transform, city, road_direction, road_index)
+            .trans(0.0, offset)
+    }
+
+    fn lane_center_offset(
+        &self,
+        road: &stateless::Road,
+        lane_width: f64,
+        direction: LaneDirection,
+        lane_index: usize,
+    ) -> f64 {
+        let lane_number = road.lane_number();
+        let top = -lane_width * lane_number as f64 / 2.0;
+        let lane_offset = match direction {
+            LaneDirection::HighToLow => road.lane_to_low.len() - 1 - lane_index,
+            LaneDirection::LowToHigh => road.lane_to_low.len() + lane_index,
+        };
+        top + lane_offset as f64 * lane_width
     }
 }

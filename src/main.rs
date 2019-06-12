@@ -15,7 +15,7 @@ fn main() {
         .exit_on_esc(true)
         .build()
         .unwrap_or_else(|e| panic!("failed to build PistonWindow: {}", e));
-    let event_settings = EventSettings::new().ups(120).max_fps(60);
+    let event_settings = EventSettings::new().ups(60).max_fps(60);
     window.set_event_settings(event_settings);
 
     let view = {
@@ -26,7 +26,7 @@ fn main() {
     let model = generate::generate_model(settings.model_generation_settings);
     let stateless_model = model.stateless;
     let mut stateful_model = model.stateful;
-    let controller = Controller;
+    let mut controller = Controller::new();
 
     while let Some(e) = window.next() {
         trace!("event: {:?}", e);
@@ -38,11 +38,11 @@ fn main() {
         });
         match e {
             Event::Input(e, _) => {
-                controller.input(&stateless_model, &mut stateful_model, e);
+                controller.input(&mut stateful_model, &stateless_model, e);
             },
             Event::Loop(e) => {
                 if let Loop::Update(args) = e {
-                    controller.update(&stateless_model, &mut stateful_model, args);
+                    controller.update(&mut stateful_model, &stateless_model, args);
                 }
             },
             _ => {},

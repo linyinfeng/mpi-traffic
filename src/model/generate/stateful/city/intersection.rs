@@ -31,7 +31,7 @@ pub fn generate_intersection_from_stateless(
         },
         stateless::Intersection::Turn { .. } => Intersection::Turn,
         stateless::Intersection::Straight => Intersection::Straight,
-        stateless::Intersection::End => Intersection::End,
+        stateless::Intersection::End { .. } => Intersection::End,
     };
     result.update_current(stateless_model);
     result
