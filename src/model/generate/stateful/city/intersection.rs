@@ -8,9 +8,8 @@ pub fn generate_intersection_from_stateless(
 ) -> Intersection {
     let mut result = match stateless_model {
         stateless::Intersection::Crossroad {
-            max_speed: _,
-            rules: _,
             switch_rule: stateless::intersection::SwitchRule::LoopTimeout { times },
+            ..
         } => Intersection::Crossroad {
             current: Default::default(),
             switch_state: intersection::SwitchState::LoopTimeout {

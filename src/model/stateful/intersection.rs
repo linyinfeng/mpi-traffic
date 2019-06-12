@@ -36,15 +36,13 @@ impl Intersection {
                     current,
                     switch_state:
                         SwitchState::LoopTimeout {
-                            remain_time: _,
-                            time_index: _,
                             rule_index,
+                            ..
                         },
                 },
                 stateless::Intersection::Crossroad {
-                    max_speed: _,
                     rules,
-                    switch_rule: _,
+                    ..
                 },
             ) => {
                 *current = rules[*rule_index];
@@ -54,16 +52,14 @@ impl Intersection {
                     current,
                     switch_state:
                         SwitchState::LoopTimeout {
-                            remain_time: _,
-                            time_index: _,
                             rule_index,
+                            ..
                         },
                 },
                 stateless::Intersection::TJunction {
-                    max_speed: _,
                     single,
                     rule_set,
-                    switch_rule: _,
+                    ..
                 },
             ) => {
                 let rule = &rule_set[*rule_index];
