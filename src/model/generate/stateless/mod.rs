@@ -151,23 +151,23 @@ impl Default for StatelessModelGenerationSettings {
     fn default() -> Self {
         StatelessModelGenerationSettings {
             board_shape_rows: 4,
-            board_shape_cols: 4,
+            board_shape_cols: 5,
             lane_width: 3.5,
 
             initial_car_number: 20,
-            min_max_velocity: 200.0,
-            max_max_velocity: 260.0,
-            min_max_acceleration: 30.0,
-            max_max_acceleration: 60.0,
-            min_max_break_acceleration: 20.0,
-            max_max_break_acceleration: 30.0,
-            min_lane_change_time: 15.0,
-            max_lane_change_time: 20.0,
+            min_max_velocity: 28.0,
+            max_max_velocity: 70.0,
+            min_max_acceleration: 2.78,
+            max_max_acceleration: 5.56,
+            min_max_break_acceleration: 6.0,
+            max_max_break_acceleration: 10.0,
+            min_lane_change_time: 3.0,
+            max_lane_change_time: 5.0,
             min_cushion: 15.0,
             max_cushion: 30.0,
 
-            time_out: 30.0,
-            intersection_max_speed: 60.0,
+            time_out: 30.0, // TODO: Rename this
+            intersection_max_speed: 30.0,
 
             lane_max_speed: 80.0,
             straight_long_way_proportion: 0.5,
