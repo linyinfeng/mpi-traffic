@@ -1,9 +1,9 @@
-use rand;
-use rand::Rng;
+use rand::{self, Rng};
 
-use crate::model::generate::stateless::StatelessModelGenerationSettings;
-use crate::model::stateless::car::DrivingModel;
-use crate::model::stateless::Car;
+use crate::model::{
+    generate::stateless::StatelessModelGenerationSettings,
+    stateless::{car::DrivingModel, Car},
+};
 
 pub fn generate_cars(settings: &StatelessModelGenerationSettings) -> Vec<Car> {
     (0..settings.initial_car_number)

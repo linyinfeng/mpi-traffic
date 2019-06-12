@@ -1,6 +1,4 @@
-use crate::model::common::AbsoluteDirection;
-use crate::model::common::Around;
-use crate::model::common::TurnRule;
+use crate::model::common::{AbsoluteDirection, Around, TurnRule};
 
 #[derive(Clone, Debug)]
 pub enum Intersection {

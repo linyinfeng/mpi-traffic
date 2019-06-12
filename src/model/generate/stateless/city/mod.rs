@@ -1,9 +1,10 @@
-use rand;
-use rand::Rng;
+use rand::{self, Rng};
 
-use crate::model::board::Board;
-use crate::model::generate::stateless::StatelessModelGenerationSettings;
-use crate::model::stateless::{City, Intersection, Road};
+use crate::model::{
+    board::Board,
+    generate::stateless::StatelessModelGenerationSettings,
+    stateless::{City, Intersection, Road},
+};
 
 mod fix;
 pub mod intersection;

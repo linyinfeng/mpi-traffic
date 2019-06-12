@@ -6,17 +6,17 @@ pub mod road;
 
 pub use car::Car;
 pub use intersection::Intersection;
-pub use road::Lane;
-pub use road::Road;
+pub use road::{Lane, Road};
 
 use crate::model::board::Board;
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct City {
     pub board: Board<Option<Intersection>, Option<Road>>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Model {
     pub city: City,
     pub cars: Vec<Car>,

@@ -1,13 +1,13 @@
-use crate::model::common::Around;
-use crate::model::common::AxisDirection;
-use crate::util::matrix::Matrix;
-use crate::util::matrix::MatrixIndex;
-use crate::util::matrix::MatrixShape;
+use crate::{
+    model::common::{Around, AxisDirection},
+    util::matrix::{Matrix, MatrixIndex, MatrixShape},
+};
+use serde::{Deserialize, Serialize};
 
 pub type IntersectionIndex = MatrixIndex;
 pub type RoadIndex = MatrixIndex;
 
-#[derive(Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Board<I, R> {
     pub intersections: Matrix<I>,
     pub horizontal_roads: Matrix<R>,

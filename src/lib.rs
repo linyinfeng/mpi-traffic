@@ -1,5 +1,6 @@
+pub mod communication;
 pub mod controller;
-mod error;
+pub mod error;
 pub mod model;
 pub mod util;
 pub mod view;

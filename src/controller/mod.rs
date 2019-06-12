@@ -1,7 +1,5 @@
-use crate::model::stateful;
-use crate::model::stateless;
-use piston_window::Input;
-use piston_window::UpdateArgs;
+use crate::model::{stateful, stateless};
+use piston_window::{Input, UpdateArgs};
 
 #[derive(Clone, Debug)]
 pub struct Controller;

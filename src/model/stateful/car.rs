@@ -1,10 +1,10 @@
-use crate::model::board::IntersectionIndex;
-use crate::model::board::RoadIndex;
-use crate::model::common::AbsoluteDirection;
-use crate::model::common::LaneDirection;
-use crate::model::common::LaneIndex;
+use crate::model::{
+    board::{IntersectionIndex, RoadIndex},
+    common::{AbsoluteDirection, LaneDirection, LaneIndex},
+};
+use serde::{Deserialize, Serialize};
 
-#[derive(Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Car {
     pub velocity: f64,
     pub heading: f64,
@@ -12,7 +12,7 @@ pub struct Car {
     pub location: Location,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum Location {
     OnLane {
         road: RoadIndex,

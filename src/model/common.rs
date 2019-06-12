@@ -1,5 +1,8 @@
-use rand::distributions::{Distribution, Standard};
-use rand::Rng;
+use rand::{
+    distributions::{Distribution, Standard},
+    Rng,
+};
+use serde::{Deserialize, Serialize};
 
 use bitflags::bitflags;
 
@@ -16,7 +19,7 @@ bitflags! {
     }
 }
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
 pub enum AbsoluteDirection {
     North,
     West,
@@ -24,7 +27,7 @@ pub enum AbsoluteDirection {
     East,
 }
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
 pub enum RelativeDirection {
     Front,
     Right,
@@ -105,13 +108,13 @@ impl AbsoluteDirection {
     }
 }
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
 pub enum AxisDirection {
     Horizontal,
     Vertical,
 }
 
-#[derive(Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
 pub enum LaneDirection {
     LowToHigh,
     HighToLow,
@@ -163,7 +166,7 @@ impl LaneDirection {
     }
 }
 
-#[derive(Debug, Copy, Clone, Eq, Hash, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
 pub enum InOutDirection {
     In,
     Out,
@@ -215,7 +218,7 @@ impl Distribution<AbsoluteDirection> for Standard {
     }
 }
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
 pub struct Around<T> {
     pub north: T,
     pub west: T,
@@ -245,13 +248,13 @@ impl<T> Around<T> {
     }
 }
 
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, PartialEq)]
 pub struct Geometry {
     pub width: f64,
     pub height: f64,
 }
 
-#[derive(Copy, Clone, Debug, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, PartialEq)]
 pub struct Position {
     pub x: f64,
     pub y: f64,

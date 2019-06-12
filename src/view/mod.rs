@@ -1,15 +1,15 @@
-use crate::model::common::AxisDirection;
-use crate::model::common::Geometry;
-use crate::model::stateful;
-use crate::model::stateless;
+use crate::model::{
+    common::{AxisDirection, Geometry, TurnRule},
+    stateful, stateless,
+};
 use log::trace;
-use piston_window::color;
-use piston_window::context::Context;
-use piston_window::rectangle;
-use piston_window::types::Color;
-use piston_window::types::Matrix2d;
-use piston_window::G2d;
-use piston_window::Transformed;
+use piston_window::{
+    color,
+    context::Context,
+    polygon, rectangle,
+    types::{Color, Matrix2d},
+    G2d, Transformed,
+};
 
 #[derive(Clone, Debug)]
 pub struct View {
@@ -28,6 +28,9 @@ pub struct ViewSettings {
     pub padding: f64,
     pub road_color: Color,
     pub road_sign_color: Color,
+    pub road_middle_separator_color: Color,
+    pub road_middle_separator_width: f64,
+    pub lane_sign_padding: f64, // a lane is typically 3.5 meters wide
     pub intersection_color: Color,
     pub intersection_sign_color: Color,
 }
@@ -38,6 +41,9 @@ impl ViewSettings {
             padding: 10.0,
             road_color: color::grey(0.4),
             road_sign_color: color::WHITE,
+            road_middle_separator_color: color::hex("ffdb4d"),
+            road_middle_separator_width: 0.2,
+            lane_sign_padding: 0.2,
             intersection_color: color::grey(0.5),
             intersection_sign_color: color::WHITE,
         }
@@ -132,15 +138,58 @@ impl View {
         transform: Matrix2d,
         g2d: &mut G2d,
     ) {
-        let width = road.lane_number() as f64 * lane_width;
-        let half_width = width / 2.0;
+        let lane_number = road.lane_number();
+        let center_distance = (lane_number - 1) as f64 * lane_width;
+        let mut center_y = -center_distance / 2.0;
+        // high to low first
+        for lane_to_low in road.lane_to_low.iter() {
+            self.draw_lane(
+                lane_to_low,
+                length,
+                lane_width,
+                transform.trans(0.0, center_y).rot_deg(180.0),
+                g2d,
+            );
+            center_y += lane_width;
+        }
+        for lane_to_high in road.lane_to_high.iter() {
+            self.draw_lane(
+                lane_to_high,
+                length,
+                lane_width,
+                transform.trans(0.0, center_y),
+                g2d,
+            );
+            center_y += lane_width;
+        }
+    }
+
+    pub fn draw_lane(
+        &self,
+        lane: &stateless::Lane,
+        length: f64,
+        width: f64,
+        transform: Matrix2d,
+        g2d: &mut G2d,
+    ) {
         let half_length = length / 2.0;
+        let half_width = width / 2.0;
         rectangle(
             self.settings.road_color,
             [-half_length, -half_width, length, width],
             transform,
             g2d,
-        )
+        );
+        let sign_half_size = (width - self.settings.lane_sign_padding) / 2.0;
+        self.draw_turn_rule_as_sign(
+            lane.direction_rule,
+            self.settings.road_sign_color,
+            transform
+                .trans(half_length - half_width, 0.0)
+                .rot_deg(90.0)
+                .zoom(sign_half_size),
+            g2d,
+        );
     }
 
     pub fn draw_intersection(
@@ -157,6 +206,146 @@ impl View {
             [-half_width, -half_height, g.width, g.height],
             transform,
             g2d,
-        )
+        );
+    }
+
+    /// Draw turn rule in (-1.0, -1.0) to (1.0, 1.0) or top left to down right
+    pub fn draw_turn_rule_as_sign(
+        &self,
+        turn_rule: TurnRule,
+        color: Color,
+        transform: Matrix2d,
+        g2d: &mut G2d,
+    ) {
+        if turn_rule != TurnRule::empty() {
+            let size = 2.0;
+            let half_size = size / 2.0;
+            let center_size = 0.2;
+            let half_center_size = center_size / 2.0;
+            let arrow_half_width = 0.3;
+            let arrow_height = 0.3;
+            let arrow_arm_length = half_size - arrow_height;
+            let back_arrow_location = -0.5;
+            rectangle(
+                color,
+                [
+                    -half_center_size,
+                    -half_center_size,
+                    center_size,
+                    center_size,
+                ],
+                transform,
+                g2d,
+            );
+            rectangle(
+                color,
+                [
+                    -half_center_size,
+                    -half_center_size,
+                    center_size,
+                    half_center_size + half_size,
+                ],
+                transform,
+                g2d,
+            );
+            if turn_rule.intersects(TurnRule::FRONT) {
+                rectangle(
+                    color,
+                    [
+                        -half_center_size,
+                        -arrow_arm_length,
+                        center_size,
+                        arrow_arm_length,
+                    ],
+                    transform,
+                    g2d,
+                );
+                polygon(
+                    color,
+                    &[
+                        [0.0, -half_size],
+                        [arrow_half_width, -arrow_arm_length],
+                        [-arrow_half_width, -arrow_arm_length],
+                    ],
+                    transform,
+                    g2d,
+                );
+            }
+            if turn_rule.intersects(TurnRule::LEFT) {
+                rectangle(
+                    color,
+                    [
+                        -arrow_arm_length,
+                        -half_center_size,
+                        arrow_arm_length,
+                        center_size,
+                    ],
+                    transform,
+                    g2d,
+                );
+                polygon(
+                    color,
+                    &[
+                        [-half_size, 0.0],
+                        [-arrow_arm_length, arrow_half_width],
+                        [-arrow_arm_length, -arrow_half_width],
+                    ],
+                    transform,
+                    g2d,
+                );
+            }
+            if turn_rule.intersects(TurnRule::RIGHT) {
+                rectangle(
+                    color,
+                    [0.0, -half_center_size, arrow_arm_length, center_size],
+                    transform,
+                    g2d,
+                );
+                polygon(
+                    color,
+                    &[
+                        [half_size, 0.0],
+                        [arrow_arm_length, arrow_half_width],
+                        [arrow_arm_length, -arrow_half_width],
+                    ],
+                    transform,
+                    g2d,
+                );
+            }
+            if turn_rule.intersects(TurnRule::BACK) {
+                rectangle(
+                    color,
+                    [
+                        back_arrow_location - half_center_size,
+                        -half_center_size,
+                        -(back_arrow_location - half_center_size),
+                        center_size,
+                    ],
+                    transform,
+                    g2d,
+                );
+                rectangle(
+                    color,
+                    [
+                        back_arrow_location - half_center_size,
+                        0.0,
+                        center_size,
+                        arrow_arm_length,
+                    ],
+                    transform,
+                    g2d,
+                );
+                polygon(
+                    color,
+                    &[
+                        [back_arrow_location, half_size],
+                        [back_arrow_location - arrow_half_width, arrow_arm_length],
+                        [back_arrow_location + arrow_half_width, arrow_arm_length],
+                    ],
+                    transform,
+                    g2d,
+                );
+            }
+        }
     }
 }

@@ -4,16 +4,13 @@ pub mod car;
 pub mod intersection;
 pub mod road;
 
-use crate::model::board::Board;
-use crate::model::board::IntersectionIndex;
-use crate::model::board::RoadIndex;
-use crate::model::common::AxisDirection;
-use crate::model::common::Geometry;
-use crate::model::common::Position;
+use crate::model::{
+    board::{Board, IntersectionIndex, RoadIndex},
+    common::{AxisDirection, Geometry, Position},
+};
 pub use car::Car;
 pub use intersection::Intersection;
-pub use road::Lane;
-pub use road::Road;
+pub use road::{Lane, Road};
 
 #[derive(Clone, Debug)]
 pub struct City {

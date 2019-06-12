@@ -1,5 +1,4 @@
-use crate::model::common::LaneDirection;
-use crate::model::common::TurnRule;
+use crate::model::common::{LaneDirection, TurnRule};
 
 #[derive(Clone, Debug)]
 pub struct Road {

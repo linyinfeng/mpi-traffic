@@ -1,8 +1,9 @@
-use crate::model::board::Board;
-use crate::model::common::{LaneDirection, TurnRule};
-use crate::model::generate::stateless::StatelessModelGenerationSettings;
-use crate::model::stateless::Lane;
-use crate::model::stateless::{Intersection, Road};
+use crate::model::{
+    board::Board,
+    common::{LaneDirection, TurnRule},
+    generate::stateless::StatelessModelGenerationSettings,
+    stateless::{Intersection, Lane, Road},
+};
 
 pub fn generate_roads(
     board: &mut Board<Option<Intersection>, Option<Road>>,
