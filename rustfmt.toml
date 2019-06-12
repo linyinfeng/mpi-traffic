@@ -11,3 +11,4 @@ use_field_init_shorthand = true
 use_try_shorthand = true
 format_doc_comments = true # Unstable
 format_macro_bodies = false # Unstable
+merge_imports = true # Unstable

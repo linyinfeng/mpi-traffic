@@ -12,8 +12,16 @@ authors = [
 edition = "2018"
 
 [dependencies]
-mpi = { git = "https://github.com/bsteinb/rsmpi.git" }
 piston_window = "*"
 log = "*"
 env_logger = "*"
 bitflags = "*"
+quick-error = "*"
+rand="*"
+structopt="*"
+serde = { version = "*", features = ["derive"] }
+bincode = "*"
+
+[dependencies.mpi]
+git = "https://github.com/bsteinb/rsmpi.git"
+default-features = false # disable user-operations
