@@ -1,6 +1,8 @@
 use crate::model::{stateful, stateless};
 use piston_window::{Input, UpdateArgs};
 
+pub mod car_map;
+
 #[derive(Clone, Debug)]
 pub struct Controller;
 

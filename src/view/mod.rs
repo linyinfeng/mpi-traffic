@@ -1,5 +1,5 @@
 use crate::model::{
-    common::{AxisDirection, Geometry, TurnRule},
+    common::{AxisDirection, Geometry, LaneDirection, TurnRule},
     stateful, stateless,
 };
 use log::trace;
@@ -42,7 +42,7 @@ impl ViewSettings {
             road_color: color::grey(0.4),
             road_sign_color: color::WHITE,
             road_middle_separator_color: color::hex("ffdb4d"),
-            road_middle_separator_width: 0.2,
+            road_middle_separator_width: 0.4,
             lane_sign_padding: 0.2,
             intersection_color: color::grey(0.5),
             intersection_sign_color: color::WHITE,
@@ -141,26 +141,41 @@ impl View {
         let lane_number = road.lane_number();
         let center_distance = (lane_number - 1) as f64 * lane_width;
         let mut center_y = -center_distance / 2.0;
-        // high to low first
-        for lane_to_low in road.lane_to_low.iter() {
-            self.draw_lane(
-                lane_to_low,
-                length,
-                lane_width,
-                transform.trans(0.0, center_y).rot_deg(180.0),
-                g2d,
-            );
-            center_y += lane_width;
+        let half_length = length / 2.0;
+        let middle = center_y + road.lane_to_high.len() as f64 * lane_width - lane_width / 2.0;
+        for direction in [LaneDirection::HighToLow, LaneDirection::LowToHigh].iter() {
+            let iter = road.lanes_to_direction(*direction).iter();
+            let iter: Box<dyn Iterator<Item = &stateless::Lane>> = match direction {
+                LaneDirection::HighToLow => Box::new(iter.rev()),
+                LaneDirection::LowToHigh => Box::new(iter),
+            };
+            for lane in iter {
+                self.draw_lane(
+                    lane,
+                    length,
+                    lane_width,
+                    transform.trans(0.0, center_y).rot_deg(match direction {
+                        LaneDirection::HighToLow => 180.0,
+                        LaneDirection::LowToHigh => 0.0,
+                    }),
+                    g2d,
+                );
+                center_y += lane_width;
+            }
         }
-        for lane_to_high in road.lane_to_high.iter() {
-            self.draw_lane(
-                lane_to_high,
-                length,
-                lane_width,
-                transform.trans(0.0, center_y),
+        if !road.is_one_way() {
+            // draw middle sperator line
+            rectangle(
+                self.settings.road_middle_separator_color,
+                [
+                    -half_length,
+                    middle - self.settings.road_middle_separator_width / 2.0,
+                    length,
+                    self.settings.road_middle_separator_width,
+                ],
+                transform,
                 g2d,
             );
-            center_y += lane_width;
         }
     }
 
