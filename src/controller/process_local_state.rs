@@ -124,13 +124,12 @@ impl ProcessLocalState {
                                 );
                                 if out_road_direction == road_direction &&
                                     *out_road_index == road_index &&
-                                    out_lane_direction == lane_direction
+                                    out_lane_direction == lane_direction &&
+                                    position < city.car_out_min_distance
                                 {
-                                    if position < city.car_out_min_distance {
-                                        local_state
-                                            .car_out_intersection_lane_out_availability
-                                            .get_mut(*direction)[lane_index] = false;
-                                    }
+                                    local_state
+                                        .car_out_intersection_lane_out_availability
+                                        .get_mut(*direction)[lane_index] = false;
                                 }
                             }
                         }

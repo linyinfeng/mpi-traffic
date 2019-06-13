@@ -9,7 +9,6 @@ use crate::{
         stateful, stateless,
     },
 };
-use log::trace;
 use piston_window::{
     context::Context,
     polygon, rectangle,
@@ -148,7 +147,6 @@ impl View {
             context.trans(x, y).zoom(zoom)
         };
         // Draw horizontal roads
-        trace!("start draw roads");
         let lane_width = stateless_model.city.lane_width;
         for ((i, j), (direction, road)) in stateless_model.city.board.enumerate_roads() {
             if let Some(road) = road.as_ref() {
@@ -477,6 +475,7 @@ impl View {
         transform: Matrix2d,
         g2d: &mut G2d,
     ) {
+        use LaneDirection::*;
         match stateful.location {
             stateful::car::Location::OnLane {
                 road_direction,
@@ -487,8 +486,6 @@ impl View {
             } => {
                 let length = city.road_length(road_direction, road_index);
                 let x = -length / 2.0 + position;
-                let heading = self.car_heading_deg_on_road(road_direction, lane_direction);
-                log::trace!("heading: {}", heading);
                 self.draw_car_only(
                     self.transform_to_lane_center(
                         transform,
@@ -499,7 +496,10 @@ impl View {
                         lane_index,
                     )
                     .trans(x, 0.0)
-                    .rot_deg(heading),
+                    .rot_deg(match lane_direction {
+                        LowToHigh => 90.0,
+                        HighToLow => 270.0,
+                    }),
                     g2d,
                 );
             },
@@ -521,7 +521,6 @@ impl View {
                         LaneDirection::HighToLow => 1.0,
                         LaneDirection::LowToHigh => -1.0,
                     };
-                let heading = self.car_heading_deg_on_road(road_direction, lane_direction);
                 self.draw_car_only(
                     self.transform_to_lane_center(
                         transform,
@@ -532,7 +531,10 @@ impl View {
                         from_lane_index,
                     )
                     .trans(x, lane_changed_offset)
-                    .rot_deg(heading),
+                    .rot_deg(match lane_direction {
+                        LowToHigh => 90.0,
+                        HighToLow => 270.0,
+                    }),
                     g2d,
                 );
             },

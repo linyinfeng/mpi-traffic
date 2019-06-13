@@ -171,7 +171,7 @@ impl City {
         lane_index: usize,
     ) -> f64 {
         let lane_number = road.lane_number();
-        let top = -self.lane_width * lane_number as f64 / 2.0;
+        let top = -self.lane_width * (lane_number - 1) as f64 / 2.0;
         let lane_offset = match direction {
             LaneDirection::HighToLow => road.lane_to_low.len() - 1 - lane_index,
             LaneDirection::LowToHigh => road.lane_to_low.len() + lane_index,
