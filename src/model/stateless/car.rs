@@ -12,7 +12,11 @@ pub struct Car {
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum DrivingModel {
     Normal {
-        /// Min cushion to front car
-        cushion: f64,
+        /// Min cushion
+        min_cushion: f64,
+        /// Cushion speed factor
+        cushion_velocity_factor: f64,
+        /// Prediction time
+        prediction_time: f64,
     },
 }

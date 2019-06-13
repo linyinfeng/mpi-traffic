@@ -9,7 +9,7 @@ use crate::{
             LaneDirection, LaneIndex,
         },
         stateful::{self, Car},
-        stateless,
+        stateless::{self, car::DrivingModel},
     },
 };
 use mpi::{collective::CommunicatorCollectives, topology::Rank};
@@ -274,6 +274,27 @@ impl UpdateController {
             }
         } else {
             None
+        }
+    }
+
+    pub fn driver_acceleration(
+        velocity: f64,
+        _acceleration: f64,
+        driving_model: &DrivingModel,
+        front_distance: f64,
+        front_velocity: f64,
+    ) -> f64 {
+        match driving_model {
+            DrivingModel::Normal {
+                min_cushion,
+                cushion_velocity_factor,
+                prediction_time,
+            } => {
+                let aim_cushion = min_cushion + cushion_velocity_factor * front_velocity;
+                let dx = front_distance - aim_cushion; // if dx is greater than 0, the car should go faster than front_velocity
+                let aim_average_velocity = dx / *prediction_time;
+                (aim_average_velocity + front_velocity - velocity) * 2.0 / *prediction_time
+            },
         }
     }
 

@@ -94,16 +94,28 @@ pub struct StatelessModelGenerationSettings {
     pub max_lane_change_time: f64,
     #[structopt(
         name = "stateless-model-generation-min-cushion",
-        default_value = "15.0",
+        default_value = "4.0",
         long = "stateless-model-generation-min-cushion"
     )]
     pub min_cushion: f64,
     #[structopt(
-        name = "stateless-model-generation-max-cushion",
-        default_value = "20.0",
-        long = "stateless-model-generation-max-cushion"
+        name = "stateless-model-generation-min-cushion-velocity-factor",
+        default_value = "2.0",
+        long = "stateless-model-generation-min-cushion-velocity-factor"
     )]
-    pub max_cushion: f64,
+    pub min_cushion_velocity_factor: f64,
+    #[structopt(
+        name = "stateless-model-generation-max-cushion-velocity-factor",
+        default_value = "3.0",
+        long = "stateless-model-generation-max-cushion-velocity-factor"
+    )]
+    pub max_cushion_velocity_factor: f64,
+    #[structopt(
+        name = "stateless-model-generation-prediction-time",
+        default_value = "5.0",
+        long = "stateless-model-generation-prediction-time"
+    )]
+    pub prediction_time: f64,
     #[structopt(
         name = "stateless-model-generation-time-out",
         default_value = "30.0",
