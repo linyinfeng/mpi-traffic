@@ -4,9 +4,12 @@ use crate::{
     model::{
         board::RoadIndex,
         common::{
-            AbsoluteDirection, AxisDirection, CarIndex, InOutDirection, LaneDirection, LaneIndex,
+            AbsoluteDirection, AxisDirection, CarIndex,
+            InOutDirection::{self, Out},
+            LaneDirection, LaneIndex,
         },
-        stateful, stateless,
+        stateful::{self, Car},
+        stateless,
     },
 };
 use mpi::{collective::CommunicatorCollectives, topology::Rank};
@@ -182,10 +185,70 @@ impl UpdateController {
         local_state: &ProcessLocalState,
         stateful: &stateful::Model,
         stateless: &stateless::Model,
-        _args: UpdateArgs,
+        args: UpdateArgs,
     ) -> Option<stateful::Car> {
+        use crate::model::stateful::car::Location::*;
         if let Some(car) = &stateful.cars[car_index] {
-            Some(car.clone()) // TODO: update it
+            match &car.location {
+                OnLane {
+                    road_direction: _,
+                    road_index: _,
+                    lane_direction: _,
+                    lane_index: _,
+                    position: _,
+                } => {
+                    // get_front_car()
+                    unimplemented!()
+                },
+                InIntersection {
+                    intersection_index,
+                    from_direction,
+                    from_lane_index,
+                    to_direction,
+                    to_lane_index,
+                    total_length,
+                    position,
+                } => {
+                    let position = position + car.velocity * args.dt;
+                    if position >= *total_length {
+                        let context = stateless
+                            .city
+                            .board
+                            .context_of_intersection(*intersection_index);
+                        let out_road_index = context.get(*to_direction).unwrap();
+                        let updated_car = OnLane {
+                            road_direction: to_direction.axis_direction(),
+                            road_index: out_road_index,
+                            lane_direction: LaneDirection::absolute_in_out_to_lane(
+                                *to_direction,
+                                Out,
+                            ),
+                            lane_index: *to_lane_index,
+                            position: 0.0,
+                        };
+                        Some(Car {
+                            location: updated_car,
+                            velocity: car.velocity,
+                            acceleration: 0.0,
+                        })
+                    } else {
+                        Some(Car {
+                            location: InIntersection {
+                                intersection_index: *intersection_index,
+                                from_direction: *from_direction,
+                                from_lane_index: *from_lane_index,
+                                to_direction: *to_direction,
+                                to_lane_index: *to_lane_index,
+                                total_length: *total_length,
+                                position,
+                            },
+                            velocity: car.velocity,
+                            acceleration: 0.0,
+                        })
+                    }
+                },
+                _ => unimplemented!(),
+            }
         } else if self.car_out_rank == rank && !*outed {
             *outed = true;
             match self.try_out_car(local_state, stateful, stateless) {
