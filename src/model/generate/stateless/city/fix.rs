@@ -189,7 +189,6 @@ fn fix_lane_rule_with_context(
     }
 
     if is_turn_intersection(context) {
-        debug!("TRUN:{:?}", context);
         for &in_direction in directions_with_in_road.iter() {
             let current_lanes_out_direction = AbsoluteDirection::directions()
                 .filter(|direction| {
