@@ -291,6 +291,27 @@ impl UpdateController {
         }
     }
 
+    fn get_front_car(
+        &self,
+        current_car: CarIndex,
+        local_state: &ProcessLocalState,
+        road_direction: AxisDirection,
+        road_index: RoadIndex,
+        lane_direction: LaneDirection,
+        lane_index: LaneIndex,
+    ) -> Option<CarIndex> {
+        let lane_cars = &local_state.board.get_roads(road_direction)[road_index]
+            .as_ref()
+            .unwrap()
+            .lanes_to_direction(lane_direction)[lane_index];
+        for (index, (_, car_index)) in lane_cars.cars.iter().enumerate() {
+            if *car_index == current_car && index != lane_cars.cars.len() - 1 {
+                return Some(lane_cars.cars[index + 1].1)
+            }
+        }
+        None
+    }
+
     fn random_choose_relative_direction(&self, turn_rule: TurnRule) -> RelativeDirection {
         use crate::model::common::RelativeDirection::*;
         let all_rule = [
