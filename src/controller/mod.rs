@@ -195,6 +195,7 @@ impl UpdateController {
                     road_index: _,
                     lane_direction: _,
                     lane_index: _,
+                    about_to_turn: _,
                     position: _,
                 } => {
                     // get_front_car()
@@ -224,6 +225,7 @@ impl UpdateController {
                                 Out,
                             ),
                             lane_index: *to_lane_index,
+                            about_to_turn: unimplemented!(),
                             position: 0.0,
                         };
                         Some(Car {
@@ -260,6 +262,7 @@ impl UpdateController {
                             lane_direction,
                             lane_index,
                             position: 0.0,
+                            about_to_turn: unimplemented!(),
                         },
                         acceleration: 0.0,
                         velocity: 0.0,

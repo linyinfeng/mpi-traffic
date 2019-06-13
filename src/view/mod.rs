@@ -483,6 +483,7 @@ impl View {
                 lane_direction,
                 lane_index,
                 position,
+                ..
             } => {
                 let length = city.road_length(road_direction, road_index);
                 let x = -length / 2.0 + position;

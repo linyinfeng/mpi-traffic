@@ -104,6 +104,7 @@ impl ProcessLocalState {
                         lane_direction,
                         lane_index,
                         position,
+                        ..
                     } => {
                         local_state.insert_car(
                             road_direction,

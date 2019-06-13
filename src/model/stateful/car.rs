@@ -1,6 +1,6 @@
 use crate::model::{
     board::{IntersectionIndex, RoadIndex},
-    common::{AbsoluteDirection, AxisDirection, LaneDirection, LaneIndex},
+    common::{AbsoluteDirection, AxisDirection, LaneDirection, LaneIndex, RelativeDirection},
 };
 use serde::{Deserialize, Serialize};
 
@@ -18,6 +18,7 @@ pub enum Location {
         road_index: RoadIndex,
         lane_direction: LaneDirection,
         lane_index: LaneIndex,
+        about_to_turn: RelativeDirection,
         position: f64,
     },
     ChangingLane {
