@@ -5,7 +5,7 @@ use mpi::{
 };
 use quick_error::quick_error;
 use serde::{Deserialize, Serialize};
-use std::{convert::TryInto, num::TryFromIntError};
+use std::{convert::TryInto, num::TryFromIntError, ops::Range};
 
 quick_error! {
     #[derive(Debug)]
@@ -76,4 +76,65 @@ where
         *item = bincode::deserialize(&buffer[..])?;
     }
     Ok(())
+}
+
+#[derive(Clone, Copy, Debug, Eq, PartialEq)]
+pub struct Division {
+    first: usize,
+    last: usize,
+}
+
+impl Division {
+    pub fn new(count: usize, rank: Rank, size: Rank) -> Self {
+        assert!(rank < size);
+        let rank = rank as usize;
+        let size = size as usize;
+        let basic_count = if count % size == 0 {
+            count / size
+        } else {
+            count / size + 1
+        };
+        Division {
+            first: basic_count * rank,
+            last: count.min(basic_count * (rank + 1)),
+        }
+    }
+
+    pub fn range(&self) -> Range<usize> {
+        self.first..self.last
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn new_division() {
+        let count = 10;
+        let size = 3;
+        assert_eq!(
+            Division::new(count, 0, size),
+            Division { first: 0, last: 4 }
+        );
+        assert_eq!(
+            Division::new(count, 1, size),
+            Division { first: 4, last: 8 }
+        );
+        assert_eq!(
+            Division::new(count, 2, size),
+            Division { first: 8, last: 10 }
+        );
+    }
+
+    #[test]
+    #[should_panic]
+    fn division_invalid_rank() {
+        let count = 10;
+        let size = 3;
+        assert_eq!(
+            Division::new(count, 3, size),
+            Division { first: 8, last: 10 }
+        );
+    }
 }

@@ -1,6 +1,9 @@
 use crate::model::{
-    board::{Board, RoadIndex},
-    common::{AxisDirection, CarIndex, LaneDirection, LaneIndex},
+    board::{Board, IntersectionIndex, RoadIndex},
+    common::{
+        AbsoluteDirection, Around, AxisDirection, CarIndex, InOutDirection, LaneDirection,
+        LaneIndex,
+    },
     stateful, stateless,
 };
 
@@ -39,14 +42,16 @@ impl Lane {
 }
 
 #[derive(Clone, Debug)]
-pub struct CarMap {
+pub struct ProcessLocalState {
     pub board: Board<(), Option<Road>>,
+    pub car_out_intersection_lane_out_availability: Around<Vec<bool>>,
 }
 
-impl CarMap {
+impl ProcessLocalState {
     pub fn empty(
         board: &Board<Option<stateless::Intersection>, Option<stateless::Road>>,
-    ) -> CarMap {
+        car_out_intersection: IntersectionIndex,
+    ) -> Self {
         let mut empty_board = Board::with_shape((), None, board.shape());
         for road_direction in AxisDirection::directions() {
             for (road_index, road) in board.get_roads(*road_direction).enumerate() {
@@ -60,15 +65,33 @@ impl CarMap {
                 }
             }
         }
-        CarMap { board: empty_board }
+        let context = board.context_of_intersection(car_out_intersection);
+        let mut car_out_intersection_lane_out_availability: Around<Vec<bool>> = Default::default();
+        for direction in AbsoluteDirection::directions() {
+            if let Some(road_index) = context.get(*direction) {
+                let road = board
+                    .get_road(direction.axis_direction(), *road_index)
+                    .unwrap()
+                    .as_ref()
+                    .unwrap();
+                let lane_direction =
+                    LaneDirection::absolute_in_out_to_lane(*direction, InOutDirection::Out);
+                *car_out_intersection_lane_out_availability.get_mut(*direction) =
+                    vec![true; road.lanes_to_direction(lane_direction).len()];
+            }
+        }
+        ProcessLocalState {
+            board: empty_board,
+            car_out_intersection_lane_out_availability,
+        }
     }
 
     pub fn generate(
-        board: &Board<Option<stateless::Intersection>, Option<stateless::Road>>,
+        city: &stateless::City,
         stateful: &[Option<stateful::Car>],
         _stateless: &[stateless::Car],
     ) -> Self {
-        let mut map = Self::empty(board);
+        let mut map = Self::empty(&city.board, city.car_out_intersection);
         for (i, car) in stateful.iter().enumerate() {
             if let Some(car) = car {
                 match car.location {
@@ -113,6 +136,16 @@ impl CarMap {
                         )
                     },
                     _ => (),
+                    /* TODO: FIX */
+                    /* InIntersection {
+                     *     intersection_index,
+                     *     from_direction,
+                     *     from_lane_index,
+                     *     to_direction,
+                     *     to_lane_index,
+                     *     total_length,
+                     *     position,
+                     * }, => (), */
                 }
             }
         }

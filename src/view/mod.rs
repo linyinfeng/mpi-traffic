@@ -64,9 +64,9 @@ pub struct ViewSettings {
     #[structopt(
         name = "view-lane-sign-padding",
         long = "view-lane-sign-padding",
-        default_value = "3.5"
+        default_value = "0.2"
     )]
-    pub lane_sign_padding: f64, // a lane is typically 3.5 meters wide
+    pub lane_sign_padding: f64,
     #[structopt(
         name = "view-intersection-color",
         long = "view-intersection-color",
@@ -77,7 +77,7 @@ pub struct ViewSettings {
     #[structopt(
         name = "view-intersection-sign-color",
         long = "view-intersection-sign-color",
-        default_value = "ffffff",
+        default_value = "66ff33",
         parse(from_str = "piston_window::color::hex")
     )]
     pub intersection_sign_color: Color,

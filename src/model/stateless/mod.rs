@@ -20,6 +20,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct City {
     pub board: Board<Option<Intersection>, Option<Road>>,
+    pub car_out_intersection: IntersectionIndex,
     pub lane_width: f64,
     pub horizontal_road_length: Vec<f64>,
     pub vertical_road_length: Vec<f64>,
@@ -185,6 +186,7 @@ mod tests {
     fn example_city() -> City {
         City {
             board: Board::with_shape(None, None, (3, 3)),
+            car_out_intersection: (0, 0),
             lane_width: 3.5,
             horizontal_road_length: vec![500.0, 500.0],
             vertical_road_length: vec![500.0, 500.0],

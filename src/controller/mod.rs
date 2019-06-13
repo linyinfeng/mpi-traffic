@@ -1,13 +1,20 @@
 use crate::{
-    communication,
+    communication::{self, Division},
     info::Info,
-    model::{stateful, stateless},
+    model::{
+        board::RoadIndex,
+        common::{
+            AbsoluteDirection, AxisDirection, CarIndex, InOutDirection, LaneDirection, LaneIndex,
+        },
+        stateful, stateless,
+    },
 };
 use mpi::{collective::CommunicatorCollectives, topology::Rank};
 use piston_window::{Button, ButtonArgs, ButtonState, Input, Motion, MouseButton, UpdateArgs};
+use process_local_state::ProcessLocalState;
 use structopt::StructOpt;
 
-pub mod car_map;
+pub mod process_local_state;
 
 #[derive(Clone, Debug)]
 pub struct Controller {
@@ -99,12 +106,14 @@ impl Controller {
     }
 }
 
-#[derive(Clone, Debug)]
-pub struct UpdateController;
+#[derive(Clone, Debug, Default)]
+pub struct UpdateController {
+    car_out_rank: Rank,
+}
 
 impl UpdateController {
     pub fn new() -> Self {
-        Self
+        Self { car_out_rank: 0 }
     }
 
     pub fn update<Comm>(
@@ -124,25 +133,109 @@ impl UpdateController {
             &stateless.city,
             args,
         );
-        self.update_cars(root, communicator, stateful, stateless, args);
+        self.update_cars(root, communicator.clone(), stateful, stateless, args);
+
+        self.car_out_rank += 1;
+        self.car_out_rank %= communicator.size();
     }
 
     pub fn update_cars<Comm>(
         &mut self,
         _root: Rank,
-        _communicator: Comm,
+        communicator: Comm,
         stateful: &mut stateful::Model,
         stateless: &stateless::Model,
         args: UpdateArgs,
     ) where
         Comm: CommunicatorCollectives,
     {
-        let _local_map = car_map::CarMap::generate(
-            &stateless.city.board,
-            &stateful.cars[..],
-            &stateless.cars[..],
-        );
-        log::trace!("update cars triggered: {:?}", args);
+        let local_state =
+            ProcessLocalState::generate(&stateless.city, &stateful.cars[..], &stateless.cars[..]);
+
+        let car_number = stateful.cars.len();
+        let rank = communicator.rank();
+        let size = communicator.size();
+        let division = Division::new(car_number, rank, size);
+        let mut local_cars = Vec::new();
+        let mut outed = false;
+        for car_index in division.range() {
+            local_cars.push(self.update_car(
+                &mut outed,
+                communicator.rank(),
+                car_index,
+                &local_state,
+                &*stateful,
+                stateless,
+                args,
+            ));
+        }
+        let gathered =
+            communication::bincode_all_gather_varcount(communicator, &local_cars).unwrap();
+        stateful.cars = gathered.into_iter().flatten().collect();
+    }
+
+    pub fn update_car(
+        &self,
+        outed: &mut bool,
+        rank: Rank,
+        car_index: CarIndex,
+        local_state: &ProcessLocalState,
+        stateful: &stateful::Model,
+        stateless: &stateless::Model,
+        _args: UpdateArgs,
+    ) -> Option<stateful::Car> {
+        if let Some(car) = &stateful.cars[car_index] {
+            Some(car.clone()) // TODO: update it
+        } else if self.car_out_rank == rank && !*outed {
+            *outed = true;
+            match self.try_out_car(local_state, stateful, stateless) {
+                Some((road_direction, road_index, lane_direction, lane_index)) => {
+                    Some(stateful::Car {
+                        location: stateful::car::Location::OnLane {
+                            road_direction,
+                            road_index,
+                            lane_direction,
+                            lane_index,
+                            position: 0.0,
+                        },
+                        acceleration: 0.0,
+                        velocity: 0.0,
+                    })
+                },
+                None => None,
+            }
+        } else {
+            None
+        }
+    }
+
+    pub fn try_out_car(
+        &self,
+        local_state: &ProcessLocalState,
+        _stateful: &stateful::Model,
+        stateless: &stateless::Model,
+    ) -> Option<(AxisDirection, RoadIndex, LaneDirection, LaneIndex)> {
+        let context = stateless
+            .city
+            .board
+            .context_of_intersection(stateless.city.car_out_intersection);
+        for direction in AbsoluteDirection::directions() {
+            let lanes_availability = local_state
+                .car_out_intersection_lane_out_availability
+                .get(*direction);
+            for (lane_index, availability) in lanes_availability.iter().enumerate() {
+                if *availability {
+                    let road_index = context.get(*direction).unwrap();
+                    return Some((
+                        direction.axis_direction(),
+                        road_index,
+                        LaneDirection::absolute_in_out_to_lane(*direction, InOutDirection::Out),
+                        lane_index,
+                    ))
+                }
+            }
+        }
+        None
     }
 
     pub fn update_city<Comm>(
