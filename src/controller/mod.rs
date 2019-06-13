@@ -192,15 +192,76 @@ impl UpdateController {
         if let Some(car) = &stateful.cars[car_index] {
             match &car.location {
                 OnLane {
-                    road_direction: _,
-                    road_index: _,
-                    lane_direction: _,
-                    lane_index: _,
-                    about_to_turn: _,
-                    position: _,
+                    road_direction,
+                    road_index,
+                    lane_direction,
+                    lane_index,
+                    about_to_turn,
+                    position,
                 } => {
-                    // get_front_car()
-                    unimplemented!()
+                    let position = position + car.velocity * args.dt;
+                    let road_length = stateless.city.road_length(*road_direction, *road_index);
+                    // let road = stateless.city.board.get_roads(*road_direction)[*road_index]
+                    //     .as_ref()
+                    //     .unwrap();
+                    if position >= road_length {
+                        // switch to InIntersection
+                        let intersection_index = stateless.city.board.lane_to_intersection_index(
+                            *road_direction,
+                            *road_index,
+                            *lane_direction,
+                        );
+                        let driver_direction =
+                            AbsoluteDirection::of_lane(*road_direction, *lane_direction);
+                        let to_direction = driver_direction.turn(*about_to_turn);
+                        let from_direction = driver_direction.turn_back();
+                        let to_lane_index = {
+                            let mut rng = rand::thread_rng();
+                            let road_index = *stateless
+                                .city
+                                .board
+                                .context_of_intersection(intersection_index)
+                                .get(to_direction)
+                                .as_ref()
+                                .expect("no way to turn");
+                            let lane_direction = LaneDirection::absolute_in_out_to_lane(
+                                to_direction,
+                                InOutDirection::Out,
+                            );
+                            let road = stateless
+                                .city
+                                .board
+                                .get_road(to_direction.axis_direction(), road_index)
+                                .unwrap()
+                                .as_ref()
+                                .unwrap();
+                            let size = road.lanes_to_direction(lane_direction).len();
+                            rng.gen_range(0, size)
+                        };
+                        let total_length = stateless.city.intersection_path_total_length(
+                            intersection_index,
+                            from_direction,
+                            *lane_index,
+                            to_direction,
+                            to_lane_index,
+                        ).unwrap();
+                        let location = InIntersection {
+                            intersection_index,
+                            from_direction,
+                            from_lane_index: *lane_index,
+                            to_direction,
+                            to_lane_index,
+                            total_length,
+                            position: 0.0,
+                        };
+                        Some(Car {
+                            location,
+                            velocity: car.velocity,
+                            acceleration: 0.0,
+                        })
+                    } else {
+                        unimplemented!()
+                    }
                 },
                 InIntersection {
                     intersection_index,
