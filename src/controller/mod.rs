@@ -6,7 +6,7 @@ use crate::{
         common::{
             AbsoluteDirection, AxisDirection, CarIndex,
             InOutDirection::{self, Out},
-            LaneDirection, LaneIndex,
+            LaneDirection, LaneIndex, RelativeDirection, TurnRule,
         },
         stateful::{self, Car},
         stateless::{self, car::DrivingModel},
@@ -15,6 +15,7 @@ use crate::{
 use mpi::{collective::CommunicatorCollectives, topology::Rank};
 use piston_window::{Button, ButtonArgs, ButtonState, Input, Motion, MouseButton, UpdateArgs};
 use process_local_state::ProcessLocalState;
+use rand::{self, Rng};
 use structopt::StructOpt;
 
 pub mod process_local_state;
@@ -217,15 +218,22 @@ impl UpdateController {
                             .board
                             .context_of_intersection(*intersection_index);
                         let out_road_index = context.get(*to_direction).unwrap();
+                        let to_lane_direction =
+                            LaneDirection::absolute_in_out_to_lane(*to_direction, Out);
+                        let turn_rule = stateless
+                            .city
+                            .board
+                            .get_roads(to_direction.axis_direction())[out_road_index]
+                            .as_ref()
+                            .unwrap()
+                            .lanes_to_direction(to_lane_direction)[*to_lane_index]
+                            .direction_rule;
                         let updated_car = OnLane {
                             road_direction: to_direction.axis_direction(),
                             road_index: out_road_index,
-                            lane_direction: LaneDirection::absolute_in_out_to_lane(
-                                *to_direction,
-                                Out,
-                            ),
+                            lane_direction: to_lane_direction,
                             lane_index: *to_lane_index,
-                            about_to_turn: unimplemented!(),
+                            about_to_turn: self.random_choose_relative_direction(turn_rule),
                             position: 0.0,
                         };
                         Some(Car {
@@ -255,6 +263,12 @@ impl UpdateController {
             *outed = true;
             match self.try_out_car(local_state, stateful, stateless) {
                 Some((road_direction, road_index, lane_direction, lane_index)) => {
+                    let turn_rule = stateless.city.board.get_roads(road_direction)[road_index]
+                        .as_ref()
+                        .unwrap()
+                        .lanes_to_direction(lane_direction)[lane_index]
+                        .direction_rule;
+                    let about_to_turn = self.random_choose_relative_direction(turn_rule);
                     let car = stateful::Car {
                         location: stateful::car::Location::OnLane {
                             road_direction,
@@ -262,7 +276,7 @@ impl UpdateController {
                             lane_direction,
                             lane_index,
                             position: 0.0,
-                            about_to_turn: unimplemented!(),
+                            about_to_turn,
                         },
                         acceleration: 0.0,
                         velocity: 0.0,
@@ -295,6 +309,29 @@ impl UpdateController {
                 let aim_average_velocity = dx / *prediction_time;
                 (aim_average_velocity + front_velocity - velocity) * 2.0 / *prediction_time
             },
+        }
+    }
+
+    fn random_choose_relative_direction(&self, turn_rule: TurnRule) -> RelativeDirection {
+        use crate::model::common::RelativeDirection::*;
+        let all_rule = [
+            TurnRule::FRONT,
+            TurnRule::BACK,
+            TurnRule::LEFT,
+            TurnRule::RIGHT,
+        ];
+        let enabled_rule = all_rule
+            .iter()
+            .filter(|&rule| (turn_rule & *rule) == *rule)
+            .collect::<Vec<_>>();
+        let mut rng = rand::thread_rng();
+        let rule = enabled_rule[rng.gen_range(0usize, enabled_rule.len())];
+        match *rule {
+            TurnRule::FRONT => Front,
+            TurnRule::BACK => Back,
+            TurnRule::LEFT => Left,
+            TurnRule::RIGHT => Right,
+            _ => unreachable!(),
         }
     }
 
