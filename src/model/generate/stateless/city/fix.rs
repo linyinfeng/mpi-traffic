@@ -1,7 +1,10 @@
 use crate::model::{
     board::{Board, IntersectionContext},
     common::{AbsoluteDirection, InOutDirection, LaneDirection, RelativeDirection, TurnRule},
-    generate::stateless::{city::road::basic_lane, StatelessModelGenerationSettings},
+    generate::stateless::{
+        city::{intersection::is_turn_intersection, road::basic_lane},
+        StatelessModelGenerationSettings,
+    },
     stateless::{Intersection, Lane, Road},
 };
 use log::debug;
@@ -89,31 +92,41 @@ fn add_lane(
 }
 
 fn fix_lane_direction_rule(board: &mut Board<Option<Intersection>, Option<Road>>) {
-    for (_, road) in board.roads_mut() {
-        if let Some(ref mut road) = road {
-            assert!(!road.lane_to_low.is_empty() || !road.lane_to_high.is_empty());
-            fix_road_side(&mut road.lane_to_low);
-            fix_road_side(&mut road.lane_to_high);
-            if road.lane_to_high.is_empty() {
-                road.lane_to_low[0].direction_rule -= TurnRule::BACK;
+    fix_lane_direction_rule_by_road(board);
+    fix_lane_direction_rule_by_context(board);
+}
+
+fn fix_lane_direction_rule_by_road(board: &mut Board<Option<Intersection>, Option<Road>>) {
+    for road in board.roads_mut().filter_map(|(_, road)| road.as_mut()) {
+        LaneDirection::lane_directions().for_each(|&lane_direction| {
+            let lanes = road.lanes_to_direction_mut(lane_direction);
+            let len = lanes.len();
+            if len > 1 {
+                // only last lane can turn right
+                lanes.iter_mut().take(len - 1).for_each(|lane| {
+                    lane.direction_rule -= TurnRule::RIGHT;
+                });
+                // only first len can turn left and back
+                lanes
+                    .iter_mut()
+                    .skip(1)
+                    .for_each(|lane| lane.direction_rule -= TurnRule::LEFT | TurnRule::BACK);
             }
-            if road.lane_to_low.is_empty() {
-                road.lane_to_high[0].direction_rule -= TurnRule::BACK;
+        });
+        LaneDirection::lane_directions().for_each(|&lane_direction| {
+            if road
+                .lanes_to_direction(lane_direction.opposite())
+                .is_empty()
+            {
+                road.lanes_to_direction_mut(lane_direction)[0].direction_rule -= TurnRule::BACK;
             }
-        }
-    }
-    for intersection_index in board.intersections.indices() {
-        fix_lane_rule_with_context(board, &board.context_of_intersection(intersection_index));
+        })
     }
 }
 
-fn fix_road_side(lanes: &mut [Lane]) {
-    if lanes.len() > 1 {
-        lanes[0].direction_rule -= TurnRule::RIGHT;
-        lanes
-            .iter_mut()
-            .skip(1)
-            .for_each(|lane| lane.direction_rule -= TurnRule::LEFT | TurnRule::BACK);
+fn fix_lane_direction_rule_by_context(board: &mut Board<Option<Intersection>, Option<Road>>) {
+    for intersection_index in board.intersections.indices() {
+        fix_lane_rule_with_context(board, &board.context_of_intersection(intersection_index));
     }
 }
 
@@ -123,7 +136,6 @@ fn fix_lane_rule_with_context(
 ) {
     use InOutDirection::*;
     use RelativeDirection::*;
-    debug!("Context:{:?}", context);
     let directions_with_in_road = AbsoluteDirection::directions()
         .filter(|&&direction| {
             context.get(direction).is_some() && {
@@ -155,12 +167,7 @@ fn fix_lane_rule_with_context(
     );
 
     for &&direction in directions_with_in_road.iter() {
-        let in_lane_direction = LaneDirection::absolute_in_out_to_lane(direction, In);
-        let road_index = context.get(direction).unwrap();
-        let lanes_to_be_fix = board.get_roads_mut(direction.axis_direction())[road_index]
-            .as_mut()
-            .unwrap()
-            .lanes_to_direction_mut(in_lane_direction);
+        let lanes_to_be_fix = find_lanes_to_be_fix(direction, board, context);
         let len = lanes_to_be_fix.len();
         if len == 0 {
             continue
@@ -180,4 +187,46 @@ fn fix_lane_rule_with_context(
             }
         }
     }
+
+    if is_turn_intersection(context) {
+        debug!("TRUN:{:?}", context);
+        for &in_direction in directions_with_in_road.iter() {
+            let current_lanes_out_direction = AbsoluteDirection::directions()
+                .filter(|direction| {
+                    !directions_without_out_lanes.contains(direction) && *direction != in_direction
+                })
+                .collect::<Vec<_>>();
+            assert!(
+                current_lanes_out_direction.len() == 1 || current_lanes_out_direction.is_empty()
+            );
+            if !current_lanes_out_direction.is_empty() {
+                let out_direction = current_lanes_out_direction[0];
+                let lanes_to_be_fixed = find_lanes_to_be_fix(*in_direction, board, context);
+                match in_direction.should_turn(*out_direction) {
+                    Front => unreachable!("Front"),
+                    Back => unreachable!("Back"),
+                    Right => lanes_to_be_fixed
+                        .iter_mut()
+                        .for_each(|lane| lane.direction_rule |= TurnRule::LEFT),
+                    Left => lanes_to_be_fixed
+                        .iter_mut()
+                        .for_each(|lane| lane.direction_rule |= TurnRule::RIGHT),
+                }
+            }
+        }
+    }
+}
+
+fn find_lanes_to_be_fix<'a>(
+    direction: AbsoluteDirection,
+    board: &'a mut Board<Option<Intersection>, Option<Road>>,
+    context: &IntersectionContext,
+) -> &'a mut Vec<Lane> {
+    use InOutDirection::*;
+    let in_lane_direction = LaneDirection::absolute_in_out_to_lane(direction, In);
+    let road_index = context.get(direction).unwrap();
+    board.get_roads_mut(direction.axis_direction())[road_index]
+        .as_mut()
+        .unwrap()
+        .lanes_to_direction_mut(in_lane_direction)
 }
