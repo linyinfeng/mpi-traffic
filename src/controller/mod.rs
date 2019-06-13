@@ -238,13 +238,16 @@ impl UpdateController {
                             let size = road.lanes_to_direction(lane_direction).len();
                             rng.gen_range(0, size)
                         };
-                        let total_length = stateless.city.intersection_path_total_length(
-                            intersection_index,
-                            from_direction,
-                            *lane_index,
-                            to_direction,
-                            to_lane_index,
-                        ).unwrap();
+                        let total_length = stateless
+                            .city
+                            .intersection_path_total_length(
+                                intersection_index,
+                                from_direction,
+                                *lane_index,
+                                to_direction,
+                                to_lane_index,
+                            )
+                            .unwrap();
                         let location = InIntersection {
                             intersection_index,
                             from_direction,
@@ -371,6 +374,27 @@ impl UpdateController {
                 (aim_average_velocity + front_velocity - velocity) * 2.0 / *prediction_time
             },
         }
+    }
+
+    fn get_front_car(
+        &self,
+        current_car: CarIndex,
+        local_state: &ProcessLocalState,
+        road_direction: AxisDirection,
+        road_index: RoadIndex,
+        lane_direction: LaneDirection,
+        lane_index: LaneIndex,
+    ) -> Option<CarIndex> {
+        let lane_cars = &local_state.board.get_roads(road_direction)[road_index]
+            .as_ref()
+            .unwrap()
+            .lanes_to_direction(lane_direction)[lane_index];
+        for (index, (_, car_index)) in lane_cars.cars.iter().enumerate() {
+            if *car_index == current_car && index != lane_cars.cars.len() - 1 {
+                return Some(lane_cars.cars[index + 1].1)
+            }
+        }
+        None
     }
 
     fn random_choose_relative_direction(&self, turn_rule: TurnRule) -> RelativeDirection {
