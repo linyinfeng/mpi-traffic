@@ -2,6 +2,7 @@ use crate::{
     model::common::{Around, AxisDirection},
     util::matrix::{Matrix, MatrixIndex, MatrixShape},
 };
+use rand::Rng;
 use serde::{Deserialize, Serialize};
 
 pub type IntersectionIndex = MatrixIndex;
@@ -82,6 +83,25 @@ impl<I, R> Board<I, R> {
                     .zip(std::iter::repeat(Vertical).zip(self.vertical_roads.iter())),
             )
     }
+
+    pub fn random_intersection(&self) -> IntersectionIndex {
+        let mut rng = rand::thread_rng();
+        let (m, n) = self.shape();
+        (rng.gen_range(0, m), rng.gen_range(0, n));
+        unimplemented!()
+    }
+
+    // pub fn random_road(&self) -> (AxisDirection, RoadIndex) {
+    //     let mut rng = rand::thread_rng();
+    //     let direction: AxisDirection = rng.gen();
+    //      self.get_roads(direction).shape()
+    // }
+
+    // pub fn random_road(&self) -> (AxisDirection, ) {
+    //     let mut rng = rand::thread_rng();
+    //     let direction: AxisDirection = rng.gen();
+    //      self.get_roads(direction).shape()
+    // }
 }
 
 pub type IntersectionContext = Around<Option<RoadIndex>>;

@@ -9,99 +9,87 @@ pub type MatrixIndex = (usize, usize);
 
 #[derive(Deserialize, Serialize, Clone, Debug, Default)]
 pub struct Matrix<T> {
-    storage: Vec<Vec<T>>,
+    pub shape: MatrixShape,
+    pub storage: Vec<T>,
 }
 
 impl<T> Index<MatrixIndex> for Matrix<T> {
     type Output = T;
 
-    fn index(&self, (i, j): MatrixIndex) -> &Self::Output {
-        &self.storage[i][j]
+    fn index(&self, index: MatrixIndex) -> &Self::Output {
+        &self.storage[self.offset(index).unwrap()]
     }
 }
 
 impl<T> IndexMut<MatrixIndex> for Matrix<T> {
-    fn index_mut(&mut self, (i, j): MatrixIndex) -> &mut Self::Output {
-        &mut self.storage[i][j]
+    fn index_mut(&mut self, index: MatrixIndex) -> &mut Self::Output {
+        let offset = self.offset(index).unwrap();
+        &mut self.storage[offset]
     }
 }
 
 impl<T> Matrix<T> {
-    pub fn get(&self, (i, j): MatrixIndex) -> Option<&T> {
-        self.storage.get(i).and_then(|row| row.get(j))
+    pub fn offset(&self, (i, j): MatrixIndex) -> Option<usize> {
+        let (m, n) = self.shape;
+        if i < m && j < n {
+            Some(i * n + j)
+        } else {
+            None
+        }
     }
 
-    pub fn get_mut(&mut self, (i, j): MatrixIndex) -> Option<&mut T> {
-        self.storage.get_mut(i).and_then(|row| row.get_mut(j))
+    pub fn offset_unchecked(&self, (i, j): MatrixIndex) -> usize {
+        let (_m, n) = self.shape;
+        i * n + j
+    }
+
+    pub fn index_from_offset(&self, offset: usize) -> Option<MatrixIndex> {
+        if offset < self.storage.len() {
+            Some(self.index_from_offset_unchecked(offset))
+        } else {
+            None
+        }
+    }
+
+    pub fn index_from_offset_unchecked(&self, offset: usize) -> MatrixIndex {
+        let (_m, n) = self.shape;
+        (offset / n, offset % n)
     }
 
     pub fn shape(&self) -> MatrixShape {
-        let col_length = self.storage.get(0).map_or(0, |row| row.len());
-        (self.storage.len(), col_length)
+        self.shape
+    }
+
+    pub fn get(&self, index: MatrixIndex) -> Option<&T> {
+        self.storage.get(self.offset(index)?)
+    }
+
+    pub fn get_mut(&mut self, index: MatrixIndex) -> Option<&mut T> {
+        let offset = self.offset(index)?;
+        self.storage.get_mut(offset)
     }
 
     pub fn indices(&self) -> Indices {
         Indices {
-            shape: self.shape(),
+            shape: self.shape,
             index: (0, 0),
         }
     }
 
-    #[allow(clippy::type_complexity)]
-    pub fn iter(
-        &self,
-    ) -> std::iter::FlatMap<
-        std::slice::Iter<Vec<T>>,
-        std::slice::Iter<T>,
-        fn(&Vec<T>) -> std::slice::Iter<T>,
-    > {
-        #[allow(clippy::ptr_arg)]
-        fn vec_iter<T>(v: &Vec<T>) -> std::slice::Iter<T> {
-            v.iter()
-        }
-        self.storage.iter().flat_map(vec_iter)
+    pub fn iter(&self) -> impl Iterator<Item = &T> {
+        self.storage.iter()
     }
 
-    #[allow(clippy::type_complexity)]
-    pub fn iter_mut(
-        &mut self,
-    ) -> std::iter::FlatMap<
-        std::slice::IterMut<Vec<T>>,
-        std::slice::IterMut<T>,
-        fn(&mut Vec<T>) -> std::slice::IterMut<T>,
-    > {
-        #[allow(clippy::ptr_arg)]
-        fn vec_iter_mut<T>(v: &mut Vec<T>) -> std::slice::IterMut<T> {
-            v.iter_mut()
-        }
-        self.storage.iter_mut().flat_map(vec_iter_mut)
+    pub fn iter_mut(&mut self) -> impl Iterator<Item = &mut T> {
+        self.storage.iter_mut()
     }
 
-    #[allow(clippy::type_complexity)]
-    pub fn enumerate(
-        &self,
-    ) -> std::iter::Zip<
-        Indices,
-        std::iter::FlatMap<
-            std::slice::Iter<Vec<T>>,
-            std::slice::Iter<T>,
-            fn(&Vec<T>) -> std::slice::Iter<T>,
-        >,
-    > {
+    pub fn enumerate(&self) -> impl Iterator<Item = (MatrixIndex, &T)> {
         self.indices().zip(self.iter())
     }
 
     #[allow(clippy::type_complexity)]
-    pub fn enumerate_mut(
-        &mut self,
-    ) -> std::iter::Zip<
-        Indices,
-        std::iter::FlatMap<
-            std::slice::IterMut<Vec<T>>,
-            std::slice::IterMut<T>,
-            fn(&mut Vec<T>) -> std::slice::IterMut<T>,
-        >,
-    > {
+    pub fn enumerate_mut(&mut self) -> impl Iterator<Item = (MatrixIndex, &mut T)> {
         self.indices().zip(self.iter_mut())
     }
 }
@@ -110,9 +98,10 @@ impl<T> Matrix<T>
 where
     T: Clone,
 {
-    pub fn with_shape(t: T, (i, j): MatrixShape) -> Self {
+    pub fn with_shape(t: T, (m, n): MatrixShape) -> Self {
         Matrix {
-            storage: vec![vec![t; j]; i],
+            shape: (m, n),
+            storage: vec![t; m * n],
         }
     }
 }
@@ -160,6 +149,24 @@ impl ExactSizeIterator for Indices {}
 #[cfg(test)]
 mod test {
     use super::*;
+
+    #[test]
+    fn test_offset() {
+        let m = Matrix::with_shape(3.14, (7, 9));
+        let mut n = 0;
+        for i in 0..7 {
+            for j in 0..9 {
+                assert_eq!(m.offset((i, j)), Some(n));
+                assert_eq!(m.offset_unchecked((i, j)), n);
+                assert_eq!(m.index_from_offset(n), Some((i, j)));
+                assert_eq!(m.index_from_offset_unchecked(n), (i, j));
+                n += 1;
+            }
+        }
+        assert_eq!(m.offset((7, 3)), None);
+        assert_eq!(m.offset((3, 9)), None);
+        assert_eq!(m.index_from_offset(64), None);
+    }
 
     #[test]
     fn empty_matrix() {
