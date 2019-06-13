@@ -188,6 +188,7 @@ mod tests {
         City {
             board: Board::with_shape(None, None, (3, 3)),
             car_out_intersection: (0, 0),
+            car_out_min_distance: 8.0,
             lane_width: 3.5,
             horizontal_road_length: vec![500.0, 500.0],
             vertical_road_length: vec![500.0, 500.0],
