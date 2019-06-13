@@ -38,22 +38,26 @@ fn generate_with_context(
     }
 }
 
-fn is_in_same_axis(context: &IntersectionContext) -> bool {
-    let mut directions = AbsoluteDirection::directions()
-        .filter_map(|&direction| context.get(direction).map(|_| direction));
-    directions.next().unwrap().turn_back() == directions.next().unwrap()
+pub fn is_turn_intersection(context: &IntersectionContext) -> bool {
+    if context.road_number() == 2 {
+        let mut directions = AbsoluteDirection::directions()
+            .filter_map(|&direction| context.get(direction).map(|_| direction));
+        directions.next().unwrap().turn_back() != directions.next().unwrap()
+    } else {
+        false
+    }
 }
 
 fn generate_with_2_road(
     context: &IntersectionContext,
     settings: &StatelessModelGenerationSettings,
 ) -> Intersection {
-    if is_in_same_axis(context) {
-        Intersection::Straight
-    } else {
+    if is_turn_intersection(context) {
         Intersection::Turn {
             max_speed: settings.intersection_max_speed,
         }
+    } else {
+        Intersection::Straight
     }
 }
 
