@@ -17,6 +17,7 @@ use piston_window::{
     types::{Color, Matrix2d},
     G2d, Transformed,
 };
+use structopt::StructOpt;
 
 #[derive(Clone, Debug)]
 pub struct View {
@@ -30,37 +31,76 @@ impl View {
 }
 
 /// Store settings of `ModelView`.
-#[derive(Default, Clone, Debug)]
+#[derive(StructOpt, Default, Clone, Debug)]
 pub struct ViewSettings {
+    #[structopt(name = "view-padding", long, default_value = "10.0")]
     pub padding: f64,
+    #[structopt(
+        name = "view-road-color",
+        long = "view-road-color",
+        default_value = "666666",
+        parse(from_str = "piston_window::color::hex")
+    )]
     pub road_color: Color,
+    #[structopt(
+        name = "view-road-sign-color",
+        long = "view-road-sign-color",
+        default_value = "ffffff",
+        parse(from_str = "piston_window::color::hex")
+    )]
     pub road_sign_color: Color,
+    #[structopt(
+        name = "view-road-middle-separator-color",
+        long = "view-road-middle-separator-color",
+        default_value = "ffdb4d",
+        parse(from_str = "piston_window::color::hex")
+    )]
     pub road_middle_separator_color: Color,
+    #[structopt(
+        name = "view-road-middle-separator-width",
+        long = "view-road-middle-separator-width",
+        default_value = "0.4"
+    )]
     pub road_middle_separator_width: f64,
+    #[structopt(
+        name = "view-lane-sign-padding",
+        long = "view-lane-sign-padding",
+        default_value = "3.5"
+    )]
     pub lane_sign_padding: f64, // a lane is typically 3.5 meters wide
+    #[structopt(
+        name = "view-intersection-color",
+        long = "view-intersection-color",
+        default_value = "737373",
+        parse(from_str = "piston_window::color::hex")
+    )]
     pub intersection_color: Color,
+    #[structopt(
+        name = "view-intersection-sign-color",
+        long = "view-intersection-sign-color",
+        default_value = "ffffff",
+        parse(from_str = "piston_window::color::hex")
+    )]
     pub intersection_sign_color: Color,
+    #[structopt(
+        name = "view-car-color",
+        long = "view-car-color",
+        default_value = "ff0066",
+        parse(from_str = "piston_window::color::hex")
+    )]
     pub car_color: Color,
+    #[structopt(
+        name = "view-car-length",
+        long = "view-car-length",
+        default_value = "4.5"
+    )]
     pub car_length: f64,
+    #[structopt(
+        name = "view-car-width",
+        long = "view-car-width",
+        default_value = "1.7"
+    )]
     pub car_width: f64,
-}
-
-impl ViewSettings {
-    pub fn new() -> Self {
-        Self {
-            padding: 10.0,
-            road_color: color::grey(0.4),
-            road_sign_color: color::WHITE,
-            road_middle_separator_color: color::hex("ffdb4d"),
-            road_middle_separator_width: 0.4,
-            lane_sign_padding: 0.4,
-            intersection_color: color::grey(0.5),
-            intersection_sign_color: color::hex("42f453"),
-            car_color: color::hex("ff0066"),
-            car_length: 4.5,
-            car_width: 1.7,
-        }
-    }
 }
 
 impl View {

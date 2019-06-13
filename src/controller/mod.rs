@@ -1,7 +1,9 @@
 use crate::{
+    communication,
     info::Info,
     model::{stateful, stateless},
 };
+use mpi::{collective::CommunicatorCollectives, topology::Rank};
 use piston_window::{Button, ButtonArgs, ButtonState, Input, Motion, MouseButton, UpdateArgs};
 use structopt::StructOpt;
 
@@ -13,6 +15,7 @@ pub struct Controller {
     pub mouse_left_button_down_location: Option<(f64, f64)>,
     pub start_drag_location: Option<(f64, f64)>,
     pub settings: ControllerSettings,
+    pub update_controller: UpdateController,
 }
 
 #[derive(StructOpt, Clone, Debug)]
@@ -22,37 +25,18 @@ pub struct ControllerSettings {
 }
 
 impl Controller {
-    pub fn new(settings: ControllerSettings) -> Self {
+    pub fn new(update_controller: UpdateController, settings: ControllerSettings) -> Self {
         Self {
             mouse_left_button_down: false,
             mouse_left_button_down_location: None,
             start_drag_location: None,
             settings,
+            update_controller,
         }
     }
+}
 
-    pub fn update(
-        &mut self,
-        _info: &mut Info,
-        stateful: &mut stateful::Model,
-        stateless: &stateless::Model,
-        args: UpdateArgs,
-    ) {
-        for (stateful_intersection, stateless_intersection) in stateful
-            .city
-            .board
-            .intersections
-            .iter_mut()
-            .zip(stateless.city.board.intersections.iter())
-        {
-            if let Some(stateful_intersection) = stateful_intersection.as_mut() {
-                let stateless_intersection = stateless_intersection.as_ref().unwrap();
-                self.update_intersection(stateful_intersection, stateless_intersection, args);
-                stateful_intersection.update_current(stateless_intersection);
-            }
-        }
-    }
-
+impl Controller {
     pub fn input(
         &mut self,
         info: &mut Info,
@@ -95,6 +79,99 @@ impl Controller {
             },
             _ => (),
         }
+    }
+}
+
+impl Controller {
+    pub fn update<Comm>(
+        &mut self,
+        root: Rank,
+        communicator: Comm,
+        _info: &mut Info,
+        stateful: &mut stateful::Model,
+        stateless: &stateless::Model,
+        args: UpdateArgs,
+    ) where
+        Comm: CommunicatorCollectives + Clone,
+    {
+        self.update_controller
+            .update(root, communicator, stateful, stateless, args);
+    }
+}
+
+#[derive(Clone, Debug)]
+pub struct UpdateController;
+
+impl UpdateController {
+    pub fn new() -> Self {
+        Self
+    }
+
+    pub fn update<Comm>(
+        &mut self,
+        root: Rank,
+        communicator: Comm,
+        stateful: &mut stateful::Model,
+        stateless: &stateless::Model,
+        args: UpdateArgs,
+    ) where
+        Comm: CommunicatorCollectives + Clone,
+    {
+        self.update_city(
+            root,
+            communicator.clone(),
+            &mut stateful.city,
+            &stateless.city,
+            args,
+        );
+        self.update_cars(root, communicator, stateful, stateless, args);
+    }
+
+    pub fn update_cars<Comm>(
+        &mut self,
+        _root: Rank,
+        _communicator: Comm,
+        stateful: &mut stateful::Model,
+        stateless: &stateless::Model,
+        args: UpdateArgs,
+    ) where
+        Comm: CommunicatorCollectives,
+    {
+        let _local_map = car_map::CarMap::generate(
+            &stateless.city.board,
+            &stateful.cars[..],
+            &stateless.cars[..],
+        );
+        log::trace!("update cars triggered: {:?}", args);
+    }
+
+    pub fn update_city<Comm>(
+        &mut self,
+        root: Rank,
+        communicator: Comm,
+        stateful: &mut stateful::City,
+        stateless: &stateless::City,
+        args: UpdateArgs,
+    ) where
+        Comm: CommunicatorCollectives,
+    {
+        if communicator.rank() == root {
+            // Update intersection first
+            for (stateful_intersection, stateless_intersection) in stateful
+                .board
+                .intersections
+                .iter_mut()
+                .zip(stateless.board.intersections.iter())
+            {
+                if let Some(stateful_intersection) = stateful_intersection.as_mut() {
+                    let stateless_intersection = stateless_intersection.as_ref().unwrap();
+                    self.update_intersection(stateful_intersection, stateless_intersection, args);
+                    stateful_intersection.update_current(stateless_intersection);
+                }
+            }
+        }
+        let root_process = communicator.process_at_rank(root);
+        communication::bincode_broadcast(communicator.rank(), root_process, stateful).unwrap();
     }
 
     fn update_intersection(

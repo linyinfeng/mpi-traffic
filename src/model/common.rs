@@ -109,13 +109,21 @@ impl AbsoluteDirection {
     }
 }
 
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub enum AxisDirection {
     Horizontal,
     Vertical,
 }
 
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
+impl AxisDirection {
+    pub fn directions() -> std::slice::Iter<'static, AxisDirection> {
+        use AxisDirection::*;
+        static DIRECTIONS: [AxisDirection; 2] = [Horizontal, Vertical];
+        DIRECTIONS.iter()
+    }
+}
+
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub enum LaneDirection {
     LowToHigh,
     HighToLow,
@@ -133,7 +141,7 @@ impl Distribution<LaneDirection> for Standard {
 }
 
 impl LaneDirection {
-    pub fn lane_directions() -> std::slice::Iter<'static, LaneDirection> {
+    pub fn directions() -> std::slice::Iter<'static, LaneDirection> {
         use LaneDirection::*;
         static LANE_DIRECTIONS: [LaneDirection; 2] = [LowToHigh, HighToLow];
         LANE_DIRECTIONS.iter()

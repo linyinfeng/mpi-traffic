@@ -51,7 +51,7 @@ fn need_lane(
     AbsoluteDirection::directions()
         .filter_map(|&direction| context.get(direction).map(|index| (direction, index)))
         .for_each(|(direction, index)| {
-            LaneDirection::lane_directions().for_each(|&lane_direction| {
+            LaneDirection::directions().for_each(|&lane_direction| {
                 if !board.get_roads(direction.axis_direction())[index]
                     .as_ref()
                     .unwrap()
@@ -98,7 +98,7 @@ fn fix_lane_direction_rule(board: &mut Board<Option<Intersection>, Option<Road>>
 
 fn fix_lane_direction_rule_by_road(board: &mut Board<Option<Intersection>, Option<Road>>) {
     for road in board.roads_mut().filter_map(|(_, road)| road.as_mut()) {
-        LaneDirection::lane_directions().for_each(|&lane_direction| {
+        LaneDirection::directions().for_each(|&lane_direction| {
             let lanes = road.lanes_to_direction_mut(lane_direction);
             let len = lanes.len();
             if len > 1 {
@@ -113,7 +113,7 @@ fn fix_lane_direction_rule_by_road(board: &mut Board<Option<Intersection>, Optio
                     .for_each(|lane| lane.direction_rule -= TurnRule::LEFT | TurnRule::BACK);
             }
         });
-        LaneDirection::lane_directions().for_each(|&lane_direction| {
+        LaneDirection::directions().for_each(|&lane_direction| {
             if road
                 .lanes_to_direction(lane_direction.opposite())
                 .is_empty()

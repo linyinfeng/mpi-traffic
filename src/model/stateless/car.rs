@@ -1,4 +1,6 @@
-#[derive(Clone, Debug)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Car {
     pub max_velocity: f64,
     pub max_acceleration: f64,
@@ -7,7 +9,7 @@ pub struct Car {
     pub driving_model: DrivingModel,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub enum DrivingModel {
     Normal {
         /// Min cushion to front car

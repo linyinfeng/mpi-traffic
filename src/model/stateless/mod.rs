@@ -15,7 +15,9 @@ pub use car::Car;
 pub use intersection::Intersection;
 pub use road::{Lane, Road};
 
-#[derive(Clone, Debug)]
+use serde::{Deserialize, Serialize};
+
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct City {
     pub board: Board<Option<Intersection>, Option<Road>>,
     pub lane_width: f64,
@@ -25,7 +27,7 @@ pub struct City {
     pub intersection_width: Vec<f64>,
 }
 
-#[derive(Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct Model {
     pub city: City,
     pub cars: Vec<Car>,

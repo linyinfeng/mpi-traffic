@@ -58,32 +58,22 @@ where
         .collect()
 }
 
-pub fn bincode_broadcast<R, T>(
-    rank: Rank,
-    root: R,
-    send_item: Option<T>,
-) -> Result<T, CommunicationError>
+pub fn bincode_broadcast<R, T>(rank: Rank, root: R, item: &mut T) -> Result<(), CommunicationError>
 where
     R: Root,
     T: Serialize + for<'a> Deserialize<'a>,
 {
-    match send_item {
-        Some(item) => {
-            assert_eq!(root.root_rank(), rank);
-            let mut serialized = bincode::serialize(&item)?;
-            let mut length = serialized.len();
-            root.broadcast_into(&mut length);
-            root.broadcast_into(&mut serialized[..]);
-            Ok(item)
-        },
-        None => {
-            assert_ne!(root.root_rank(), rank);
-            let mut length = 0usize;
-            root.broadcast_into(&mut length);
-            let mut buffer = vec![0u8; length];
-            root.broadcast_into(&mut buffer[..]);
-            let item = bincode::deserialize(&buffer[..])?;
-            Ok(item)
-        },
+    if rank == root.root_rank() {
+        let mut serialized = bincode::serialize(&*item)?;
+        let mut length = serialized.len();
+        root.broadcast_into(&mut length);
+        root.broadcast_into(&mut serialized[..]);
+    } else {
+        let mut length = 0usize;
+        root.broadcast_into(&mut length);
+        let mut buffer = vec![0u8; length];
+        root.broadcast_into(&mut buffer[..]);
+        *item = bincode::deserialize(&buffer[..])?;
     }
+    Ok(())
 }

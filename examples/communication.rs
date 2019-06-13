@@ -1,6 +1,7 @@
 use mpi::topology::Communicator;
 use mpi_traffic::communication::{bincode_all_gather_varcount, bincode_broadcast};
 use serde::{Deserialize, Serialize};
+use mpi::collective::CommunicatorCollectives;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 struct A {
@@ -18,14 +19,16 @@ fn main() {
     let data = bincode_all_gather_varcount(world, &local_data);
     println!("{:?}", data);
 
+    world.barrier();
+
     let root = world.process_at_rank(0);
-    let local_data = if rank == root.rank() {
+    let mut data = if rank == root.rank() {
         Some(A {
             v: vec![1, 2, 3, 4, 5],
         })
     } else {
         None
     };
-    let data = bincode_broadcast(rank, root, local_data).unwrap();
+    bincode_broadcast(rank, root, &mut data).unwrap();
     println!("{:?}", data);
 }
