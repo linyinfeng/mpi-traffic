@@ -88,7 +88,6 @@ impl<T> Matrix<T> {
         self.indices().zip(self.iter())
     }
 
-    #[allow(clippy::type_complexity)]
     pub fn enumerate_mut(&mut self) -> impl Iterator<Item = (MatrixIndex, &mut T)> {
         self.indices().zip(self.iter_mut())
     }
