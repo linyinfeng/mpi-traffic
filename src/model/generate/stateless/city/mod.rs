@@ -29,6 +29,7 @@ pub fn generate_city(city_settings: &StatelessModelGenerationSettings) -> City {
     City {
         board,
         car_out_intersection,
+        car_out_min_distance: city_settings.car_out_min_distance,
         lane_width: city_settings.lane_width,
         horizontal_road_length: rand_road_length(board_shape.1 - 1, city_settings),
         vertical_road_length: rand_road_length(board_shape.0 - 1, city_settings),

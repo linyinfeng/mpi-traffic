@@ -189,6 +189,20 @@ impl View {
                 );
             }
         }
+
+        for (stateless_car, stateful_car) in
+            stateless_model.cars.iter().zip(stateful_model.cars.iter())
+        {
+            if let Some(stateful_car) = stateful_car {
+                self.draw_car(
+                    stateless_car,
+                    stateful_car,
+                    &stateless_model.city,
+                    model_context.transform,
+                    g2d,
+                );
+            }
+        }
     }
 
     /// Draw a horizontal road.
@@ -474,6 +488,7 @@ impl View {
                 let length = city.road_length(road_direction, road_index);
                 let x = -length / 2.0 + position;
                 let heading = self.car_heading_deg_on_road(road_direction, lane_direction);
+                log::trace!("heading: {}", heading);
                 self.draw_car_only(
                     self.transform_to_lane_center(
                         transform,

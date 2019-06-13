@@ -91,7 +91,10 @@ impl ProcessLocalState {
         stateful: &[Option<stateful::Car>],
         _stateless: &[stateless::Car],
     ) -> Self {
-        let mut map = Self::empty(&city.board, city.car_out_intersection);
+        let mut local_state = Self::empty(&city.board, city.car_out_intersection);
+        let car_out_intersection_context = city
+            .board
+            .context_of_intersection(city.car_out_intersection);
         for (i, car) in stateful.iter().enumerate() {
             if let Some(car) = car {
                 match car.location {
@@ -101,14 +104,37 @@ impl ProcessLocalState {
                         lane_direction,
                         lane_index,
                         position,
-                    } => map.insert_car(
-                        road_direction,
-                        road_index,
-                        lane_direction,
-                        lane_index,
-                        position,
-                        i,
-                    ),
+                    } => {
+                        local_state.insert_car(
+                            road_direction,
+                            road_index,
+                            lane_direction,
+                            lane_index,
+                            position,
+                            i,
+                        );
+                        for direction in AbsoluteDirection::directions() {
+                            if let Some(out_road_index) =
+                                car_out_intersection_context.get(*direction)
+                            {
+                                let out_road_direction = direction.axis_direction();
+                                let out_lane_direction = LaneDirection::absolute_in_out_to_lane(
+                                    *direction,
+                                    InOutDirection::Out,
+                                );
+                                if out_road_direction == road_direction &&
+                                    *out_road_index == road_index &&
+                                    out_lane_direction == lane_direction
+                                {
+                                    if position < city.car_out_min_distance {
+                                        local_state
+                                            .car_out_intersection_lane_out_availability
+                                            .get_mut(*direction)[lane_index] = false;
+                                    }
+                                }
+                            }
+                        }
+                    },
                     stateful::car::Location::ChangingLane {
                         road_direction,
                         road_index,
@@ -118,7 +144,7 @@ impl ProcessLocalState {
                         position,
                         ..
                     } => {
-                        map.insert_car(
+                        local_state.insert_car(
                             road_direction,
                             road_index,
                             lane_direction,
@@ -126,7 +152,7 @@ impl ProcessLocalState {
                             position,
                             i,
                         );
-                        map.insert_car(
+                        local_state.insert_car(
                             road_direction,
                             road_index,
                             lane_direction,
@@ -135,22 +161,23 @@ impl ProcessLocalState {
                             i,
                         )
                     },
-                    _ => (),
-                    /* TODO: FIX */
-                    /* InIntersection {
-                     *     intersection_index,
-                     *     from_direction,
-                     *     from_lane_index,
-                     *     to_direction,
-                     *     to_lane_index,
-                     *     total_length,
-                     *     position,
-                     * }, => (), */
+                    stateful::car::Location::InIntersection {
+                        intersection_index,
+                        to_direction,
+                        to_lane_index,
+                        ..
+                    } => {
+                        if intersection_index == city.car_out_intersection {
+                            local_state
+                                .car_out_intersection_lane_out_availability
+                                .get_mut(to_direction)[to_lane_index] = false;
+                        }
+                    },
                 }
             }
         }
-        map.sort_all();
-        map
+        local_state.sort_all();
+        local_state
     }
 
     pub fn insert_car(

@@ -40,7 +40,7 @@ fn main() {
         let event_settings = EventSettings::new().ups(60).max_fps(60);
         window.set_event_settings(event_settings);
 
-        let view = View::new(dbg!(settings.view_settings));
+        let view = View::new(settings.view_settings);
         let mut info = Info::new();
         let update_controller = UpdateController::new();
         let mut controller = Controller::new(update_controller, settings.controller_settings);

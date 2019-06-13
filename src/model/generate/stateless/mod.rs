@@ -158,6 +158,13 @@ pub struct StatelessModelGenerationSettings {
         long = "stateless-model-generation-straight-long-way-lane-num"
     )]
     pub straight_long_way_lane_num: usize,
+
+    #[structopt(
+        name = "stateless-model-generation-car-out-min-distance",
+        default_value = "8",
+        long = "stateless-model-generation-car-out-min-distance"
+    )]
+    pub car_out_min_distance: f64,
 }
 
 pub fn generate_stateless_model(settings: StatelessModelGenerationSettings) -> Model {

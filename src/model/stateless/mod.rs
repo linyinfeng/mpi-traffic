@@ -21,6 +21,7 @@ use serde::{Deserialize, Serialize};
 pub struct City {
     pub board: Board<Option<Intersection>, Option<Road>>,
     pub car_out_intersection: IntersectionIndex,
+    pub car_out_min_distance: f64,
     pub lane_width: f64,
     pub horizontal_road_length: Vec<f64>,
     pub vertical_road_length: Vec<f64>,

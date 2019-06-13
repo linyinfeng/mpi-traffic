@@ -190,7 +190,7 @@ impl UpdateController {
             *outed = true;
             match self.try_out_car(local_state, stateful, stateless) {
                 Some((road_direction, road_index, lane_direction, lane_index)) => {
-                    Some(stateful::Car {
+                    let car = stateful::Car {
                         location: stateful::car::Location::OnLane {
                             road_direction,
                             road_index,
@@ -200,7 +200,9 @@ impl UpdateController {
                         },
                         acceleration: 0.0,
                         velocity: 0.0,
-                    })
+                    };
+                    log::debug!("crate car: {:?}", car);
+                    Some(car)
                 },
                 None => None,
             }
@@ -215,6 +217,7 @@ impl UpdateController {
         _stateful: &stateful::Model,
         stateless: &stateless::Model,
     ) -> Option<(AxisDirection, RoadIndex, LaneDirection, LaneIndex)> {
+        log::trace!("try_out_car called");
         let context = stateless
             .city
             .board
@@ -226,12 +229,14 @@ impl UpdateController {
             for (lane_index, availability) in lanes_availability.iter().enumerate() {
                 if *availability {
                     let road_index = context.get(*direction).unwrap();
-                    return Some((
+                    let car_out_parameter = (
                         direction.axis_direction(),
                         road_index,
                         LaneDirection::absolute_in_out_to_lane(*direction, InOutDirection::Out),
                         lane_index,
-                    ))
+                    );
+                    log::debug!("car out parameter: {:?}", car_out_parameter);
+                    return Some(car_out_parameter)
                 }
             }
         }
