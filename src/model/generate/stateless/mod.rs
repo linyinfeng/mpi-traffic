@@ -9,7 +9,7 @@ pub mod city;
 pub struct StatelessModelGenerationSettings {
     #[structopt(
         name = "stateless-model-generation-board-shape-rows",
-        default_value = "4",
+        default_value = "3",
         long = "stateless-model-generation-board-shape-rows"
     )]
     pub board_shape_rows: usize,
@@ -22,7 +22,7 @@ pub struct StatelessModelGenerationSettings {
 
     #[structopt(
         name = "stateless-model-generation-min-road-length",
-        default_value = "50",
+        default_value = "20",
         long = "stateless-model-generation-min-road-length"
     )]
     pub min_road_length: f64,

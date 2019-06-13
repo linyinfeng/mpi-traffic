@@ -1,7 +1,10 @@
-use crate::model::{
-    board::RoadIndex,
-    common::{AbsoluteDirection, AxisDirection, Geometry, LaneDirection, TurnRule},
-    stateful, stateless,
+use crate::{
+    info::Info,
+    model::{
+        board::RoadIndex,
+        common::{AbsoluteDirection, AxisDirection, Geometry, LaneDirection, TurnRule},
+        stateful, stateless,
+    },
 };
 use log::trace;
 use piston_window::{
@@ -60,11 +63,14 @@ impl ViewSettings {
 impl View {
     pub fn draw(
         &self,
+        info: &Info,
         stateless_model: &stateless::Model,
         stateful_model: &stateful::Model,
         context: Context,
         g2d: &mut G2d,
     ) {
+        let context = context.trans(info.x, info.y).zoom(info.zoom);
+
         // Model logical width and model height
         let Geometry {
             width: mw,

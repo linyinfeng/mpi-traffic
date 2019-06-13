@@ -1,6 +1,7 @@
 use log::trace;
 use mpi_traffic::{
-    controller::Controller,
+    controller::{Controller, ControllerSettings},
+    info::Info,
     model::generate::{self, ModelGenerationSettings},
     view::{View, ViewSettings},
 };
@@ -26,7 +27,8 @@ fn main() {
     let model = generate::generate_model(settings.model_generation_settings);
     let stateless_model = model.stateless;
     let mut stateful_model = model.stateful;
-    let mut controller = Controller::new();
+    let mut info = Info::new();
+    let mut controller = Controller::new(settings.controller_settings);
 
     while let Some(e) = window.next() {
         trace!("event: {:?}", e);
@@ -34,15 +36,15 @@ fn main() {
             use piston_window::clear;
             let clear_color = color::BLACK;
             clear(clear_color, g);
-            view.draw(&stateless_model, &stateful_model, c, g);
+            view.draw(&info, &stateless_model, &stateful_model, c, g);
         });
         match e {
             Event::Input(e, _) => {
-                controller.input(&mut stateful_model, &stateless_model, e);
+                controller.input(&mut info, &mut stateful_model, &stateless_model, e);
             },
             Event::Loop(e) => {
                 if let Loop::Update(args) = e {
-                    controller.update(&mut stateful_model, &stateless_model, args);
+                    controller.update(&mut info, &mut stateful_model, &stateless_model, args);
                 }
             },
             _ => {},
@@ -51,8 +53,11 @@ fn main() {
 }
 
 #[derive(StructOpt)]
-#[structopt(name = "mpi-traffic", about = "Simple traffic simulation with MPI..")]
+#[structopt(name = "mpi-traffic", about = "Simple traffic simulation with MPI.")]
 struct MpiTrafficOpt {
     #[structopt(flatten)]
     pub model_generation_settings: ModelGenerationSettings,
+
+    #[structopt(flatten)]
+    pub controller_settings: ControllerSettings,
 }

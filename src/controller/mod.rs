@@ -1,28 +1,43 @@
-use crate::model::{stateful, stateless};
-use log::trace;
-use piston_window::{Input, UpdateArgs};
+use crate::{
+    info::Info,
+    model::{stateful, stateless},
+};
+use piston_window::{Button, ButtonArgs, ButtonState, Input, Motion, MouseButton, UpdateArgs};
+use structopt::StructOpt;
 
 pub mod car_map;
 
 #[derive(Clone, Debug)]
 pub struct Controller {
-    elapsed_time: f64,
+    pub mouse_left_button_down: bool,
+    pub mouse_left_button_down_location: Option<(f64, f64)>,
+    pub start_drag_location: Option<(f64, f64)>,
+    pub settings: ControllerSettings,
+}
+
+#[derive(StructOpt, Clone, Debug)]
+pub struct ControllerSettings {
+    #[structopt(name = "zoom-step", long = "zoom-step", default_value = "0.1")]
+    pub zoom_step: f64,
 }
 
 impl Controller {
-    pub fn new() -> Self {
-        Self { elapsed_time: 0.0 }
+    pub fn new(settings: ControllerSettings) -> Self {
+        Self {
+            mouse_left_button_down: false,
+            mouse_left_button_down_location: None,
+            start_drag_location: None,
+            settings,
+        }
     }
 
     pub fn update(
         &mut self,
+        _info: &mut Info,
         stateful: &mut stateful::Model,
         stateless: &stateless::Model,
         args: UpdateArgs,
     ) {
-        self.elapsed_time += args.dt;
-        trace!("elapsed time: {:.5}, dt: {:.5}", self.elapsed_time, args.dt);
-
         for (stateful_intersection, stateless_intersection) in stateful
             .city
             .board
@@ -40,10 +55,46 @@ impl Controller {
 
     pub fn input(
         &mut self,
+        info: &mut Info,
         _stateful: &mut stateful::Model,
         _stateless: &stateless::Model,
-        _input: Input,
+        input: Input,
     ) {
+        match input {
+            Input::Button(ButtonArgs {
+                state,
+                button: Button::Mouse(MouseButton::Left),
+                ..
+            }) => {
+                match state {
+                    ButtonState::Press => {
+                        self.mouse_left_button_down = true;
+                        self.start_drag_location = Some((info.x, info.y));
+                    },
+                    ButtonState::Release => {
+                        self.mouse_left_button_down = false;
+                        self.start_drag_location = None;
+                    },
+                };
+                self.mouse_left_button_down_location = None;
+            },
+            Input::Move(Motion::MouseCursor([x, y])) => {
+                if self.mouse_left_button_down {
+                    if let Some((origin_x, origin_y)) = self.mouse_left_button_down_location {
+                        if let Some((start_drag_x, start_drag_y)) = self.start_drag_location {
+                            info.x = start_drag_x + x - origin_x;
+                            info.y = start_drag_y + y - origin_y;
+                        }
+                    } else {
+                        self.mouse_left_button_down_location = Some((x, y));
+                    }
+                }
+            },
+            Input::Move(Motion::MouseScroll([_x, y])) => {
+                info.zoom += y * self.settings.zoom_step;
+            },
+            _ => (),
+        }
     }
 
     fn update_intersection(
