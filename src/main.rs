@@ -37,7 +37,7 @@ fn main() {
             .exit_on_esc(true)
             .build()
             .unwrap_or_else(|e| panic!("failed to build PistonWindow: {}", e));
-        let event_settings = EventSettings::new().ups(60).max_fps(60);
+        let event_settings = EventSettings::new().ups(30).max_fps(30);
         window.set_event_settings(event_settings);
 
         let view = View::new(settings.view_settings);

@@ -36,6 +36,18 @@ pub enum RelativeDirection {
     Left,
 }
 
+impl RelativeDirection {
+    pub fn to_turn_rule(self) -> TurnRule {
+        use RelativeDirection::*;
+        match self {
+            Front => TurnRule::FRONT,
+            Right => TurnRule::RIGHT,
+            Back => TurnRule::BACK,
+            Left => TurnRule::LEFT,
+        }
+    }
+}
+
 impl AbsoluteDirection {
     pub fn turn_back(self) -> AbsoluteDirection {
         use AbsoluteDirection::*;
@@ -206,8 +218,8 @@ impl AbsoluteDirection {
         use LaneDirection::*;
 
         match (axis, lane_direction) {
-            (Horizontal, LowToHigh) => West,
-            (Horizontal, HighToLow) => East,
+            (Horizontal, LowToHigh) => East,
+            (Horizontal, HighToLow) => West,
             (Vertical, LowToHigh) => South,
             (Vertical, HighToLow) => North,
         }
@@ -319,8 +331,8 @@ mod test {
         let cases = vec![
             ((Vertical, HighToLow), North),
             ((Vertical, LowToHigh), South),
-            ((Horizontal, HighToLow), East),
-            ((Horizontal, LowToHigh), West),
+            ((Horizontal, HighToLow), West),
+            ((Horizontal, LowToHigh), East),
         ];
         for ((axis_direction, lane_direction), absolute) in cases.into_iter() {
             assert_eq!(

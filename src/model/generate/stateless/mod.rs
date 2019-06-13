@@ -94,7 +94,7 @@ pub struct StatelessModelGenerationSettings {
     pub max_lane_change_time: f64,
     #[structopt(
         name = "stateless-model-generation-min-cushion",
-        default_value = "4.0",
+        default_value = "8.0",
         long = "stateless-model-generation-min-cushion"
     )]
     pub min_cushion: f64,
@@ -118,7 +118,7 @@ pub struct StatelessModelGenerationSettings {
     pub prediction_time: f64,
     #[structopt(
         name = "stateless-model-generation-time-out",
-        default_value = "30.0",
+        default_value = "5.0",
         long = "stateless-model-generation-time-out"
     )]
     pub time_out: f64,

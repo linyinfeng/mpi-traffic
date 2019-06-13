@@ -496,7 +496,13 @@ impl View {
                         lane_direction,
                         lane_index,
                     )
-                    .trans(x, 0.0)
+                    .trans(
+                        match lane_direction {
+                            LowToHigh => x,
+                            HighToLow => -x,
+                        },
+                        0.0,
+                    )
                     .rot_deg(match lane_direction {
                         LowToHigh => 90.0,
                         HighToLow => 270.0,
@@ -531,7 +537,13 @@ impl View {
                         lane_direction,
                         from_lane_index,
                     )
-                    .trans(x, lane_changed_offset)
+                    .trans(
+                        match lane_direction {
+                            LowToHigh => x,
+                            HighToLow => -x,
+                        },
+                        lane_changed_offset,
+                    )
                     .rot_deg(match lane_direction {
                         LowToHigh => 90.0,
                         HighToLow => 270.0,

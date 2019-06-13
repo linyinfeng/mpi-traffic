@@ -96,8 +96,8 @@ impl<I, R> Board<I, R> {
             LowToHigh => {
                 let (x, y) = road_index;
                 match road_direction {
-                    Vertical => (x, y + 1),
-                    Horizontal => (x + 1, y),
+                    Vertical => (x + 1, y),
+                    Horizontal => (x, y + 1),
                 }
             },
         }

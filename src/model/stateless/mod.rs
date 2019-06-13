@@ -122,11 +122,11 @@ impl City {
         let position = match direction {
             North => Position {
                 x: -offset,
-                y: geometry.height / 2.0,
+                y: -geometry.height / 2.0,
             },
             South => Position {
                 x: -offset,
-                y: -geometry.height / 2.0,
+                y: geometry.height / 2.0,
             },
             East => Position {
                 x: geometry.height / 2.0,
