@@ -1,7 +1,6 @@
-use mpi::topology::Communicator;
+use mpi::{collective::CommunicatorCollectives, topology::Communicator};
 use mpi_traffic::communication::{bincode_all_gather_varcount, bincode_broadcast};
 use serde::{Deserialize, Serialize};
-use mpi::collective::CommunicatorCollectives;
 
 #[derive(Serialize, Deserialize, Debug, Clone)]
 struct A {

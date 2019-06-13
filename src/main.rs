@@ -32,11 +32,6 @@ fn main() {
     let stateless_model = model.stateless;
     let mut stateful_model = model.stateful;
 
-    // use std::io::Write;
-    // let mut file = std::fs::File::create(format!("{}.txt",
-    // world.rank())).unwrap(); file.write_all(format!("{:#?}",
-    // model).as_bytes()).unwrap();
-
     if world.rank() == ROOT {
         let mut window: PistonWindow = WindowSettings::new("MPI Traffic", [1000, 500])
             .exit_on_esc(true)

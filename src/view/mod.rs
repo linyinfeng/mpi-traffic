@@ -11,7 +11,6 @@ use crate::{
 };
 use log::trace;
 use piston_window::{
-    color,
     context::Context,
     polygon, rectangle,
     types::{Color, Matrix2d},
