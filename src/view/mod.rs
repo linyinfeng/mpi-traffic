@@ -1,8 +1,11 @@
 use crate::{
     info::Info,
     model::{
-        board::RoadIndex,
-        common::{AbsoluteDirection, AxisDirection, Geometry, LaneDirection, TurnRule},
+        board::{IntersectionIndex, RoadIndex},
+        common::{
+            AbsoluteDirection, AxisDirection, Geometry, InOutDirection, LaneDirection, LaneIndex,
+            Position, RelativeDirection, TurnRule,
+        },
         stateful, stateless,
     },
 };
@@ -134,12 +137,15 @@ impl View {
         {
             if let Some(intersection) = intersection.as_ref() {
                 let geometry = stateless_model.city.intersection_geometry((i, j));
-                let center = stateless_model.city.intersection_center((i, j));
                 self.draw_intersection(
                     geometry,
                     intersection,
                     state.as_ref().unwrap(),
-                    model_context.transform.trans(center.x, center.y),
+                    self.transform_to_intersection_center(
+                        model_context.transform,
+                        &stateless_model.city,
+                        (i, j),
+                    ),
                     g2d,
                 );
             }
@@ -428,6 +434,7 @@ impl View {
             } => {
                 let length = city.road_length(road_direction, road_index);
                 let x = -length / 2.0 + position;
+                let heading = self.car_heading_deg_on_road(road_direction, lane_direction);
                 self.draw_car_only(
                     self.transform_to_lane_center(
                         transform,
@@ -437,31 +444,98 @@ impl View {
                         lane_direction,
                         lane_index,
                     )
-                    .trans(x, 0.0),
+                    .trans(x, 0.0)
+                    .rot_deg(heading),
                     g2d,
                 );
             },
             stateful::car::Location::ChangingLane {
-                road_direction: _,
-                road_index: _,
-                lane_direction: _,
-                from_lane_index: _,
-                to_lane_index: _,
-                position: _,
-                lane_changed_proportion: _,
-            } => unimplemented!(),
+                road_direction,
+                road_index,
+                lane_direction,
+                from_lane_index,
+                to_lane_index,
+                position,
+                lane_changed_proportion,
+            } => {
+                let length = city.road_length(road_direction, road_index);
+                let x = -length / 2.0 + position;
+                let lane_changed_offset = lane_changed_proportion *
+                    city.lane_width *
+                    (to_lane_index - from_lane_index) as f64 *
+                    match lane_direction {
+                        LaneDirection::HighToLow => 1.0,
+                        LaneDirection::LowToHigh => -1.0,
+                    };
+                let heading = self.car_heading_deg_on_road(road_direction, lane_direction);
+                self.draw_car_only(
+                    self.transform_to_lane_center(
+                        transform,
+                        city,
+                        road_direction,
+                        road_index,
+                        lane_direction,
+                        from_lane_index,
+                    )
+                    .trans(x, lane_changed_offset)
+                    .rot_deg(heading),
+                    g2d,
+                );
+            },
             stateful::car::Location::InIntersection {
-                intersection_index: _,
-                from_direction: _,
-                from_lane_index: _,
-                to_direction: _,
-                to_lane_index: _,
-                in_intersection_proportion: _,
-            } => unimplemented!(),
+                intersection_index,
+                from_direction,
+                from_lane_index,
+                to_direction,
+                to_lane_index,
+                total_length,
+                position,
+            } => {
+                let Position {
+                    x: from_x,
+                    y: from_y,
+                } = city
+                    .intersection_road_join_position(
+                        intersection_index,
+                        from_direction,
+                        InOutDirection::In,
+                        from_lane_index,
+                    )
+                    .unwrap();
+                let Position { x: to_x, y: to_y } = city
+                    .intersection_road_join_position(
+                        intersection_index,
+                        to_direction,
+                        InOutDirection::Out,
+                        to_lane_index,
+                    )
+                    .unwrap();
+                let proportion = position / total_length;
+                let dx = to_x - from_x;
+                let dy = to_y - from_y;
+                let x = dx * proportion + from_x;
+                let y = dy * proportion + from_y;
+                let turn_direction = from_direction.turn_back() // convert to driver's direction
+                    .should_turn(to_direction);
+                let origin_heading = self.car_heading_deg_on_road(
+                    from_direction.axis_direction(),
+                    LaneDirection::absolute_in_out_to_lane(from_direction, InOutDirection::In),
+                );
+                let turn_heading = self.car_heading_offset_deb_to_turn(turn_direction);
+                let heading = origin_heading + turn_heading * proportion;
+                self.draw_car_only(
+                    self.transform_to_intersection_center(transform, city, intersection_index)
+                        .trans(x, y)
+                        .rot_deg(heading),
+                    g2d,
+                );
+            },
         }
     }
 
-    /// Draw a car under centralized coordinate system
+    /// Draw a car under centralized coordinate system.
+    ///
+    /// The car is heading to north.
     pub fn draw_car_only(&self, transform: Matrix2d, g2d: &mut G2d) {
         let height = self.settings.car_length;
         let width = self.settings.car_width;
@@ -499,7 +573,7 @@ impl View {
         road_direction: AxisDirection,
         road_index: RoadIndex,
         lane_direction: LaneDirection,
-        lane_index: usize,
+        lane_index: LaneIndex,
     ) -> Matrix2d {
         let road = city
             .board
@@ -507,24 +581,43 @@ impl View {
             .unwrap()
             .as_ref()
             .unwrap();
-        let offset = self.lane_center_offset(road, city.lane_width, lane_direction, lane_index);
+        let offset = city.lane_center_offset(road, lane_direction, lane_index);
         self.transform_to_road_center(transform, city, road_direction, road_index)
             .trans(0.0, offset)
     }
 
-    fn lane_center_offset(
+    fn transform_to_intersection_center(
         &self,
-        road: &stateless::Road,
-        lane_width: f64,
-        direction: LaneDirection,
-        lane_index: usize,
+        transform: Matrix2d,
+        city: &stateless::City,
+        index: IntersectionIndex,
+    ) -> Matrix2d {
+        let center = city.intersection_center(index);
+        transform.trans(center.x, center.y)
+    }
+
+    fn car_heading_deg_on_road(
+        &self,
+        road_direction: AxisDirection,
+        lane_direction: LaneDirection,
     ) -> f64 {
-        let lane_number = road.lane_number();
-        let top = -lane_width * lane_number as f64 / 2.0;
-        let lane_offset = match direction {
-            LaneDirection::HighToLow => road.lane_to_low.len() - 1 - lane_index,
-            LaneDirection::LowToHigh => road.lane_to_low.len() + lane_index,
-        };
-        top + lane_offset as f64 * lane_width
+        use AxisDirection::*;
+        use LaneDirection::*;
+        match (road_direction, lane_direction) {
+            (Horizontal, HighToLow) => 270.0,
+            (Horizontal, LowToHigh) => 90.0,
+            (Vertical, HighToLow) => 0.0,
+            (Vertical, LowToHigh) => 180.0,
+        }
+    }
+
+    fn car_heading_offset_deb_to_turn(&self, direction: RelativeDirection) -> f64 {
+        use RelativeDirection::*;
+        match direction {
+            Front => 0.0,
+            Back => -180.0,
+            Left => -90.0,
+            Right => 90.0,
+        }
     }
 }

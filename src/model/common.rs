@@ -261,6 +261,16 @@ pub struct Position {
     pub y: f64,
 }
 
+impl Position {
+    pub fn distance(self, other: Self) -> f64 {
+        let Position { x: x1, y: y1 } = self;
+        let Position { x: x2, y: y2 } = other;
+        let dx = x1 - x2;
+        let dy = y1 - y2;
+        (dx * dx + dy * dy).sqrt()
+    }
+}
+
 #[cfg(test)]
 mod test {
     use AbsoluteDirection::*;
@@ -309,6 +319,27 @@ mod test {
                 AbsoluteDirection::of_lane(axis_direction, lane_direction),
                 absolute
             );
+        }
+    }
+
+    #[test]
+    fn distance() {
+        let cases = vec![
+            (
+                (Position { x: 0.0, y: 0.0 }, Position { x: 3.0, y: 4.0 }),
+                5.0,
+            ),
+            (
+                (Position { x: 1.0, y: 2.0 }, Position { x: 1.0, y: 2.0 }),
+                0.0,
+            ),
+            (
+                (Position { x: 1.0, y: 3.0 }, Position { x: 1.0, y: 2.0 }),
+                1.0,
+            ),
+        ];
+        for ((a, b), result) in cases.into_iter() {
+            assert_eq!(a.distance(b), result);
         }
     }
 }

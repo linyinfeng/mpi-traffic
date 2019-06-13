@@ -36,9 +36,7 @@ pub enum Location {
         from_lane_index: LaneIndex,
         to_direction: AbsoluteDirection,
         to_lane_index: LaneIndex,
-        /// Proportion in intersection.
-        ///
-        /// Assume the path in intersection is a straight line.
-        in_intersection_proportion: f64,
+        total_length: f64,
+        position: f64,
     },
 }

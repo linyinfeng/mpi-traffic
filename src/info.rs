@@ -1,3 +1,4 @@
+#[derive(Debug, Clone, Default)]
 pub struct Info {
     pub x: f64,
     pub y: f64,

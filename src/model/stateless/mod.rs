@@ -6,7 +6,10 @@ pub mod road;
 
 use crate::model::{
     board::{Board, IntersectionIndex, RoadIndex},
-    common::{AxisDirection, Geometry, Position},
+    common::{
+        AbsoluteDirection, AxisDirection, Geometry, InOutDirection, LaneDirection, LaneIndex,
+        Position,
+    },
 };
 pub use car::Car;
 pub use intersection::Intersection;
@@ -95,11 +98,86 @@ impl City {
             height: self.intersection_height[i],
         }
     }
+
+    /// Return the join point relative to intersection center
+    pub fn intersection_road_join_position(
+        &self,
+        intersection_index: IntersectionIndex,
+        direction: AbsoluteDirection,
+        in_out: InOutDirection,
+        lane_index: LaneIndex,
+    ) -> Option<Position> {
+        use AbsoluteDirection::*;
+        let geometry = self.intersection_geometry(intersection_index);
+        let context = self.board.context_of_intersection(intersection_index);
+        let road_index = (*context.get(direction))?;
+        let road_direction = direction.axis_direction();
+        let lane_direction = LaneDirection::absolute_in_out_to_lane(direction, in_out);
+        let road = self.board.get_road(road_direction, road_index)?.as_ref()?;
+        let offset = self.lane_center_offset(road, lane_direction, lane_index);
+        let position = match direction {
+            North => Position {
+                x: -offset,
+                y: geometry.height / 2.0,
+            },
+            South => Position {
+                x: -offset,
+                y: -geometry.height / 2.0,
+            },
+            East => Position {
+                x: geometry.height / 2.0,
+                y: offset,
+            },
+            West => Position {
+                x: -geometry.height / 2.0,
+                y: offset,
+            },
+        };
+        Some(position)
+    }
+
+    /// Return the join point relative to intersection center
+    pub fn intersection_path_total_length(
+        &self,
+        intersection_index: IntersectionIndex,
+        from_direction: AbsoluteDirection,
+        from_lane_index: LaneIndex,
+        to_direction: AbsoluteDirection,
+        to_lane_index: LaneIndex,
+    ) -> Option<f64> {
+        let from_position = self.intersection_road_join_position(
+            intersection_index,
+            from_direction,
+            InOutDirection::In,
+            from_lane_index,
+        )?;
+        let to_position = self.intersection_road_join_position(
+            intersection_index,
+            to_direction,
+            InOutDirection::Out,
+            to_lane_index,
+        )?;
+        Some(from_position.distance(to_position))
+    }
+
+    pub fn lane_center_offset(
+        &self,
+        road: &Road,
+        direction: LaneDirection,
+        lane_index: usize,
+    ) -> f64 {
+        let lane_number = road.lane_number();
+        let top = -self.lane_width * lane_number as f64 / 2.0;
+        let lane_offset = match direction {
+            LaneDirection::HighToLow => road.lane_to_low.len() - 1 - lane_index,
+            LaneDirection::LowToHigh => road.lane_to_low.len() + lane_index,
+        };
+        top + lane_offset as f64 * self.lane_width
+    }
 }
 
 #[cfg(test)]
 mod tests {
-
     use super::*;
 
     fn example_city() -> City {
