@@ -456,7 +456,6 @@ impl UpdateController {
                             },
                             None => None, // remove the car
                         }
-
                     } else {
                         Some(Car {
                             location: InIntersection {
@@ -578,9 +577,8 @@ impl UpdateController {
                     TurnRule::RIGHT => Right,
                     _ => unreachable!(),
                 })
-            }
+            },
         }
-
     }
 
     pub fn try_out_car(
