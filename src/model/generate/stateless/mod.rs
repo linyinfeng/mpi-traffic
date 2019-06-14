@@ -70,13 +70,13 @@ pub struct StatelessModelGenerationSettings {
     pub max_max_acceleration: f64,
     #[structopt(
         name = "stateless-model-generation-min-max-break-acceleration",
-        default_value = "20.0",
+        default_value = "30.0",
         long = "stateless-model-generation-min-max-break-acceleration"
     )]
     pub min_max_break_acceleration: f64,
     #[structopt(
         name = "stateless-model-generation-max-max-break-acceleration",
-        default_value = "30.0",
+        default_value = "50.0",
         long = "stateless-model-generation-max-max-break-acceleration"
     )]
     pub max_max_break_acceleration: f64,

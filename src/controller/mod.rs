@@ -189,6 +189,7 @@ impl UpdateController {
         args: UpdateArgs,
     ) -> Option<stateful::Car> {
         use crate::model::stateful::car::Location::*;
+        let stateless_car = &stateless.cars[car_index];
         if let Some(car) = &stateful.cars[car_index] {
             match &car.location {
                 OnLane {
@@ -199,15 +200,20 @@ impl UpdateController {
                     about_to_turn,
                     position,
                 } => {
-                    let mut velocity = car.velocity + car.acceleration * args.dt;
-                    if car.acceleration < 0.0 && velocity < car.acceleration {
+                    let road_length = stateless.city.road_length(*road_direction, *road_index);
+                    let road = stateless.city.board.get_roads(*road_direction)[*road_index]
+                        .as_ref()
+                        .unwrap();
+                    let lane = &road.lanes_to_direction(*lane_direction)[*lane_index];
+                    // let max_velocity = stateless_car.max_velocity.min(lane.max_speed);
+                    let max_velocity = stateless_car.max_velocity;
+                    let mut velocity =
+                        (car.velocity + car.acceleration * args.dt).min(max_velocity);
+                    if car.acceleration < 0.0 && velocity < 2.0 * car.acceleration {
                         velocity = 0.0;
                     }
                     let position = position + car.velocity * args.dt;
-                    let road_length = stateless.city.road_length(*road_direction, *road_index);
-                    // let road = stateless.city.board.get_roads(*road_direction)[*road_index]
-                    //     .as_ref()
-                    //     .unwrap();
+
                     if position >= road_length {
                         // switch to InIntersection
                         let intersection_index = stateless.city.board.lane_to_intersection_index(
@@ -345,13 +351,14 @@ impl UpdateController {
                                 stateless::Intersection::Turn { max_speed } => {
                                     front_objects.push((road_length - position, *max_speed))
                                 },
-                                stateless::Intersection::Straight => {},
+                                stateless::Intersection::Straight => {
+                                    front_objects.push((road_length - position, lane.max_speed))
+                                },
                                 stateless::Intersection::End { max_speed } => {
                                     front_objects.push((road_length - position, *max_speed))
                                 },
                             }
                         }
-                        let stateless_car = &stateless.cars[car_index];
                         let acceleration = front_objects
                             .into_iter()
                             .map(|(object_distance, object_velocity)| {
@@ -365,6 +372,9 @@ impl UpdateController {
                             })
                             .min_by(|a, b| a.partial_cmp(b).unwrap())
                             .expect("car can not detect any object front");
+                        let acceleration = acceleration
+                            .min(stateless_car.max_acceleration)
+                            .max(-stateless_car.max_break_acceleration);
                         Some(Car {
                             velocity,
                             acceleration,
