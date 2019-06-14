@@ -129,11 +129,11 @@ impl City {
                 y: geometry.height / 2.0,
             },
             East => Position {
-                x: geometry.height / 2.0,
+                x: geometry.width / 2.0,
                 y: offset,
             },
             West => Position {
-                x: -geometry.height / 2.0,
+                x: -geometry.width / 2.0,
                 y: offset,
             },
         };

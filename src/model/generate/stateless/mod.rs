@@ -22,13 +22,13 @@ pub struct StatelessModelGenerationSettings {
 
     #[structopt(
         name = "stateless-model-generation-min-road-length",
-        default_value = "100",
+        default_value = "50",
         long = "stateless-model-generation-min-road-length"
     )]
     pub min_road_length: f64,
     #[structopt(
         name = "stateless-model-generation-max-road-length",
-        default_value = "1000",
+        default_value = "100",
         long = "stateless-model-generation-max-road-length"
     )]
     pub max_road_length: f64,
@@ -46,37 +46,37 @@ pub struct StatelessModelGenerationSettings {
     pub initial_car_number: usize,
     #[structopt(
         name = "stateless-model-generation-min-max-velocity",
-        default_value = "200.0",
+        default_value = "100.0",
         long = "stateless-model-generation-min-max-velocity"
     )]
     pub min_max_velocity: f64,
     #[structopt(
         name = "stateless-model-generation-max-max-velocity",
-        default_value = "260.0",
+        default_value = "160.0",
         long = "stateless-model-generation-max-max-velocity"
     )]
     pub max_max_velocity: f64,
     #[structopt(
         name = "stateless-model-generation-min-max-acceleration",
-        default_value = "30.0",
+        default_value = "3.0",
         long = "stateless-model-generation-min-max-acceleration"
     )]
     min_max_acceleration: f64,
     #[structopt(
         name = "stateless-model-generation-max-max-acceleration",
-        default_value = "60.0",
+        default_value = "10.0",
         long = "stateless-model-generation-max-max-acceleration"
     )]
     pub max_max_acceleration: f64,
     #[structopt(
         name = "stateless-model-generation-min-max-break-acceleration",
-        default_value = "30.0",
+        default_value = "80.0",
         long = "stateless-model-generation-min-max-break-acceleration"
     )]
     pub min_max_break_acceleration: f64,
     #[structopt(
         name = "stateless-model-generation-max-max-break-acceleration",
-        default_value = "50.0",
+        default_value = "100.0",
         long = "stateless-model-generation-max-max-break-acceleration"
     )]
     pub max_max_break_acceleration: f64,
@@ -94,7 +94,7 @@ pub struct StatelessModelGenerationSettings {
     pub max_lane_change_time: f64,
     #[structopt(
         name = "stateless-model-generation-min-cushion",
-        default_value = "8.0",
+        default_value = "10.0",
         long = "stateless-model-generation-min-cushion"
     )]
     pub min_cushion: f64,
@@ -118,19 +118,19 @@ pub struct StatelessModelGenerationSettings {
     pub prediction_time: f64,
     #[structopt(
         name = "stateless-model-generation-time-out",
-        default_value = "5.0",
+        default_value = "10.0",
         long = "stateless-model-generation-time-out"
     )]
     pub time_out: f64,
     #[structopt(
         name = "stateless-model-generation-intersection-max-speed",
-        default_value = "20.0",
+        default_value = "10.0",
         long = "stateless-model-generation-intersection-max-speed"
     )]
     pub intersection_max_speed: f64,
     #[structopt(
         name = "stateless-model-generation-lane-max-speed",
-        default_value = "60.0",
+        default_value = "40.0",
         long = "stateless-model-generation-lane-max-speed"
     )]
     pub lane_max_speed: f64,

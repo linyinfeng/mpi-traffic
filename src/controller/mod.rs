@@ -209,7 +209,7 @@ impl UpdateController {
                     let max_velocity = stateless_car.max_velocity;
                     let mut velocity =
                         (car.velocity + car.acceleration * args.dt).min(max_velocity);
-                    if car.acceleration < 0.0 && velocity < 2.0 * car.acceleration {
+                    if velocity < 0.0 {
                         velocity = 0.0;
                     }
                     let position = position + car.velocity * args.dt;
@@ -409,14 +409,11 @@ impl UpdateController {
                         stateless::Intersection::Straight => None,
                         stateless::Intersection::End { max_speed } => Some(max_speed),
                     };
+                    let proportion = position / total_length;
                     let velocity = match intersection_max_speed {
                         Some(max_speed) => {
-                            if car.velocity < *max_speed {
-                                let dv = max_speed - car.velocity;
-                                car.velocity + 0.5 * dv * args.dt
-                            } else {
-                                car.velocity
-                            }
+                            let velocity_proportion = proportion.min(0.5);
+                            car.velocity * (1.0 - velocity_proportion) + *max_speed * velocity_proportion
                         },
                         None => car.velocity,
                     };
