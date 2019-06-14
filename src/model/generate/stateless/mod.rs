@@ -22,13 +22,13 @@ pub struct StatelessModelGenerationSettings {
 
     #[structopt(
         name = "stateless-model-generation-min-road-length",
-        default_value = "20",
+        default_value = "100",
         long = "stateless-model-generation-min-road-length"
     )]
     pub min_road_length: f64,
     #[structopt(
         name = "stateless-model-generation-max-road-length",
-        default_value = "100",
+        default_value = "1000",
         long = "stateless-model-generation-max-road-length"
     )]
     pub max_road_length: f64,

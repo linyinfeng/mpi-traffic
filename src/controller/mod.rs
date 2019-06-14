@@ -437,19 +437,26 @@ impl UpdateController {
                             .unwrap()
                             .lanes_to_direction(to_lane_direction)[*to_lane_index]
                             .direction_rule;
-                        let updated_car = OnLane {
-                            road_direction: to_direction.axis_direction(),
-                            road_index: out_road_index,
-                            lane_direction: to_lane_direction,
-                            lane_index: *to_lane_index,
-                            about_to_turn: self.random_choose_relative_direction(turn_rule),
-                            position: 0.0,
-                        };
-                        Some(Car {
-                            location: updated_car,
-                            velocity,
-                            acceleration: 0.0,
-                        })
+                        let about_to_turn = self.random_choose_relative_direction(turn_rule);
+                        match about_to_turn {
+                            Some(about_to_turn) => {
+                                let updated_car = OnLane {
+                                    road_direction: to_direction.axis_direction(),
+                                    road_index: out_road_index,
+                                    lane_direction: to_lane_direction,
+                                    lane_index: *to_lane_index,
+                                    about_to_turn,
+                                    position: 0.0,
+                                };
+                                Some(Car {
+                                    location: updated_car,
+                                    velocity,
+                                    acceleration: 0.0,
+                                })
+                            },
+                            None => None, // remove the car
+                        }
+
                     } else {
                         Some(Car {
                             location: InIntersection {
@@ -478,20 +485,25 @@ impl UpdateController {
                         .lanes_to_direction(lane_direction)[lane_index]
                         .direction_rule;
                     let about_to_turn = self.random_choose_relative_direction(turn_rule);
-                    let car = stateful::Car {
-                        location: stateful::car::Location::OnLane {
-                            road_direction,
-                            road_index,
-                            lane_direction,
-                            lane_index,
-                            position: 0.0,
-                            about_to_turn,
+                    match about_to_turn {
+                        Some(about_to_turn) => {
+                            let car = stateful::Car {
+                                location: stateful::car::Location::OnLane {
+                                    road_direction,
+                                    road_index,
+                                    lane_direction,
+                                    lane_index,
+                                    position: 0.0,
+                                    about_to_turn,
+                                },
+                                acceleration: 0.0,
+                                velocity: 0.0,
+                            };
+                            log::debug!("Crate new car: {:?}", car);
+                            Some(car)
                         },
-                        acceleration: 0.0,
-                        velocity: 0.0,
-                    };
-                    log::debug!("crate car: {:?}", car);
-                    Some(car)
+                        None => None,
+                    }
                 },
                 None => None,
             }
@@ -542,7 +554,7 @@ impl UpdateController {
         None
     }
 
-    fn random_choose_relative_direction(&self, turn_rule: TurnRule) -> RelativeDirection {
+    fn random_choose_relative_direction(&self, turn_rule: TurnRule) -> Option<RelativeDirection> {
         use crate::model::common::RelativeDirection::*;
         let all_rule = [
             TurnRule::FRONT,
@@ -554,15 +566,21 @@ impl UpdateController {
             .iter()
             .filter(|&rule| (turn_rule & *rule) == *rule)
             .collect::<Vec<_>>();
-        let mut rng = rand::thread_rng();
-        let rule = enabled_rule[rng.gen_range(0usize, enabled_rule.len())];
-        match *rule {
-            TurnRule::FRONT => Front,
-            TurnRule::BACK => Back,
-            TurnRule::LEFT => Left,
-            TurnRule::RIGHT => Right,
-            _ => unreachable!(),
+        match enabled_rule.len() {
+            0 => None,
+            len => {
+                let mut rng = rand::thread_rng();
+                let rule = enabled_rule[rng.gen_range(0usize, len)];
+                Some(match *rule {
+                    TurnRule::FRONT => Front,
+                    TurnRule::BACK => Back,
+                    TurnRule::LEFT => Left,
+                    TurnRule::RIGHT => Right,
+                    _ => unreachable!(),
+                })
+            }
         }
+
     }
 
     pub fn try_out_car(
