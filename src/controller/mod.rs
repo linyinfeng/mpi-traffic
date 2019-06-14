@@ -413,7 +413,8 @@ impl UpdateController {
                     let velocity = match intersection_max_speed {
                         Some(max_speed) => {
                             let velocity_proportion = proportion.min(0.5);
-                            car.velocity * (1.0 - velocity_proportion) + *max_speed * velocity_proportion
+                            car.velocity * (1.0 - velocity_proportion) +
+                                *max_speed * velocity_proportion
                         },
                         None => car.velocity,
                     };
