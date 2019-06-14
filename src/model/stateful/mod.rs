@@ -1,23 +1,21 @@
 //! Module `stateful` is the dynamic part of the simulation
 
-pub mod car;
-pub mod intersection;
-pub mod road;
-
-pub use car::Car;
-pub use intersection::Intersection;
-pub use road::{Lane, Road};
-
 use crate::model::board::Board;
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+pub mod car;
+pub mod intersection;
+
+pub use car::Car;
+pub use intersection::Intersection;
+
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct City {
-    pub board: Board<Option<Intersection>, Option<Road>>,
+    pub board: Board<Option<Intersection>, ()>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct Model {
     pub city: City,
-    pub cars: Vec<Car>,
+    pub cars: Vec<Option<Car>>,
 }

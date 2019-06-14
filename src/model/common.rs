@@ -10,6 +10,7 @@ pub type CarIndex = usize;
 pub type LaneIndex = usize;
 
 bitflags! {
+    #[derive(Serialize, Deserialize, Default)]
     pub struct TurnRule: u8 {
         const FRONT = 0b0000_0001;
         const LEFT  = 0b0000_0010;
@@ -35,6 +36,18 @@ pub enum RelativeDirection {
     Left,
 }
 
+impl RelativeDirection {
+    pub fn to_turn_rule(self) -> TurnRule {
+        use RelativeDirection::*;
+        match self {
+            Front => TurnRule::FRONT,
+            Right => TurnRule::RIGHT,
+            Back => TurnRule::BACK,
+            Left => TurnRule::LEFT,
+        }
+    }
+}
+
 impl AbsoluteDirection {
     pub fn turn_back(self) -> AbsoluteDirection {
         use AbsoluteDirection::*;
@@ -49,20 +62,20 @@ impl AbsoluteDirection {
     pub fn turn_left(self) -> AbsoluteDirection {
         use AbsoluteDirection::*;
         match self {
-            East => South,
-            West => North,
-            North => East,
-            South => West,
+            East => North,
+            West => South,
+            North => West,
+            South => East,
         }
     }
 
     pub fn turn_right(self) -> AbsoluteDirection {
         use AbsoluteDirection::*;
         match self {
-            East => North,
-            West => South,
-            North => West,
-            South => East,
+            East => South,
+            West => North,
+            North => East,
+            South => West,
         }
     }
 
@@ -108,13 +121,21 @@ impl AbsoluteDirection {
     }
 }
 
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub enum AxisDirection {
     Horizontal,
     Vertical,
 }
 
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
+impl AxisDirection {
+    pub fn directions() -> std::slice::Iter<'static, AxisDirection> {
+        use AxisDirection::*;
+        static DIRECTIONS: [AxisDirection; 2] = [Horizontal, Vertical];
+        DIRECTIONS.iter()
+    }
+}
+
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq, Ord, PartialOrd)]
 pub enum LaneDirection {
     LowToHigh,
     HighToLow,
@@ -132,7 +153,7 @@ impl Distribution<LaneDirection> for Standard {
 }
 
 impl LaneDirection {
-    pub fn lane_directions() -> std::slice::Iter<'static, LaneDirection> {
+    pub fn directions() -> std::slice::Iter<'static, LaneDirection> {
         use LaneDirection::*;
         static LANE_DIRECTIONS: [LaneDirection; 2] = [LowToHigh, HighToLow];
         LANE_DIRECTIONS.iter()
@@ -154,11 +175,11 @@ impl LaneDirection {
         use InOutDirection::*;
         use LaneDirection::*;
         match absolute_direction {
-            North | East => match in_out {
+            South | East => match in_out {
                 In => HighToLow,
                 Out => LowToHigh,
             },
-            South | West => match in_out {
+            North | West => match in_out {
                 In => LowToHigh,
                 Out => HighToLow,
             },
@@ -197,8 +218,8 @@ impl AbsoluteDirection {
         use LaneDirection::*;
 
         match (axis, lane_direction) {
-            (Horizontal, LowToHigh) => West,
-            (Horizontal, HighToLow) => East,
+            (Horizontal, LowToHigh) => East,
+            (Horizontal, HighToLow) => West,
             (Vertical, LowToHigh) => South,
             (Vertical, HighToLow) => North,
         }
@@ -218,7 +239,7 @@ impl Distribution<AbsoluteDirection> for Standard {
     }
 }
 
-#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq)]
+#[derive(Serialize, Deserialize, Copy, Clone, Debug, Eq, PartialEq, Default)]
 pub struct Around<T> {
     pub north: T,
     pub west: T,
@@ -260,6 +281,16 @@ pub struct Position {
     pub y: f64,
 }
 
+impl Position {
+    pub fn distance(self, other: Self) -> f64 {
+        let Position { x: x1, y: y1 } = self;
+        let Position { x: x2, y: y2 } = other;
+        let dx = x1 - x2;
+        let dy = y1 - y2;
+        (dx * dx + dy * dy).sqrt()
+    }
+}
+
 #[cfg(test)]
 mod test {
     use AbsoluteDirection::*;
@@ -272,14 +303,14 @@ mod test {
     #[test]
     fn turn() {
         let cases = vec![
-            ((North, East), Left),
-            ((East, South), Left),
-            ((South, West), Left),
-            ((West, North), Left),
-            ((North, West), Right),
-            ((West, South), Right),
-            ((South, East), Right),
-            ((East, North), Right),
+            ((North, East), Right),
+            ((East, South), Right),
+            ((South, West), Right),
+            ((West, North), Right),
+            ((North, West), Left),
+            ((West, South), Left),
+            ((South, East), Left),
+            ((East, North), Left),
             ((North, North), Front),
             ((West, West), Front),
             ((South, South), Front),
@@ -300,14 +331,35 @@ mod test {
         let cases = vec![
             ((Vertical, HighToLow), North),
             ((Vertical, LowToHigh), South),
-            ((Horizontal, HighToLow), East),
-            ((Horizontal, LowToHigh), West),
+            ((Horizontal, HighToLow), West),
+            ((Horizontal, LowToHigh), East),
         ];
         for ((axis_direction, lane_direction), absolute) in cases.into_iter() {
             assert_eq!(
                 AbsoluteDirection::of_lane(axis_direction, lane_direction),
                 absolute
             );
+        }
+    }
+
+    #[test]
+    fn distance() {
+        let cases = vec![
+            (
+                (Position { x: 0.0, y: 0.0 }, Position { x: 3.0, y: 4.0 }),
+                5.0,
+            ),
+            (
+                (Position { x: 1.0, y: 2.0 }, Position { x: 1.0, y: 2.0 }),
+                0.0,
+            ),
+            (
+                (Position { x: 1.0, y: 3.0 }, Position { x: 1.0, y: 2.0 }),
+                1.0,
+            ),
+        ];
+        for ((a, b), result) in cases.into_iter() {
+            assert_eq!(a.distance(b), result);
         }
     }
 }

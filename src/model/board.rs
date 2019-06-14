@@ -1,5 +1,5 @@
 use crate::{
-    model::common::{Around, AxisDirection},
+    model::common::{Around, AxisDirection, LaneDirection},
     util::matrix::{Matrix, MatrixIndex, MatrixShape},
 };
 use serde::{Deserialize, Serialize};
@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 pub type IntersectionIndex = MatrixIndex;
 pub type RoadIndex = MatrixIndex;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct Board<I, R> {
     pub intersections: Matrix<I>,
     pub horizontal_roads: Matrix<R>,
@@ -29,6 +29,10 @@ where
 }
 
 impl<I, R> Board<I, R> {
+    pub fn shape(&self) -> MatrixShape {
+        self.intersections.shape()
+    }
+
     pub fn get_roads(&self, axis: AxisDirection) -> &Matrix<R> {
         use AxisDirection::*;
         match axis {
@@ -78,6 +82,45 @@ impl<I, R> Board<I, R> {
                     .zip(std::iter::repeat(Vertical).zip(self.vertical_roads.iter())),
             )
     }
+
+    pub fn lane_to_intersection_index(
+        &self,
+        road_direction: AxisDirection,
+        road_index: RoadIndex,
+        lane_direction: LaneDirection,
+    ) -> MatrixIndex {
+        use AxisDirection::*;
+        use LaneDirection::*;
+        match lane_direction {
+            HighToLow => road_index,
+            LowToHigh => {
+                let (x, y) = road_index;
+                match road_direction {
+                    Vertical => (x + 1, y),
+                    Horizontal => (x, y + 1),
+                }
+            },
+        }
+    }
+
+    // pub fn random_intersection(&self) -> IntersectionIndex {
+    //     let mut rng = rand::thread_rng();
+    //     let (m, n) = self.shape();
+    //     (rng.gen_range(0, m), rng.gen_range(0, n));
+    //     unimplemented!()
+    // }
+
+    // pub fn random_road(&self) -> (AxisDirection, RoadIndex) {
+    //     let mut rng = rand::thread_rng();
+    //     let direction: AxisDirection = rng.gen();
+    //      self.get_roads(direction).shape()
+    // }
+
+    // pub fn random_road(&self) -> (AxisDirection, ) {
+    //     let mut rng = rand::thread_rng();
+    //     let direction: AxisDirection = rng.gen();
+    //      self.get_roads(direction).shape()
+    // }
 }
 
 pub type IntersectionContext = Around<Option<RoadIndex>>;
@@ -98,12 +141,12 @@ impl<I, R> Board<I, Option<R>> {
             None
         };
         let south_index = Some((Vertical, (i, j)));
-        let east_index = if j != 0 {
+        let west_index = if j != 0 {
             Some((Horizontal, (i, j - 1)))
         } else {
             None
         };
-        let west_index = Some((Horizontal, (i, j)));
+        let east_index = Some((Horizontal, (i, j)));
 
         let check_and_convert = |o| {
             let (axis, index) = o?;

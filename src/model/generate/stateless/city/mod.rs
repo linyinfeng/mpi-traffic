@@ -1,7 +1,7 @@
 use rand::{self, Rng};
 
 use crate::model::{
-    board::Board,
+    board::{Board, IntersectionIndex},
     generate::stateless::StatelessModelGenerationSettings,
     stateless::{City, Intersection, Road},
 };
@@ -25,20 +25,35 @@ pub fn generate_city(city_settings: &StatelessModelGenerationSettings) -> City {
 
     let (intersection_height, intersection_width) =
         calculate_intersection_geometry(&board, city_settings.lane_width);
+    let car_out_intersection = generate_car_out_intersection(&board, city_settings);
     City {
         board,
+        car_out_intersection,
+        car_out_min_distance: city_settings.car_out_min_distance,
         lane_width: city_settings.lane_width,
-        horizontal_road_length: rand_road_length(board_shape.1 - 1),
-        vertical_road_length: rand_road_length(board_shape.0 - 1),
+        horizontal_road_length: rand_road_length(board_shape.1 - 1, city_settings),
+        vertical_road_length: rand_road_length(board_shape.0 - 1, city_settings),
         intersection_height,
         intersection_width,
     }
 }
 
-fn rand_road_length(road_num: usize) -> Vec<f64> {
+fn generate_car_out_intersection(
+    board: &Board<Option<Intersection>, Option<Road>>,
+    _city_settings: &StatelessModelGenerationSettings,
+) -> IntersectionIndex {
+    for (index, intersection) in board.intersections.enumerate() {
+        if intersection.is_some() {
+            return index
+        }
+    }
+    panic!("empty city")
+}
+
+fn rand_road_length(road_num: usize, settings: &StatelessModelGenerationSettings) -> Vec<f64> {
     let mut rng = rand::thread_rng();
     (0..road_num)
-        .map(|_| rng.gen_range(MIN_LANE_LENGTH, MAX_LANE_LENGTH))
+        .map(|_| rng.gen_range(settings.min_road_length, settings.max_road_length))
         .collect()
 }
 

@@ -10,7 +10,7 @@ use structopt::StructOpt;
 pub mod stateful;
 pub mod stateless;
 
-#[derive(StructOpt)]
+#[derive(StructOpt, Debug)]
 pub struct ModelGenerationSettings {
     #[structopt(flatten)]
     pub stateless_model_settings: StatelessModelGenerationSettings,

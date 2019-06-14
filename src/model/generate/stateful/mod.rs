@@ -1,17 +1,11 @@
-use crate::model::{
-    board::Board,
-    stateful::{City, Model},
-    stateless,
-};
+use crate::model::{stateful::Model, stateless};
+
+pub mod city;
 
 pub fn generate_from_stateless(stateless_model: &stateless::Model) -> Model {
-    stub(stateless_model)
-}
-
-fn stub(stateless_model: &stateless::Model) -> Model {
-    let board = Board::with_shape(None, None, stateless_model.city.board.intersections.shape());
+    let car_number = stateless_model.cars.len();
     Model {
-        city: City { board },
-        cars: Vec::new(),
+        city: city::generate_city_from_stateless(&stateless_model.city),
+        cars: vec![None; car_number],
     }
 }

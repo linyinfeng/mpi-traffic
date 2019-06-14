@@ -28,25 +28,36 @@ fn generate_with_context(
     settings: &StatelessModelGenerationSettings,
 ) -> Intersection {
     match context.road_number() {
-        1 => Intersection::End,
-        2 => generate_with_2_road(context),
+        1 => Intersection::End {
+            max_speed: settings.intersection_max_speed,
+        },
+        2 => generate_with_2_road(context, settings),
         3 => generate_with_3_road(context, settings),
         4 => generate_with_4_road(settings),
         _ => unreachable!(),
     }
 }
 
-fn is_in_same_axis(context: &IntersectionContext) -> bool {
-    let mut directions = AbsoluteDirection::directions()
-        .filter_map(|&direction| context.get(direction).map(|_| direction));
-    directions.next().unwrap().turn_back() == directions.next().unwrap()
+pub fn is_turn_intersection(context: &IntersectionContext) -> bool {
+    if context.road_number() == 2 {
+        let mut directions = AbsoluteDirection::directions()
+            .filter_map(|&direction| context.get(direction).map(|_| direction));
+        directions.next().unwrap().turn_back() != directions.next().unwrap()
+    } else {
+        false
+    }
 }
 
-fn generate_with_2_road(context: &IntersectionContext) -> Intersection {
-    if is_in_same_axis(context) {
-        Intersection::Straight
+fn generate_with_2_road(
+    context: &IntersectionContext,
+    settings: &StatelessModelGenerationSettings,
+) -> Intersection {
+    if is_turn_intersection(context) {
+        Intersection::Turn {
+            max_speed: settings.intersection_max_speed,
+        }
     } else {
-        Intersection::Turn
+        Intersection::Straight
     }
 }
 
