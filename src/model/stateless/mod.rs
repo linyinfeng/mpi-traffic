@@ -17,7 +17,7 @@ pub use road::{Lane, Road};
 
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct City {
     pub board: Board<Option<Intersection>, Option<Road>>,
     pub car_out_intersection: IntersectionIndex,
@@ -29,7 +29,7 @@ pub struct City {
     pub intersection_width: Vec<f64>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct Model {
     pub city: City,
     pub cars: Vec<Car>,

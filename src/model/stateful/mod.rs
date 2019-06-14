@@ -9,12 +9,12 @@ pub mod intersection;
 pub use car::Car;
 pub use intersection::Intersection;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct City {
     pub board: Board<Option<Intersection>, ()>,
 }
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct Model {
     pub city: City,
     pub cars: Vec<Option<Car>>,

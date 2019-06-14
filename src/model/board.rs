@@ -7,7 +7,7 @@ use serde::{Deserialize, Serialize};
 pub type IntersectionIndex = MatrixIndex;
 pub type RoadIndex = MatrixIndex;
 
-#[derive(Serialize, Deserialize, Clone, Debug)]
+#[derive(Serialize, Deserialize, Clone, Debug, Default)]
 pub struct Board<I, R> {
     pub intersections: Matrix<I>,
     pub horizontal_roads: Matrix<R>,

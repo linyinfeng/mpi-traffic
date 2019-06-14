@@ -10,7 +10,6 @@ use mpi_traffic::{
 use piston_window::{
     color, Event, EventLoop, EventSettings, Loop, PistonWindow, UpdateArgs, WindowSettings,
 };
-use std::mem;
 use structopt::StructOpt;
 
 fn main() {
@@ -26,7 +25,7 @@ fn main() {
     let mut model = if world.rank() == ROOT {
         generate::generate_model(settings.model_generation_settings)
     } else {
-        unsafe { mem::uninitialized() }
+        Default::default()
     };
     communication::bincode_broadcast(world.rank(), root, &mut model).unwrap();
     let stateless_model = model.stateless;
@@ -84,7 +83,7 @@ fn main() {
     } else {
         let mut controller = UpdateController::new();
         loop {
-            let mut args: Option<UpdateArgs> = unsafe { mem::uninitialized() };
+            let mut args: Option<UpdateArgs> = None;
             communication::bincode_broadcast(world.rank(), root, &mut args).unwrap();
             if let Some(args) = args {
                 controller.update(ROOT, world, &mut stateful_model, &stateless_model, args);
