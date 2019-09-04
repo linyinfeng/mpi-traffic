@@ -37,21 +37,21 @@ pub struct ViewSettings {
         name = "view-road-color",
         long = "view-road-color",
         default_value = "666666",
-        parse(from_str = "piston_window::color::hex")
+        parse(from_str = piston_window::color::hex)
     )]
     pub road_color: Color,
     #[structopt(
         name = "view-road-sign-color",
         long = "view-road-sign-color",
         default_value = "ffffff",
-        parse(from_str = "piston_window::color::hex")
+        parse(from_str = piston_window::color::hex)
     )]
     pub road_sign_color: Color,
     #[structopt(
         name = "view-road-middle-separator-color",
         long = "view-road-middle-separator-color",
         default_value = "ffdb4d",
-        parse(from_str = "piston_window::color::hex")
+        parse(from_str = piston_window::color::hex)
     )]
     pub road_middle_separator_color: Color,
     #[structopt(
@@ -70,21 +70,21 @@ pub struct ViewSettings {
         name = "view-intersection-color",
         long = "view-intersection-color",
         default_value = "737373",
-        parse(from_str = "piston_window::color::hex")
+        parse(from_str = piston_window::color::hex)
     )]
     pub intersection_color: Color,
     #[structopt(
         name = "view-intersection-sign-color",
         long = "view-intersection-sign-color",
         default_value = "66ff33",
-        parse(from_str = "piston_window::color::hex")
+        parse(from_str = piston_window::color::hex)
     )]
     pub intersection_sign_color: Color,
     #[structopt(
         name = "view-car-color",
         long = "view-car-color",
         default_value = "ff0066",
-        parse(from_str = "piston_window::color::hex")
+        parse(from_str = piston_window::color::hex)
     )]
     pub car_color: Color,
     #[structopt(
