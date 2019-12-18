@@ -133,7 +133,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "build-probe-mpi"
 version = "0.1.1"
-source = "git+https://github.com/bsteinb/rsmpi.git#c1ed9c1776be7c9ffce857024f997e1396a3b115"
+source = "git+https://github.com/bsteinb/rsmpi.git#c6b155d8c99a1ed991b2317dbff962dffc8379c9"
 dependencies = [
  "pkg-config 0.3.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -723,18 +723,18 @@ dependencies = [
 [[package]]
 name = "mpi"
 version = "0.6.0"
-source = "git+https://github.com/bsteinb/rsmpi.git#c1ed9c1776be7c9ffce857024f997e1396a3b115"
+source = "git+https://github.com/bsteinb/rsmpi.git#c6b155d8c99a1ed991b2317dbff962dffc8379c9"
 dependencies = [
  "conv 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "mpi-sys 0.2.0 (git+https://github.com/bsteinb/rsmpi.git)",
  "rustc_version 0.2.3 (registry+https://github.com/rust-lang/crates.io-index)",
- "smallvec 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)",
+ "smallvec 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "mpi-sys"
 version = "0.2.0"
-source = "git+https://github.com/bsteinb/rsmpi.git#c1ed9c1776be7c9ffce857024f997e1396a3b115"
+source = "git+https://github.com/bsteinb/rsmpi.git#c6b155d8c99a1ed991b2317dbff962dffc8379c9"
 dependencies = [
  "bindgen 0.51.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "build-probe-mpi 0.1.1 (git+https://github.com/bsteinb/rsmpi.git)",
@@ -1298,6 +1298,11 @@ version = "0.6.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "smallvec"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
 name = "smithay-client-toolkit"
 version = "0.4.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1755,6 +1760,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum shared_library 0.1.9 (registry+https://github.com/rust-lang/crates.io-index)" = "5a9e7e0f2bfae24d8a5b5a66c5b257a83c7412304311512a0c054cd5e619da11"
 "checksum shlex 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "7fdf1b9db47230893d76faad238fd6097fd6d6a9245cd7a4d90dbd639536bbd2"
 "checksum smallvec 0.6.10 (registry+https://github.com/rust-lang/crates.io-index)" = "ab606a9c5e214920bb66c458cd7be8ef094f813f20fe77a54cc7dbfff220d4b7"
+"checksum smallvec 1.0.0 (registry+https://github.com/rust-lang/crates.io-index)" = "4ecf3b85f68e8abaa7555aa5abdb1153079387e60b718283d732f03897fcfc86"
 "checksum smithay-client-toolkit 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)" = "2ccb8c57049b2a34d2cc2b203fa785020ba0129d31920ef0d317430adaf748fa"
 "checksum stb_truetype 0.3.0 (registry+https://github.com/rust-lang/crates.io-index)" = "824210d6fb52cbc3ad2545270ead6860c7311aa5450642b078da4515937b6f7a"
 "checksum strsim 0.8.0 (registry+https://github.com/rust-lang/crates.io-index)" = "8ea5119cdb4c55b55d432abb513a0429384878c15dde60cc77b1c99de1a95a6a"
