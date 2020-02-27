@@ -133,7 +133,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 [[package]]
 name = "build-probe-mpi"
 version = "0.1.1"
-source = "git+https://github.com/bsteinb/rsmpi.git#8c3cb325e62c4f248590bbb5658dc97c81a758c4"
+source = "git+https://github.com/bsteinb/rsmpi.git#4a50f8dc99deba5d77a70ed1c6de3ee19275fb04"
 dependencies = [
  "pkg-config 0.3.16 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
@@ -737,7 +737,7 @@ dependencies = [
 [[package]]
 name = "mpi"
 version = "0.6.0"
-source = "git+https://github.com/bsteinb/rsmpi.git#8c3cb325e62c4f248590bbb5658dc97c81a758c4"
+source = "git+https://github.com/bsteinb/rsmpi.git#4a50f8dc99deba5d77a70ed1c6de3ee19275fb04"
 dependencies = [
  "conv 0.3.3 (registry+https://github.com/rust-lang/crates.io-index)",
  "mpi-sys 0.2.0 (git+https://github.com/bsteinb/rsmpi.git)",
@@ -748,7 +748,7 @@ dependencies = [
 [[package]]
 name = "mpi-sys"
 version = "0.2.0"
-source = "git+https://github.com/bsteinb/rsmpi.git#8c3cb325e62c4f248590bbb5658dc97c81a758c4"
+source = "git+https://github.com/bsteinb/rsmpi.git#4a50f8dc99deba5d77a70ed1c6de3ee19275fb04"
 dependencies = [
  "bindgen 0.51.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "build-probe-mpi 0.1.1 (git+https://github.com/bsteinb/rsmpi.git)",
