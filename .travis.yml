@@ -9,6 +9,10 @@ rust:
   - stable
   - nightly
 
+jobs:
+  allow_failures:
+  - rust: nightly
+
 matrix:
   fast_finish: true
 
