@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Board",""]],"type":[["IntersectionContext",""],["IntersectionIndex",""],["RoadIndex",""]]});

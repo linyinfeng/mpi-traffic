@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["MAX_SPEED",""],["TIME_OUT",""]],"fn":[["generate_intersections",""],["is_turn_intersection",""]]});

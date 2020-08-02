@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Indices",""],["Matrix",""]],"type":[["MatrixIndex",""],["MatrixShape",""]]});

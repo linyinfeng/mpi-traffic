@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Encoder","GIF encoder."],["GifDecoder","GIF decoder"],["GifReader","Wrapper struct around a `Cursor<Vec<u8>>`"]]});

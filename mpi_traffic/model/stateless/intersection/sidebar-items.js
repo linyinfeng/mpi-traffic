@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["Intersection",""],["SwitchRule",""]],"struct":[["TJunctionRule","T-junction intersection has 3 arms denoted with \"left\", \"right\" and \"single\""]],"type":[["CrossroadRule",""]]});

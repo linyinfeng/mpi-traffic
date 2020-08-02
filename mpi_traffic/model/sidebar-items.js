@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["board",""],["common",""],["generate",""],["stateful","Module `stateful` is the dynamic part of the simulation"],["stateless","Module `stateless` is the static part of the simulation"]],"struct":[["Model",""]]});

@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["generate_stateless_model",""]],"mod":[["car",""],["city",""]],"struct":[["StatelessModelGenerationSettings",""]]});

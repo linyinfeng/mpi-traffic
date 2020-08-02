@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["communication",""],["controller",""],["error",""],["info",""],["model",""],["util",""],["view",""]]});

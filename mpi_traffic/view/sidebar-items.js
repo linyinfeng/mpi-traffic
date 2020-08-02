@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["View",""],["ViewSettings","Store settings of `ModelView`."]]});

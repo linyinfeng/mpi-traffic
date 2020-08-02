@@ -1,0 +1,45 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `request` mod in crate `mpi`."><meta name="keywords" content="rust, rustlang, rust-lang, request"><title>mpi::request - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a><p class='location'>Module request</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'><a href='../index.html'>mpi</a></p><script>window.sidebarCurrent = {name: 'request', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../src/mpi/request.rs.html#1-444' title='goto source code'>[src]</a></span><span class='in-band'>Module <a href='../index.html'>mpi</a>::<wbr><a class="mod" href=''>request</a></span></h1><div class='docblock'><p>Request objects for non-blocking operations</p>
+<p>Non-blocking operations such as <code>immediate_send()</code> return request objects that borrow any
+buffers involved in the operation so as to ensure proper access restrictions. In order to
+release the borrowed buffers from the request objects, a completion operation such as
+<a href="struct.Request.html#method.wait"><code>wait()</code></a> or <a href="struct.Request.html#method.test"><code>test()</code></a> must
+be used on the request object.</p>
+<p><strong>Note:</strong> If the <code>Request</code> is dropped (as opposed to calling <code>wait</code> or <code>test</code> explicitly), the
+program will panic.</p>
+<p>To enforce this rule, every request object must be registered to some pre-existing
+<a href="trait.Scope.html"><code>Scope</code></a>.  At the end of a <code>Scope</code>, all its remaining requests will be waited
+for until completion.  Scopes can be created using either <a href="fn.scope.html"><code>scope</code></a> or
+<a href="struct.StaticScope.html"><code>StaticScope</code></a>.</p>
+<p>To handle request completion in an RAII style, a request can be wrapped in either
+<a href="struct.WaitGuard.html"><code>WaitGuard</code></a> or <a href="struct.CancelGuard.html"><code>CancelGuard</code></a>, which will
+follow the respective policy for completing the operation.  When the guard is dropped, the
+request will be automatically unregistered from its <code>Scope</code>.</p>
+<h1 id="unfinished-features" class="section-header"><a href="#unfinished-features">Unfinished features</a></h1>
+<ul>
+<li><strong>3.7</strong>: Nonblocking mode:
+<ul>
+<li>Completion, <code>MPI_Waitall()</code>, <code>MPI_Waitsome()</code>,
+<code>MPI_Testany()</code>, <code>MPI_Testall()</code>, <code>MPI_Testsome()</code>, <code>MPI_Request_get_status()</code></li>
+</ul>
+</li>
+<li><strong>3.8</strong>:
+<ul>
+<li>Cancellation, <code>MPI_Test_cancelled()</code></li>
+</ul>
+</li>
+</ul>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table><tr class='module-item'><td><a class="struct" href="struct.CancelGuard.html" title='mpi::request::CancelGuard struct'>CancelGuard</a></td><td class='docblock-short'><p>Guard object that tries to cancel and waits for the completion of an operation when it is
+dropped</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.LocalScope.html" title='mpi::request::LocalScope struct'>LocalScope</a></td><td class='docblock-short'><p>A temporary scope that lasts no more than the lifetime <code>'a</code></p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.Request.html" title='mpi::request::Request struct'>Request</a></td><td class='docblock-short'><p>A request object for a non-blocking operation registered with a <code>Scope</code> of lifetime <code>'a</code></p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.StaticScope.html" title='mpi::request::StaticScope struct'>StaticScope</a></td><td class='docblock-short'><p>The scope that lasts as long as the entire execution of the program</p>
+</td></tr><tr class='module-item'><td><a class="struct" href="struct.WaitGuard.html" title='mpi::request::WaitGuard struct'>WaitGuard</a></td><td class='docblock-short'><p>Guard object that waits for the completion of an operation when it is dropped</p>
+</td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
+<table><tr class='module-item'><td><a class="trait" href="trait.Scope.html" title='mpi::request::Scope trait'>Scope</a></td><td class='docblock-short'><p>A common interface for <a href="struct.LocalScope.html"><code>LocalScope</code></a> and
+<a href="struct.StaticScope.html"><code>StaticScope</code></a> used internally by the <code>request</code> module.</p>
+</td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table><tr class='module-item'><td><a class="fn" href="fn.scope.html" title='mpi::request::scope fn'>scope</a></td><td class='docblock-short'><p>Used to create a <a href="struct.LocalScope.html"><code>LocalScope</code></a></p>
+</td></tr><tr class='module-item'><td><a class="fn" href="fn.wait_any.html" title='mpi::request::wait_any fn'>wait_any</a></td><td class='docblock-short'><p>Wait for the completion of one of the requests in the vector,
+returns the index of the request completed and the status of the request.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../";window.currentCrate = "mpi";</script><script src="../../main.js"></script><script defer src="../../search-index.js"></script></body></html>
