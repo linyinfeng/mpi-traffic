@@ -170,7 +170,7 @@ fn fix_lane_rule_with_context(
         let lanes_to_be_fix = find_lanes_to_be_fix(direction, board, context);
         let len = lanes_to_be_fix.len();
         if len == 0 {
-            continue
+            continue;
         }
         for &&direction_without_out_lane in directions_without_out_lanes.iter() {
             match direction.should_turn(direction_without_out_lane) {

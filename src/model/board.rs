@@ -99,7 +99,7 @@ impl<I, R> Board<I, R> {
                     Vertical => (x + 1, y),
                     Horizontal => (x, y + 1),
                 }
-            },
+            }
         }
     }
 

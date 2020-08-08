@@ -51,32 +51,32 @@ impl City {
     }
 
     pub fn intersection_center(&self, (i, j): IntersectionIndex) -> Position {
-        let x = self.intersection_width.iter().take(j).sum::<f64>() +
-            self.horizontal_road_length.iter().take(j).sum::<f64>() +
-            self.intersection_width[j] / 2.0;
-        let y = self.intersection_height.iter().take(i).sum::<f64>() +
-            self.vertical_road_length.iter().take(i).sum::<f64>() +
-            self.intersection_height[i] / 2.0;
+        let x = self.intersection_width.iter().take(j).sum::<f64>()
+            + self.horizontal_road_length.iter().take(j).sum::<f64>()
+            + self.intersection_width[j] / 2.0;
+        let y = self.intersection_height.iter().take(i).sum::<f64>()
+            + self.vertical_road_length.iter().take(i).sum::<f64>()
+            + self.intersection_height[i] / 2.0;
         Position { x, y }
     }
 
     pub fn horizontal_road_center(&self, (i, j): RoadIndex) -> Position {
-        let x = self.intersection_width.iter().take(j + 1).sum::<f64>() +
-            self.horizontal_road_length.iter().take(j).sum::<f64>() +
-            self.horizontal_road_length[j] / 2.0;
-        let y = self.intersection_height.iter().take(i).sum::<f64>() +
-            self.vertical_road_length.iter().take(i).sum::<f64>() +
-            self.intersection_height[i] / 2.0;
+        let x = self.intersection_width.iter().take(j + 1).sum::<f64>()
+            + self.horizontal_road_length.iter().take(j).sum::<f64>()
+            + self.horizontal_road_length[j] / 2.0;
+        let y = self.intersection_height.iter().take(i).sum::<f64>()
+            + self.vertical_road_length.iter().take(i).sum::<f64>()
+            + self.intersection_height[i] / 2.0;
         Position { x, y }
     }
 
     pub fn vertical_road_center(&self, (i, j): RoadIndex) -> Position {
-        let x = self.intersection_width.iter().take(j).sum::<f64>() +
-            self.horizontal_road_length.iter().take(j).sum::<f64>() +
-            self.intersection_width[j] / 2.0;
-        let y = self.intersection_height.iter().take(i + 1).sum::<f64>() +
-            self.vertical_road_length.iter().take(i).sum::<f64>() +
-            self.vertical_road_length[i] / 2.0;
+        let x = self.intersection_width.iter().take(j).sum::<f64>()
+            + self.horizontal_road_length.iter().take(j).sum::<f64>()
+            + self.intersection_width[j] / 2.0;
+        let y = self.intersection_height.iter().take(i + 1).sum::<f64>()
+            + self.vertical_road_length.iter().take(i).sum::<f64>()
+            + self.vertical_road_length[i] / 2.0;
         Position { x, y }
     }
 

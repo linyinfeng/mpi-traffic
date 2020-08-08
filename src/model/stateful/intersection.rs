@@ -39,7 +39,7 @@ impl Intersection {
                 stateless::Intersection::Crossroad { rules, .. },
             ) => {
                 *current = rules[*rule_index];
-            },
+            }
             (
                 Intersection::TJunction {
                     current,
@@ -55,7 +55,7 @@ impl Intersection {
                 *current.get_mut(driver_direction.turn_left()) = rule.for_left;
                 *current.get_mut(driver_direction.turn_right()) = rule.for_right;
                 *current.get_mut(single.turn_back()) = TurnRule::empty();
-            },
+            }
             (Intersection::Crossroad { .. }, _) => unreachable!(),
             (Intersection::TJunction { .. }, _) => unreachable!(),
             _ => (), // no need to update current

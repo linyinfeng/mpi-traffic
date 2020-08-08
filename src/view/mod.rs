@@ -509,7 +509,7 @@ impl View {
                     }),
                     g2d,
                 );
-            },
+            }
             stateful::car::Location::ChangingLane {
                 road_direction,
                 road_index,
@@ -521,10 +521,10 @@ impl View {
             } => {
                 let length = city.road_length(road_direction, road_index);
                 let x = -length / 2.0 + position;
-                let lane_changed_offset = lane_changed_proportion *
-                    city.lane_width *
-                    (to_lane_index - from_lane_index) as f64 *
-                    match lane_direction {
+                let lane_changed_offset = lane_changed_proportion
+                    * city.lane_width
+                    * (to_lane_index - from_lane_index) as f64
+                    * match lane_direction {
                         LaneDirection::HighToLow => 1.0,
                         LaneDirection::LowToHigh => -1.0,
                     };
@@ -550,7 +550,7 @@ impl View {
                     }),
                     g2d,
                 );
-            },
+            }
             stateful::car::Location::InIntersection {
                 intersection_index,
                 from_direction,
@@ -584,7 +584,8 @@ impl View {
                 let dy = to_y - from_y;
                 let x = dx * proportion + from_x;
                 let y = dy * proportion + from_y;
-                let turn_direction = from_direction.turn_back() // convert to driver's direction
+                let turn_direction = from_direction
+                    .turn_back() // convert to driver's direction
                     .should_turn(to_direction);
                 let origin_heading = self.car_heading_deg_on_road(
                     from_direction.axis_direction(),
@@ -598,7 +599,7 @@ impl View {
                         .rot_deg(heading),
                     g2d,
                 );
-            },
+            }
         }
     }
 

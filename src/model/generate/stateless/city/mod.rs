@@ -44,7 +44,7 @@ fn generate_car_out_intersection(
 ) -> IntersectionIndex {
     for (index, intersection) in board.intersections.enumerate() {
         if intersection.is_some() {
-            return index
+            return index;
         }
     }
     panic!("empty city")

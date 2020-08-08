@@ -343,6 +343,7 @@ mod test {
     }
 
     #[test]
+    #[allow(clippy::float_cmp)]
     fn distance() {
         let cases = vec![
             (

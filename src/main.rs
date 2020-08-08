@@ -55,7 +55,7 @@ fn main() {
             match e {
                 Event::Input(e, _) => {
                     controller.input(&mut info, &mut stateful_model, &stateless_model, e);
-                },
+                }
                 Event::Loop(e) => {
                     if let Loop::Update(args) = e {
                         let mut send_args = Some(args);
@@ -70,8 +70,8 @@ fn main() {
                             args,
                         );
                     }
-                },
-                _ => {},
+                }
+                _ => {}
             }
         }
         communication::bincode_broadcast::<_, Option<UpdateArgs>>(
@@ -88,7 +88,7 @@ fn main() {
             if let Some(args) = args {
                 controller.update(ROOT, world, &mut stateful_model, &stateless_model, args);
             } else {
-                break
+                break;
             }
         }
     }

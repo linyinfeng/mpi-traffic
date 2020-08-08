@@ -151,7 +151,7 @@ mod test {
 
     #[test]
     fn test_offset() {
-        let m = Matrix::with_shape(3.14, (7, 9));
+        let m = Matrix::with_shape(4.14, (7, 9));
         let mut n = 0;
         for i in 0..7 {
             for j in 0..9 {
@@ -169,23 +169,23 @@ mod test {
 
     #[test]
     fn empty_matrix() {
-        let m = Matrix::with_shape(3.14, (0, 0));
+        let m = Matrix::with_shape(4.14, (0, 0));
         assert_eq!(m.shape(), (0, 0));
     }
 
     #[test]
     fn normal_matrix() {
-        let mut m = Matrix::with_shape(3.14, (7, 9));
-        m[(3, 0)] = 4.14;
+        let mut m = Matrix::with_shape(4.14, (7, 9));
+        m[(3, 0)] = 5.14;
         for i in 0..7 {
             for j in 0..9 {
                 assert_eq!(
                     m.get((i, j)).cloned(),
-                    Some(if (i, j) == (3, 0) { 4.14 } else { 3.14 })
+                    Some(if (i, j) == (3, 0) { 5.14 } else { 4.14 })
                 );
                 assert_eq!(
                     m.get_mut((i, j)).cloned(),
-                    Some(if (i, j) == (3, 0) { 4.14 } else { 3.14 })
+                    Some(if (i, j) == (3, 0) { 5.14 } else { 4.14 })
                 );
             }
         }
@@ -197,14 +197,14 @@ mod test {
     #[test]
     #[should_panic]
     fn panic_out_of_m_range() {
-        let mut m = Matrix::with_shape(3.14, (7, 9));
+        let mut m = Matrix::with_shape(4.14, (7, 9));
         m[(10, 3)] = 4.14;
     }
 
     #[test]
     #[should_panic]
     fn panic_out_of_n_range() {
-        let mut m = Matrix::with_shape(3.14, (7, 9));
+        let mut m = Matrix::with_shape(4.14, (7, 9));
         m[(0, 11)] = 4.14;
     }
 
@@ -212,7 +212,7 @@ mod test {
     fn matrix_indices() {
         let shape = (7, 9);
         let (n, m) = shape;
-        let mat = Matrix::with_shape(3.14, shape);
+        let mat = Matrix::with_shape(4.14, shape);
         let mut indices = mat.indices();
         for i in 0..n {
             for j in 0..m {
@@ -222,10 +222,11 @@ mod test {
     }
 
     #[test]
+    #[allow(clippy::float_cmp)]
     fn enumerate_mut() {
         let shape = (7, 9);
         let (m, n) = shape;
-        let mut mat = Matrix::with_shape(3.14, shape);
+        let mut mat = Matrix::with_shape(4.14, shape);
         let v = |i, j| i as f64 * 10.0 + j as f64;
         for ((i, j), item) in mat.enumerate_mut() {
             *item = v(i, j);
@@ -238,8 +239,9 @@ mod test {
     }
 
     #[test]
+    #[allow(clippy::float_cmp)]
     fn enumerate() {
-        let mut mat = Matrix::with_shape(3.14, (7, 9));
+        let mut mat = Matrix::with_shape(4.14, (7, 9));
         let v = |i, j| i as f64 * 10.0 + j as f64;
         for ((i, j), item) in mat.enumerate_mut() {
             *item = v(i, j);

@@ -65,14 +65,14 @@ impl Controller {
                     ButtonState::Press => {
                         self.mouse_left_button_down = true;
                         self.start_drag_location = Some((info.x, info.y));
-                    },
+                    }
                     ButtonState::Release => {
                         self.mouse_left_button_down = false;
                         self.start_drag_location = None;
-                    },
+                    }
                 };
                 self.mouse_left_button_down_location = None;
-            },
+            }
             Input::Move(Motion::MouseCursor([x, y])) => {
                 if self.mouse_left_button_down {
                     if let Some((origin_x, origin_y)) = self.mouse_left_button_down_location {
@@ -84,10 +84,10 @@ impl Controller {
                         self.mouse_left_button_down_location = Some((x, y));
                     }
                 }
-            },
+            }
             Input::Move(Motion::MouseScroll([_x, y])) => {
                 info.zoom += y * self.settings.zoom_step;
-            },
+            }
             _ => (),
         }
     }
@@ -178,6 +178,8 @@ impl UpdateController {
         stateful.cars = gathered.into_iter().flatten().collect();
     }
 
+    // TODO: fix this
+    #[allow(clippy::too_many_arguments)]
     pub fn update_car(
         &self,
         outed: &mut bool,
@@ -324,10 +326,10 @@ impl UpdateController {
                                             } else {
                                                 front_objects.push((road_length - position, 0.0))
                                             }
-                                        },
+                                        }
                                         _ => unreachable!(),
                                     }
-                                },
+                                }
                                 stateless::Intersection::TJunction { max_speed, .. } => {
                                     match stateful_intersection {
                                         stateful::Intersection::TJunction { current, .. } => {
@@ -344,19 +346,19 @@ impl UpdateController {
                                             } else {
                                                 front_objects.push((road_length - position, 0.0))
                                             }
-                                        },
+                                        }
                                         _ => unreachable!(),
                                     }
-                                },
+                                }
                                 stateless::Intersection::Turn { max_speed } => {
                                     front_objects.push((road_length - position, *max_speed))
-                                },
+                                }
                                 stateless::Intersection::Straight => {
                                     front_objects.push((road_length - position, lane.max_speed))
-                                },
+                                }
                                 stateless::Intersection::End { max_speed } => {
                                     front_objects.push((road_length - position, *max_speed))
-                                },
+                                }
                             }
                         }
                         let acceleration = front_objects
@@ -388,7 +390,7 @@ impl UpdateController {
                             },
                         })
                     }
-                },
+                }
                 InIntersection {
                     intersection_index,
                     from_direction,
@@ -413,9 +415,9 @@ impl UpdateController {
                     let velocity = match intersection_max_speed {
                         Some(max_speed) => {
                             let velocity_proportion = proportion.min(0.5);
-                            car.velocity * (1.0 - velocity_proportion) +
-                                *max_speed * velocity_proportion
-                        },
+                            car.velocity * (1.0 - velocity_proportion)
+                                + *max_speed * velocity_proportion
+                        }
                         None => car.velocity,
                     };
                     let position = position + car.velocity * args.dt;
@@ -451,7 +453,7 @@ impl UpdateController {
                                     velocity,
                                     acceleration: 0.0,
                                 })
-                            },
+                            }
                             None => None, // remove the car
                         }
                     } else {
@@ -469,7 +471,7 @@ impl UpdateController {
                             acceleration: 0.0,
                         })
                     }
-                },
+                }
                 _ => unimplemented!(),
             }
         } else if self.car_out_rank == rank && !*outed {
@@ -498,10 +500,10 @@ impl UpdateController {
                             };
                             log::debug!("Crate new car: {:?}", car);
                             Some(car)
-                        },
+                        }
                         None => None,
                     }
-                },
+                }
                 None => None,
             }
         } else {
@@ -526,7 +528,7 @@ impl UpdateController {
                 let dx = front_distance - aim_cushion; // if dx is greater than 0, the car should go faster than front_velocity
                 let aim_average_velocity = dx / *prediction_time;
                 (aim_average_velocity + front_velocity - velocity) * 2.0 / *prediction_time
-            },
+            }
         }
     }
 
@@ -545,7 +547,7 @@ impl UpdateController {
             .lanes_to_direction(lane_direction)[lane_index];
         for (index, (_, car_index)) in lane_cars.cars.iter().enumerate() {
             if *car_index == current_car && index != lane_cars.cars.len() - 1 {
-                return Some(lane_cars.cars[index + 1].1)
+                return Some(lane_cars.cars[index + 1].1);
             }
         }
         None
@@ -575,7 +577,7 @@ impl UpdateController {
                     TurnRule::RIGHT => Right,
                     _ => unreachable!(),
                 })
-            },
+            }
         }
     }
 
@@ -604,7 +606,7 @@ impl UpdateController {
                         lane_index,
                     );
                     log::debug!("car out parameter: {:?}", car_out_parameter);
-                    return Some(car_out_parameter)
+                    return Some(car_out_parameter);
                 }
             }
         }
@@ -672,7 +674,7 @@ impl UpdateController {
                     *rule_index %= rules.len();
                     *remain_time += times[*time_index]; // Set new timeout
                 }
-            },
+            }
             (
                 stateful::Intersection::TJunction {
                     switch_state:
@@ -698,7 +700,7 @@ impl UpdateController {
                     *rule_index %= rule_set.len();
                     *remain_time += times[*time_index]; // Set new timeout
                 }
-            },
+            }
             (stateful::Intersection::Crossroad { .. }, _) => unreachable!(),
             (stateful::Intersection::TJunction { .. }, _) => unreachable!(),
             _ => (), // no need to update current
