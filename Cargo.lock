@@ -147,7 +147,7 @@ checksum = "0d8c1fef690941d3e7788d328517591fecc684c084084702d6ff1641e993699a"
 [[package]]
 name = "build-probe-mpi"
 version = "0.1.1"
-source = "git+https://github.com/bsteinb/rsmpi.git#4f07e748b84940b3b823e806c575761199348e0d"
+source = "git+https://github.com/bsteinb/rsmpi.git#055d50360fa811cec44c0aab1c71b572a57d7e54"
 dependencies = [
  "pkg-config",
 ]
@@ -827,7 +827,7 @@ dependencies = [
 [[package]]
 name = "mpi"
 version = "0.6.0"
-source = "git+https://github.com/bsteinb/rsmpi.git#4f07e748b84940b3b823e806c575761199348e0d"
+source = "git+https://github.com/bsteinb/rsmpi.git#055d50360fa811cec44c0aab1c71b572a57d7e54"
 dependencies = [
  "conv",
  "mpi-sys",
@@ -838,7 +838,7 @@ dependencies = [
 [[package]]
 name = "mpi-sys"
 version = "0.2.0"
-source = "git+https://github.com/bsteinb/rsmpi.git#4f07e748b84940b3b823e806c575761199348e0d"
+source = "git+https://github.com/bsteinb/rsmpi.git#055d50360fa811cec44c0aab1c71b572a57d7e54"
 dependencies = [
  "bindgen",
  "build-probe-mpi",
