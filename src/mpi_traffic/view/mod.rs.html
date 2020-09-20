@@ -690,6 +690,7 @@
 <span id="690">690</span>
 <span id="691">691</span>
 <span id="692">692</span>
+<span id="693">693</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">info</span>::<span class="ident">Info</span>,
@@ -1202,7 +1203,7 @@
                     }),
                     <span class="ident">g2d</span>,
                 );
-            },
+            }
             <span class="ident">stateful</span>::<span class="ident">car</span>::<span class="ident">Location</span>::<span class="ident">ChangingLane</span> {
                 <span class="ident">road_direction</span>,
                 <span class="ident">road_index</span>,
@@ -1214,10 +1215,10 @@
             } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">length</span> <span class="op">=</span> <span class="ident">city</span>.<span class="ident">road_length</span>(<span class="ident">road_direction</span>, <span class="ident">road_index</span>);
                 <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="op">-</span><span class="ident">length</span> <span class="op">/</span> <span class="number">2.0</span> <span class="op">+</span> <span class="ident">position</span>;
-                <span class="kw">let</span> <span class="ident">lane_changed_offset</span> <span class="op">=</span> <span class="ident">lane_changed_proportion</span> <span class="op">*</span>
-                    <span class="ident">city</span>.<span class="ident">lane_width</span> <span class="op">*</span>
-                    (<span class="ident">to_lane_index</span> <span class="op">-</span> <span class="ident">from_lane_index</span>) <span class="kw">as</span> <span class="ident">f64</span> <span class="op">*</span>
-                    <span class="kw">match</span> <span class="ident">lane_direction</span> {
+                <span class="kw">let</span> <span class="ident">lane_changed_offset</span> <span class="op">=</span> <span class="ident">lane_changed_proportion</span>
+                    <span class="op">*</span> <span class="ident">city</span>.<span class="ident">lane_width</span>
+                    <span class="op">*</span> (<span class="ident">to_lane_index</span> <span class="op">-</span> <span class="ident">from_lane_index</span>) <span class="kw">as</span> <span class="ident">f64</span>
+                    <span class="op">*</span> <span class="kw">match</span> <span class="ident">lane_direction</span> {
                         <span class="ident">LaneDirection</span>::<span class="ident">HighToLow</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1.0</span>,
                         <span class="ident">LaneDirection</span>::<span class="ident">LowToHigh</span> <span class="op">=</span><span class="op">&gt;</span> <span class="op">-</span><span class="number">1.0</span>,
                     };
@@ -1243,7 +1244,7 @@
                     }),
                     <span class="ident">g2d</span>,
                 );
-            },
+            }
             <span class="ident">stateful</span>::<span class="ident">car</span>::<span class="ident">Location</span>::<span class="ident">InIntersection</span> {
                 <span class="ident">intersection_index</span>,
                 <span class="ident">from_direction</span>,
@@ -1277,7 +1278,8 @@
                 <span class="kw">let</span> <span class="ident">dy</span> <span class="op">=</span> <span class="ident">to_y</span> <span class="op">-</span> <span class="ident">from_y</span>;
                 <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">dx</span> <span class="op">*</span> <span class="ident">proportion</span> <span class="op">+</span> <span class="ident">from_x</span>;
                 <span class="kw">let</span> <span class="ident">y</span> <span class="op">=</span> <span class="ident">dy</span> <span class="op">*</span> <span class="ident">proportion</span> <span class="op">+</span> <span class="ident">from_y</span>;
-                <span class="kw">let</span> <span class="ident">turn_direction</span> <span class="op">=</span> <span class="ident">from_direction</span>.<span class="ident">turn_back</span>() <span class="comment">// convert to driver&#39;s direction</span>
+                <span class="kw">let</span> <span class="ident">turn_direction</span> <span class="op">=</span> <span class="ident">from_direction</span>
+                    .<span class="ident">turn_back</span>() <span class="comment">// convert to driver&#39;s direction</span>
                     .<span class="ident">should_turn</span>(<span class="ident">to_direction</span>);
                 <span class="kw">let</span> <span class="ident">origin_heading</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">car_heading_deg_on_road</span>(
                     <span class="ident">from_direction</span>.<span class="ident">axis_direction</span>(),
@@ -1291,7 +1293,7 @@
                         .<span class="ident">rot_deg</span>(<span class="ident">heading</span>),
                     <span class="ident">g2d</span>,
                 );
-            },
+            }
         }
     }
 

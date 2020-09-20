@@ -342,10 +342,10 @@
                                     <span class="kw-2">*</span><span class="ident">direction</span>,
                                     <span class="ident">InOutDirection</span>::<span class="ident">Out</span>,
                                 );
-                                <span class="kw">if</span> <span class="ident">out_road_direction</span> <span class="op">=</span><span class="op">=</span> <span class="ident">road_direction</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span>
-                                    <span class="kw-2">*</span><span class="ident">out_road_index</span> <span class="op">=</span><span class="op">=</span> <span class="ident">road_index</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span>
-                                    <span class="ident">out_lane_direction</span> <span class="op">=</span><span class="op">=</span> <span class="ident">lane_direction</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span>
-                                    <span class="ident">position</span> <span class="op">&lt;</span> <span class="ident">city</span>.<span class="ident">car_out_min_distance</span>
+                                <span class="kw">if</span> <span class="ident">out_road_direction</span> <span class="op">=</span><span class="op">=</span> <span class="ident">road_direction</span>
+                                    <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="kw-2">*</span><span class="ident">out_road_index</span> <span class="op">=</span><span class="op">=</span> <span class="ident">road_index</span>
+                                    <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">out_lane_direction</span> <span class="op">=</span><span class="op">=</span> <span class="ident">lane_direction</span>
+                                    <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">position</span> <span class="op">&lt;</span> <span class="ident">city</span>.<span class="ident">car_out_min_distance</span>
                                 {
                                     <span class="ident">local_state</span>
                                         .<span class="ident">car_out_intersection_lane_out_availability</span>
@@ -353,7 +353,7 @@
                                 }
                             }
                         }
-                    },
+                    }
                     <span class="ident">stateful</span>::<span class="ident">car</span>::<span class="ident">Location</span>::<span class="ident">ChangingLane</span> {
                         <span class="ident">road_direction</span>,
                         <span class="ident">road_index</span>,
@@ -379,7 +379,7 @@
                             <span class="ident">position</span>,
                             <span class="ident">i</span>,
                         )
-                    },
+                    }
                     <span class="ident">stateful</span>::<span class="ident">car</span>::<span class="ident">Location</span>::<span class="ident">InIntersection</span> {
                         <span class="ident">intersection_index</span>,
                         <span class="ident">to_direction</span>,
@@ -391,7 +391,7 @@
                                 .<span class="ident">car_out_intersection_lane_out_availability</span>
                                 .<span class="ident">get_mut</span>(<span class="ident">to_direction</span>)[<span class="ident">to_lane_index</span>] <span class="op">=</span> <span class="bool-val">false</span>;
                         }
-                    },
+                    }
                 }
             }
         }

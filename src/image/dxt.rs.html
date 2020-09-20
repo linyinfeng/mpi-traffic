@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/image-0.23.7/./src/dxt.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dxt.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../image/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/image-0.23.9/./src/dxt.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>dxt.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../image/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -812,6 +812,45 @@
 <span id="812">812</span>
 <span id="813">813</span>
 <span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
+<span id="818">818</span>
+<span id="819">819</span>
+<span id="820">820</span>
+<span id="821">821</span>
+<span id="822">822</span>
+<span id="823">823</span>
+<span id="824">824</span>
+<span id="825">825</span>
+<span id="826">826</span>
+<span id="827">827</span>
+<span id="828">828</span>
+<span id="829">829</span>
+<span id="830">830</span>
+<span id="831">831</span>
+<span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//!  Decoding of DXT (S3TC) compression</span>
 <span class="doccomment">//!</span>
@@ -832,6 +871,12 @@
 <span class="doccomment">/// What version of DXT compression are we using?</span>
 <span class="doccomment">/// Note that DXT2 and DXT4 are left away as they&#39;re</span>
 <span class="doccomment">/// just DXT3 and DXT5 with premultiplied alpha</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// DEPRECATED: The name of this enum will be changed to [`DxtVariant`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// TODO: rename to [`DxtVariant`]</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`DxtVariant`]: type.DxtVariant.html</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DXTVariant</span> {
     <span class="doccomment">/// The DXT1 format. 48 bytes of RGB data in a 4x4 pixel square is</span>
@@ -844,6 +889,16 @@
     <span class="doccomment">/// compressed into a 16 byte block of DXT5 data</span>
     <span class="ident">DXT5</span>,
 }
+
+<span class="doccomment">/// DXT compression version.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// An alias of [`DXTVariant`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// TODO: remove when [`DXTVariant`] is renamed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`DXTVariant`]: enum.DXTVariant.html</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DxtVariant</span> <span class="op">=</span> <span class="ident">DXTVariant</span>;
 
 <span class="kw">impl</span> <span class="ident">DXTVariant</span> {
     <span class="doccomment">/// Returns the amount of bytes of raw image data</span>
@@ -933,7 +988,7 @@
 <span class="comment">// Note that, due to the way that DXT compression works, a scanline is considered to consist out of</span>
 <span class="comment">// 4 lines of pixels.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">ImageDecoder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DxtDecoder</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
-    <span class="kw">type</span> <span class="ident">Reader</span> <span class="op">=</span> <span class="ident">DXTReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>;
+    <span class="kw">type</span> <span class="ident">Reader</span> <span class="op">=</span> <span class="ident">DxtReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>;
 
     <span class="kw">fn</span> <span class="ident">dimensions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">u32</span>, <span class="ident">u32</span>) {
         (<span class="self">self</span>.<span class="ident">width_blocks</span> <span class="op">*</span> <span class="number">4</span>, <span class="self">self</span>.<span class="ident">height_blocks</span> <span class="op">*</span> <span class="number">4</span>)
@@ -948,7 +1003,7 @@
     }
 
     <span class="kw">fn</span> <span class="ident">into_reader</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ImageResult</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Reader</span><span class="op">&gt;</span> {
-        <span class="prelude-val">Ok</span>(<span class="ident">DXTReader</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident">DxtReader</span> {
             <span class="ident">buffer</span>: <span class="ident">ImageReadBuffer</span>::<span class="ident">new</span>(<span class="self">self</span>.<span class="ident">scanline_bytes</span>(), <span class="self">self</span>.<span class="ident">total_bytes</span>()),
             <span class="ident">decoder</span>: <span class="self">self</span>,
         })
@@ -990,11 +1045,23 @@
 }
 
 <span class="doccomment">/// DXT reader</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DXTReader</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DxtReader</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span> {
     <span class="ident">buffer</span>: <span class="ident">ImageReadBuffer</span>,
     <span class="ident">decoder</span>: <span class="ident">DxtDecoder</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
 }
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">DXTReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+
+<span class="doccomment">/// DXT reader</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// An alias of [`DxtReader`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// TODO: remove</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`DxtReader`]: struct.DxtReader.html</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+<span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Use `DxtReader` instead&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DXTReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">DxtReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>;
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span> <span class="ident">Read</span> <span class="kw">for</span> <span class="ident">DxtReader</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">decoder</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">decoder</span>;
         <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">read</span>(<span class="ident">buf</span>, <span class="op">|</span><span class="ident">buf</span><span class="op">|</span> <span class="ident">decoder</span>.<span class="ident">read_scanline</span>(<span class="ident">buf</span>))
@@ -1002,14 +1069,25 @@
 }
 
 <span class="doccomment">/// DXT encoder</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DXTEncoder</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DxtEncoder</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> {
     <span class="ident">w</span>: <span class="ident">W</span>,
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">DXTEncoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+<span class="doccomment">/// DXT encoder</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// An alias of [`DxtEncoder`].</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// TODO: remove</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`DxtEncoder`]: struct.DxtEncoder.html</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
+<span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Use `DxtEncoder` instead&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">type</span> <span class="ident">DXTEncoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">DxtEncoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span>;
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span> <span class="ident">DxtEncoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new encoder that writes its output to ```w```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">w</span>: <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DXTEncoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
-        <span class="ident">DXTEncoder</span> { <span class="ident">w</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">w</span>: <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DxtEncoder</span><span class="op">&lt;</span><span class="ident">W</span><span class="op">&gt;</span> {
+        <span class="ident">DxtEncoder</span> { <span class="ident">w</span> }
     }
 
     <span class="doccomment">/// Encodes the image data ```data```</span>

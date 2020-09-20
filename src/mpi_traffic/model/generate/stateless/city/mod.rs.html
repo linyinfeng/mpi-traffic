@@ -134,7 +134,7 @@
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IntersectionIndex</span> {
     <span class="kw">for</span> (<span class="ident">index</span>, <span class="ident">intersection</span>) <span class="kw">in</span> <span class="ident">board</span>.<span class="ident">intersections</span>.<span class="ident">enumerate</span>() {
         <span class="kw">if</span> <span class="ident">intersection</span>.<span class="ident">is_some</span>() {
-            <span class="kw">return</span> <span class="ident">index</span>
+            <span class="kw">return</span> <span class="ident">index</span>;
         }
     }
     <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;empty city&quot;</span>)
