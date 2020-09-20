@@ -5,6 +5,7 @@
 /result
 .direnv
 .envrc
+/outputs
 
 /target
 **/*.rs.bk

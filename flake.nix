@@ -28,6 +28,7 @@
             pkg-config
             clang
             texinfo
+            mpich
           ];
           buildInputs = with pkgs; [
             mpich
