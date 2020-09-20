@@ -2,6 +2,9 @@
 /.vscode
 /.idea
 *.iml
+/result
+.direnv
+.envrc
 
 /target
 **/*.rs.bk
