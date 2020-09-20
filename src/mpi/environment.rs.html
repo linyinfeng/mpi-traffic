@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/git/checkouts/rsmpi-d28083ffcf8044e3/8c1cb4d/src/environment.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>environment.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mpi-0.5.4/src/environment.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>environment.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -299,10 +299,6 @@
 <span id="299">299</span>
 <span id="300">300</span>
 <span id="301">301</span>
-<span id="302">302</span>
-<span id="303">303</span>
-<span id="304">304</span>
-<span id="305">305</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="doccomment">//! Environmental management</span>
 <span class="doccomment">//!</span>
@@ -313,16 +309,15 @@
 <span class="doccomment">//! - **8.1.2**: `MPI_TAG_UB`, ...</span>
 <span class="doccomment">//! - **8.2**: Memory allocation</span>
 <span class="doccomment">//! - **8.3, 8.4, and 8.5**: Error handling</span>
+<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">mem</span>, <span class="ident">ptr</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_char</span>, <span class="ident">c_double</span>, <span class="ident">c_int</span>, <span class="ident">c_void</span>};
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ptr</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">FromUtf8Error</span>;
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">os</span>::<span class="ident">raw</span>::{<span class="ident">c_char</span>, <span class="ident">c_double</span>, <span class="ident">c_int</span>, <span class="ident">c_void</span>};
 
 <span class="kw">use</span> <span class="ident">conv</span>::<span class="ident">ConvUtil</span>;
 
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">ffi</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">topology</span>::<span class="ident">SystemCommunicator</span>;
-<span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">with_uninitialized</span>, <span class="ident">with_uninitialized2</span>};
+<span class="kw">use</span> <span class="ident">ffi</span>;
+<span class="kw">use</span> <span class="ident">topology</span>::<span class="ident">SystemCommunicator</span>;
 
 <span class="doccomment">/// Global context</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Universe</span> {
@@ -342,7 +337,7 @@
 
     <span class="doccomment">/// The size in bytes of the buffer used for buffered communication.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">buffer_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
-        <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">as_ref</span>().<span class="ident">map_or</span>(<span class="number">0</span>, <span class="ident">Vec</span>::<span class="ident">len</span>)
+        <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">as_ref</span>().<span class="ident">map_or</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">buffer</span><span class="op">|</span> <span class="ident">buffer</span>.<span class="ident">len</span>())
     }
 
     <span class="doccomment">/// Set the size in bytes of the buffer used for buffered communication.</span>
@@ -353,7 +348,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buffer</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0</span>; <span class="ident">size</span>];
             <span class="kw">unsafe</span> {
                 <span class="ident">ffi</span>::<span class="ident">MPI_Buffer_attach</span>(
-                    <span class="ident">buffer</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>,
+                    <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">buffer</span>.<span class="ident">as_mut_ptr</span>()),
                     <span class="ident">buffer</span>
                         .<span class="ident">len</span>()
                         .<span class="ident">value_as</span>()
@@ -372,7 +367,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">size</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
             <span class="kw">unsafe</span> {
                 <span class="ident">ffi</span>::<span class="ident">MPI_Buffer_detach</span>(<span class="ident">addr_ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">size</span>);
-                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">addr</span>, <span class="ident">buffer</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>);
+                <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">addr</span>, <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="ident">buffer</span>.<span class="ident">as_ptr</span>()));
             }
             <span class="macro">assert_eq</span><span class="macro">!</span>(
                 <span class="ident">size</span>,
@@ -419,9 +414,9 @@
 
 <span class="kw">impl</span> <span class="ident">Threading</span> {
     <span class="doccomment">/// The raw value understood by the MPI C API</span>
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">c_int</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">c_int</span> {
         <span class="kw">use</span> <span class="self">self</span>::<span class="ident">Threading</span>::<span class="kw-2">*</span>;
-        <span class="kw">match</span> <span class="self">self</span> {
+        <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
             <span class="ident">Single</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SINGLE</span>),
             <span class="ident">Funneled</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_FUNNELED</span>),
             <span class="ident">Serialized</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SERIALIZED</span>),
@@ -460,7 +455,11 @@
 
 <span class="doccomment">/// Whether the MPI library has been initialized</span>
 <span class="kw">fn</span> <span class="ident">is_initialized</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-    <span class="kw">unsafe</span> { <span class="ident">with_uninitialized</span>(<span class="op">|</span><span class="ident">initialized</span><span class="op">|</span> <span class="ident">ffi</span>::<span class="ident">MPI_Initialized</span>(<span class="ident">initialized</span>)).<span class="number">1</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> }
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
+    <span class="kw">unsafe</span> {
+        <span class="ident">ffi</span>::<span class="ident">MPI_Initialized</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
+    }
+    <span class="ident">res</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
 }
 
 <span class="doccomment">/// Initialize MPI.</span>
@@ -498,16 +497,15 @@
     <span class="kw">if</span> <span class="ident">is_initialized</span>() {
         <span class="prelude-val">None</span>
     } <span class="kw">else</span> {
-        <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">provided</span>) <span class="op">=</span> <span class="kw">unsafe</span> {
-            <span class="ident">with_uninitialized</span>(<span class="op">|</span><span class="ident">provided</span><span class="op">|</span> {
-                <span class="ident">ffi</span>::<span class="ident">MPI_Init_thread</span>(
-                    <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                    <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
-                    <span class="ident">threading</span>.<span class="ident">as_raw</span>(),
-                    <span class="ident">provided</span>,
-                )
-            })
-        };
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">provided</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
+        <span class="kw">unsafe</span> {
+            <span class="ident">ffi</span>::<span class="ident">MPI_Init_thread</span>(
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="ident">ptr</span>::<span class="ident">null_mut</span>(),
+                <span class="ident">threading</span>.<span class="ident">as_raw</span>(),
+                <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">provided</span>,
+            );
+        }
         <span class="prelude-val">Some</span>((<span class="ident">Universe</span> { <span class="ident">buffer</span>: <span class="prelude-val">None</span> }, <span class="ident">provided</span>.<span class="ident">into</span>()))
     }
 }
@@ -519,11 +517,11 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">/// See `examples/init_with_threading.rs`</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">threading_support</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Threading</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
     <span class="kw">unsafe</span> {
-        <span class="ident">with_uninitialized</span>(<span class="op">|</span><span class="ident">threading</span><span class="op">|</span> <span class="ident">ffi</span>::<span class="ident">MPI_Query_thread</span>(<span class="ident">threading</span>))
-            .<span class="number">1</span>
-            .<span class="ident">into</span>()
+        <span class="ident">ffi</span>::<span class="ident">MPI_Query_thread</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
     }
+    <span class="ident">res</span>.<span class="ident">into</span>()
 }
 
 <span class="doccomment">/// Identifies the version of the MPI standard implemented by the library.</span>
@@ -532,9 +530,11 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Can be called without initializing MPI.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>() <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">c_int</span>, <span class="ident">c_int</span>) {
-    <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">version</span>, <span class="ident">subversion</span>) <span class="op">=</span> <span class="kw">unsafe</span> {
-        <span class="ident">with_uninitialized2</span>(<span class="op">|</span><span class="ident">version</span>, <span class="ident">subversion</span><span class="op">|</span> <span class="ident">ffi</span>::<span class="ident">MPI_Get_version</span>(<span class="ident">version</span>, <span class="ident">subversion</span>))
-    };
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">version</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">subversion</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
+    <span class="kw">unsafe</span> {
+        <span class="ident">ffi</span>::<span class="ident">MPI_Get_version</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">version</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">subversion</span>);
+    }
     (<span class="ident">version</span>, <span class="ident">subversion</span>)
 }
 
@@ -546,25 +546,21 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">library_version</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FromUtf8Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">bufsize</span> <span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_MAX_LIBRARY_VERSION_STRING</span>)
         .<span class="ident">value_as</span>()
-        .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-            <span class="macro">panic</span><span class="macro">!</span>(
-                <span class="string">&quot;MPI_MAX_LIBRARY_SIZE ({}) cannot be expressed as a usize.&quot;</span>,
-                <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_MAX_LIBRARY_VERSION_STRING</span>)
-            )
-        });
+        .<span class="ident">expect</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;MPI_MAX_LIBRARY_SIZE ({}) cannot be expressed as a usize.&quot;</span>,
+            <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_MAX_LIBRARY_VERSION_STRING</span>)
+        ));
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0u8</span>; <span class="ident">bufsize</span>];
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">len</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
 
     <span class="kw">unsafe</span> {
         <span class="ident">ffi</span>::<span class="ident">MPI_Get_library_version</span>(<span class="ident">buf</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">len</span>);
     }
-    <span class="ident">buf</span>.<span class="ident">truncate</span>(<span class="ident">len</span>.<span class="ident">value_as</span>().<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-        <span class="macro">panic</span><span class="macro">!</span>(
-            <span class="string">&quot;Length of library version string ({}) cannot \
-             be expressed as a usize.&quot;</span>,
-            <span class="ident">len</span>
-        )
-    }));
+    <span class="ident">buf</span>.<span class="ident">truncate</span>(<span class="ident">len</span>.<span class="ident">value_as</span>().<span class="ident">expect</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+        <span class="string">&quot;Length of library version string ({}) cannot \
+         be expressed as a usize.&quot;</span>,
+        <span class="ident">len</span>
+    )));
     <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">buf</span>)
 }
 
@@ -574,27 +570,23 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">processor_name</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FromUtf8Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">bufsize</span> <span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_MAX_PROCESSOR_NAME</span>)
         .<span class="ident">value_as</span>()
-        .<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-            <span class="macro">panic</span><span class="macro">!</span>(
-                <span class="string">&quot;MPI_MAX_LIBRARY_SIZE ({}) \
-                 cannot be expressed as a \
-                 usize.&quot;</span>,
-                <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_MAX_PROCESSOR_NAME</span>)
-            )
-        });
+        .<span class="ident">expect</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+            <span class="string">&quot;MPI_MAX_LIBRARY_SIZE ({}) \
+             cannot be expressed as a \
+             usize.&quot;</span>,
+            <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_MAX_PROCESSOR_NAME</span>)
+        ));
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">0u8</span>; <span class="ident">bufsize</span>];
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">len</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="number">0</span>;
 
     <span class="kw">unsafe</span> {
         <span class="ident">ffi</span>::<span class="ident">MPI_Get_processor_name</span>(<span class="ident">buf</span>.<span class="ident">as_mut_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_char</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">len</span>);
     }
-    <span class="ident">buf</span>.<span class="ident">truncate</span>(<span class="ident">len</span>.<span class="ident">value_as</span>().<span class="ident">unwrap_or_else</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
-        <span class="macro">panic</span><span class="macro">!</span>(
-            <span class="string">&quot;Length of processor name string ({}) cannot be \
-             expressed as a usize.&quot;</span>,
-            <span class="ident">len</span>
-        )
-    }));
+    <span class="ident">buf</span>.<span class="ident">truncate</span>(<span class="ident">len</span>.<span class="ident">value_as</span>().<span class="ident">expect</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
+        <span class="string">&quot;Length of processor name string ({}) cannot be \
+         expressed as a usize.&quot;</span>,
+        <span class="ident">len</span>
+    )));
     <span class="ident">String</span>::<span class="ident">from_utf8</span>(<span class="ident">buf</span>)
 }
 

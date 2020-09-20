@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `datatype` mod in crate `mpi`."><meta name="keywords" content="rust, rustlang, rust-lang, datatype"><title>mpi::datatype - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a><p class='location'>Module datatype</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../index.html'>mpi</a></p><script>window.sidebarCurrent = {name: 'datatype', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../src/mpi/datatype.rs.html#1-1413' title='goto source code'>[src]</a></span><span class='in-band'>Module <a href='../index.html'>mpi</a>::<wbr><a class="mod" href=''>datatype</a></span></h1><div class='docblock'><p>The core function of MPI is getting data from point A to point B (where A and B are e.g. single
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="API documentation for the Rust `datatype` mod in crate `mpi`."><meta name="keywords" content="rust, rustlang, rust-lang, datatype"><title>mpi::datatype - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a><p class='location'>Module datatype</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class='location'><a href='../index.html'>mpi</a></p><script>window.sidebarCurrent = {name: 'datatype', ty: 'mod', relpath: '../'};</script><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class='fqn'><span class='out-of-band'><span id='render-detail'><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class='inner'>&#x2212;</span>]</a></span><a class='srclink' href='../../src/mpi/datatype.rs.html#1-1067' title='goto source code'>[src]</a></span><span class='in-band'>Module <a href='../index.html'>mpi</a>::<wbr><a class="mod" href=''>datatype</a></span></h1><div class='docblock'><p>Describing data</p>
+<p>The core function of MPI is getting data from point A to point B (where A and B are e.g. single
 processes, multiple processes, the filesystem, ...). It offers facilities to describe that data
 (layout in memory, behavior under certain operators) that go beyound a start address and a
 number of bytes.</p>
@@ -10,37 +11,6 @@ an MPI datatype is covered by the <code>Equivalence</code> trait. Starting from 
 struct (which should then implement <code>Equivalence</code>) or to intrusively describe parts of
 an object in memory like all elements below the diagonal of a dense matrix stored in row-major
 order.</p>
-<h2 id="derived-datatypes" class="section-header"><a href="#derived-datatypes">Derived Datatypes</a></h2>
-<p>Derived MPI datatypes can exist in either an &quot;uncommitted&quot; or &quot;committed&quot; state. Only
-&quot;committed&quot; datatypes can be used in MPI communication. There is a cost to committing a
-datatype: only a final aggregate type should be committed when building it from component
-derived datatypes.</p>
-<p>In order to represent the difference between committed and uncommitted <code>MPI_Datatype</code> objects,
-two different flavors of types representing the &quot;committed&quot;-ness of the type are exposed.
-Orthogonally, there are types representing both &quot;owned&quot; <code>MPI_Datatype</code> objects and &quot;borrowed&quot;
-<code>MPI_Datatype</code> objects. This means there are four different types for <code>MPI_Datatype</code>:</p>
-<ul>
-<li><code>UserDatatype</code> represents a committed, owned <code>MPI_Datatype</code></li>
-<li><code>DatatypeRef&lt;'_&gt;</code> represents a committed, borrowed <code>MPI_Datatype</code>.
-<ul>
-<li>All builtin types are <code>DatatypeRef&lt;'static&gt;</code></li>
-</ul>
-</li>
-<li><code>UncommittedUserDatatype</code> represents an uncommitted, owned <code>MPI_Datatype</code></li>
-<li><code>UncommittedDatatypeRef&lt;'_&gt;</code> represents an uncommitted, borrowed <code>MPI_Datatype</code></li>
-</ul>
-<p>Along with this, there are two traits that are applied to these types:</p>
-<ul>
-<li><code>UncommittedDatatype</code> indicates the type represents a possibly uncommitted <code>MPI_Datatype</code></li>
-<li><code>Datatype</code> indicates the type represents a committed <code>MPI_Datatype</code></li>
-</ul>
-<p>An important concept here is that all committed <code>Datatype</code> objects are also
-<code>UncommittedDatatype</code> objects. This may seem unintuitive at first, but as far as MPI is
-concerned, &quot;committing&quot; a datatype is purely a promotion, enabling more capabilities. This
-allows <code>Datatype</code> and <code>UncommittedDatatype</code> objects to be used interchangeably in the same
-<code>Datatype</code> constructors.</p>
-<p>For more information on derived datatypes, see section 4.1 of the MPI 3.1 Standard.</p>
-<h2 id="data-buffers" class="section-header"><a href="#data-buffers">Data Buffers</a></h2>
 <p>A <code>Buffer</code> describes a specific piece of data in memory that MPI should operate on. In addition
 to specifying the datatype of the data. It knows the address in memory where the data begins
 and how many instances of the datatype are contained in the data. The <code>Buffer</code> trait is
@@ -50,6 +20,7 @@ provided. However, since it can be used to instruct the underlying MPI implement
 rummage around arbitrary parts of memory, its constructors are currently marked unsafe.</p>
 <h1 id="unfinished-features" class="section-header"><a href="#unfinished-features">Unfinished features</a></h1>
 <ul>
+<li><strong>4.1.2</strong>: Datatype constructors, <code>MPI_Type_create_struct()</code></li>
 <li><strong>4.1.3</strong>: Subarray datatype constructors, <code>MPI_Type_create_subarray()</code>,</li>
 <li><strong>4.1.4</strong>: Distributed array datatype constructors, <code>MPI_Type_create_darray()</code></li>
 <li><strong>4.1.5</strong>: Address and size functions, <code>MPI_Get_address()</code>, <code>MPI_Aint_add()</code>,
@@ -58,8 +29,10 @@ rummage around arbitrary parts of memory, its constructors are currently marked 
 <code>MPI_Type_get_extent_x()</code>, <code>MPI_Type_create_resized()</code></li>
 <li><strong>4.1.8</strong>: True extent of datatypes, <code>MPI_Type_get_true_extent()</code>,
 <code>MPI_Type_get_true_extent_x()</code></li>
+<li><strong>4.1.10</strong>: Duplicating a datatype, <code>MPI_Type_dup()</code></li>
 <li><strong>4.1.11</strong>: <code>MPI_Get_elements()</code>, <code>MPI_Get_elements_x()</code></li>
 <li><strong>4.1.13</strong>: Decoding a datatype, <code>MPI_Type_get_envelope()</code>, <code>MPI_Type_get_contents()</code></li>
+<li><strong>4.2</strong>: Pack and unpack, <code>MPI_Pack()</code>, <code>MPI_Unpack()</code>, <code>MPI_Pack_size()</code></li>
 <li><strong>4.3</strong>: Canonical pack and unpack, <code>MPI_Pack_external()</code>, <code>MPI_Unpack_external()</code>,
 <code>MPI_Pack_external_size()</code></li>
 </ul>
@@ -72,9 +45,6 @@ rummage around arbitrary parts of memory, its constructors are currently marked 
 </td></tr><tr class='module-item'><td><a class="struct" href="struct.MutView.html" title='mpi::datatype::MutView struct'>MutView</a></td><td class='docblock-short'><p>A buffer with a user specified count and datatype</p>
 </td></tr><tr class='module-item'><td><a class="struct" href="struct.Partition.html" title='mpi::datatype::Partition struct'>Partition</a></td><td class='docblock-short'><p>Adds a partitioning to an existing <code>Buffer</code> so that it becomes <code>Partitioned</code></p>
 </td></tr><tr class='module-item'><td><a class="struct" href="struct.PartitionMut.html" title='mpi::datatype::PartitionMut struct'>PartitionMut</a></td><td class='docblock-short'><p>Adds a partitioning to an existing <code>BufferMut</code> so that it becomes <code>Partitioned</code></p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.UncommittedDatatypeRef.html" title='mpi::datatype::UncommittedDatatypeRef struct'>UncommittedDatatypeRef</a></td><td class='docblock-short'><p>A reference to an uncommitted, or potentially uncommitted, MPI data type.</p>
-</td></tr><tr class='module-item'><td><a class="struct" href="struct.UncommittedUserDatatype.html" title='mpi::datatype::UncommittedUserDatatype struct'>UncommittedUserDatatype</a></td><td class='docblock-short'><p>Represents an MPI datatype that has not yet been committed. Can be used to build up more complex
-datatypes before committing.</p>
 </td></tr><tr class='module-item'><td><a class="struct" href="struct.UserDatatype.html" title='mpi::datatype::UserDatatype struct'>UserDatatype</a></td><td class='docblock-short'><p>A user defined MPI datatype</p>
 </td></tr><tr class='module-item'><td><a class="struct" href="struct.View.html" title='mpi::datatype::View struct'>View</a></td><td class='docblock-short'><p>A buffer with a user specified count and datatype</p>
 </td></tr></table><h2 id='traits' class='section-header'><a href="#traits">Traits</a></h2>
@@ -92,8 +62,6 @@ from the start of the buffer for each partition.</p>
 </td></tr><tr class='module-item'><td><a class="trait" href="trait.PartitionedBufferMut.html" title='mpi::datatype::PartitionedBufferMut trait'>PartitionedBufferMut</a></td><td class='docblock-short'><p>A mutable buffer that is <code>Partitioned</code></p>
 </td></tr><tr class='module-item'><td><a class="trait" href="trait.Pointer.html" title='mpi::datatype::Pointer trait'>Pointer</a></td><td class='docblock-short'><p>Provides a pointer to the starting address in memory.</p>
 </td></tr><tr class='module-item'><td><a class="trait" href="trait.PointerMut.html" title='mpi::datatype::PointerMut trait'>PointerMut</a></td><td class='docblock-short'><p>Provides a mutable pointer to the starting address in memory.</p>
-</td></tr><tr class='module-item'><td><a class="trait" href="trait.UncommittedDatatype.html" title='mpi::datatype::UncommittedDatatype trait'>UncommittedDatatype</a></td><td class='docblock-short'><p>An UncommittedDatatype is a partial description of the layout of messages in memory which may
-not yet have been committed to an implementation-defined message format.</p>
 </td></tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table><tr class='module-item'><td><a class="fn" href="fn.address_of.html" title='mpi::datatype::address_of fn'>address_of</a></td><td class='docblock-short'><p>Returns the address of the argument in a format suitable for use with datatype constructors</p>
 </td></tr></table><h2 id='types' class='section-header'><a href="#types">Type Definitions</a></h2>
