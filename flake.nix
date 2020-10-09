@@ -16,7 +16,7 @@
 
           src = ./.;
 
-          cargoSha256 = "sha256-xwxqzaz7n7S3NrBRn6671EfzfDSEr8sx8lj2kTVVTL0=";
+          cargoSha256 = "sha256-0tK5gux61YtKSd8+POeQqitPcJYjFgtBVwzbxHWIMTI=";
           verifyCargoDeps = true;
 
           RUST_BACKTRACE = 1;
