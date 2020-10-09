@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/controller/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../mpi_traffic/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/controller/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../mpi_traffic/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -746,7 +747,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Controller</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">update_controller</span>: <span class="ident">UpdateController</span>, <span class="ident">settings</span>: <span class="ident">ControllerSettings</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">update_controller</span>: <span class="ident">UpdateController</span>, <span class="ident">settings</span>: <span class="ident">ControllerSettings</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">mouse_left_button_down</span>: <span class="bool-val">false</span>,
             <span class="ident">mouse_left_button_down_location</span>: <span class="prelude-val">None</span>,
@@ -770,20 +771,20 @@
                 <span class="ident">state</span>,
                 <span class="ident">button</span>: <span class="ident">Button</span>::<span class="ident">Mouse</span>(<span class="ident">MouseButton</span>::<span class="ident">Left</span>),
                 ..
-            }) <span class="op">=</span><span class="op">&gt;</span> {
+            }) <span class="op">=&gt;</span> {
                 <span class="kw">match</span> <span class="ident">state</span> {
-                    <span class="ident">ButtonState</span>::<span class="ident">Press</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">ButtonState</span>::<span class="ident">Press</span> <span class="op">=&gt;</span> {
                         <span class="self">self</span>.<span class="ident">mouse_left_button_down</span> <span class="op">=</span> <span class="bool-val">true</span>;
                         <span class="self">self</span>.<span class="ident">start_drag_location</span> <span class="op">=</span> <span class="prelude-val">Some</span>((<span class="ident">info</span>.<span class="ident">x</span>, <span class="ident">info</span>.<span class="ident">y</span>));
                     }
-                    <span class="ident">ButtonState</span>::<span class="ident">Release</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">ButtonState</span>::<span class="ident">Release</span> <span class="op">=&gt;</span> {
                         <span class="self">self</span>.<span class="ident">mouse_left_button_down</span> <span class="op">=</span> <span class="bool-val">false</span>;
                         <span class="self">self</span>.<span class="ident">start_drag_location</span> <span class="op">=</span> <span class="prelude-val">None</span>;
                     }
                 };
                 <span class="self">self</span>.<span class="ident">mouse_left_button_down_location</span> <span class="op">=</span> <span class="prelude-val">None</span>;
             }
-            <span class="ident">Input</span>::<span class="ident">Move</span>(<span class="ident">Motion</span>::<span class="ident">MouseCursor</span>([<span class="ident">x</span>, <span class="ident">y</span>])) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">Input</span>::<span class="ident">Move</span>(<span class="ident">Motion</span>::<span class="ident">MouseCursor</span>([<span class="ident">x</span>, <span class="ident">y</span>])) <span class="op">=&gt;</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">mouse_left_button_down</span> {
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">origin_x</span>, <span class="ident">origin_y</span>)) <span class="op">=</span> <span class="self">self</span>.<span class="ident">mouse_left_button_down_location</span> {
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>((<span class="ident">start_drag_x</span>, <span class="ident">start_drag_y</span>)) <span class="op">=</span> <span class="self">self</span>.<span class="ident">start_drag_location</span> {
@@ -795,10 +796,10 @@
                     }
                 }
             }
-            <span class="ident">Input</span>::<span class="ident">Move</span>(<span class="ident">Motion</span>::<span class="ident">MouseScroll</span>([<span class="ident">_x</span>, <span class="ident">y</span>])) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="ident">info</span>.<span class="ident">zoom</span> <span class="op">+</span><span class="op">=</span> <span class="ident">y</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">settings</span>.<span class="ident">zoom_step</span>;
+            <span class="ident">Input</span>::<span class="ident">Move</span>(<span class="ident">Motion</span>::<span class="ident">MouseScroll</span>([<span class="ident">_x</span>, <span class="ident">y</span>])) <span class="op">=&gt;</span> {
+                <span class="ident">info</span>.<span class="ident">zoom</span> <span class="op">+=</span> <span class="ident">y</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">settings</span>.<span class="ident">zoom_step</span>;
             }
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (),
+            <span class="kw">_</span> <span class="op">=&gt;</span> (),
         }
     }
 }
@@ -826,7 +827,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">UpdateController</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">car_out_rank</span>: <span class="number">0</span> }
     }
 
@@ -849,8 +850,8 @@
         );
         <span class="self">self</span>.<span class="ident">update_cars</span>(<span class="ident">root</span>, <span class="ident">communicator</span>.<span class="ident">clone</span>(), <span class="ident">stateful</span>, <span class="ident">stateless</span>, <span class="ident">args</span>);
 
-        <span class="self">self</span>.<span class="ident">car_out_rank</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-        <span class="self">self</span>.<span class="ident">car_out_rank</span> <span class="op">%</span><span class="op">=</span> <span class="ident">communicator</span>.<span class="ident">size</span>();
+        <span class="self">self</span>.<span class="ident">car_out_rank</span> <span class="op">+=</span> <span class="number">1</span>;
+        <span class="self">self</span>.<span class="ident">car_out_rank</span> <span class="op">%=</span> <span class="ident">communicator</span>.<span class="ident">size</span>();
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">update_cars</span><span class="op">&lt;</span><span class="ident">Comm</span><span class="op">&gt;</span>(
@@ -899,7 +900,7 @@
         <span class="ident">stateful</span>: <span class="kw-2">&amp;</span><span class="ident">stateful</span>::<span class="ident">Model</span>,
         <span class="ident">stateless</span>: <span class="kw-2">&amp;</span><span class="ident">stateless</span>::<span class="ident">Model</span>,
         <span class="ident">args</span>: <span class="ident">UpdateArgs</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">stateful</span>::<span class="ident">Car</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">stateful</span>::<span class="ident">Car</span><span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">model</span>::<span class="ident">stateful</span>::<span class="ident">car</span>::<span class="ident">Location</span>::<span class="kw-2">*</span>;
         <span class="kw">let</span> <span class="ident">stateless_car</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">stateless</span>.<span class="ident">cars</span>[<span class="ident">car_index</span>];
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">car</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">stateful</span>.<span class="ident">cars</span>[<span class="ident">car_index</span>] {
@@ -911,7 +912,7 @@
                     <span class="ident">lane_index</span>,
                     <span class="ident">about_to_turn</span>,
                     <span class="ident">position</span>,
-                } <span class="op">=</span><span class="op">&gt;</span> {
+                } <span class="op">=&gt;</span> {
                     <span class="kw">let</span> <span class="ident">road_length</span> <span class="op">=</span> <span class="ident">stateless</span>.<span class="ident">city</span>.<span class="ident">road_length</span>(<span class="kw-2">*</span><span class="ident">road_direction</span>, <span class="kw-2">*</span><span class="ident">road_index</span>);
                     <span class="kw">let</span> <span class="ident">road</span> <span class="op">=</span> <span class="ident">stateless</span>.<span class="ident">city</span>.<span class="ident">board</span>.<span class="ident">get_roads</span>(<span class="kw-2">*</span><span class="ident">road_direction</span>)[<span class="kw-2">*</span><span class="ident">road_index</span>]
                         .<span class="ident">as_ref</span>()
@@ -926,7 +927,7 @@
                     }
                     <span class="kw">let</span> <span class="ident">position</span> <span class="op">=</span> <span class="ident">position</span> <span class="op">+</span> <span class="ident">car</span>.<span class="ident">velocity</span> <span class="op">*</span> <span class="ident">args</span>.<span class="ident">dt</span>;
 
-                    <span class="kw">if</span> <span class="ident">position</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident">road_length</span> {
+                    <span class="kw">if</span> <span class="ident">position</span> <span class="op">&gt;=</span> <span class="ident">road_length</span> {
                         <span class="comment">// switch to InIntersection</span>
                         <span class="kw">let</span> <span class="ident">intersection_index</span> <span class="op">=</span> <span class="ident">stateless</span>.<span class="ident">city</span>.<span class="ident">board</span>.<span class="ident">lane_to_intersection_index</span>(
                             <span class="kw-2">*</span><span class="ident">road_direction</span>,
@@ -998,8 +999,8 @@
                             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">front_car_index</span>) <span class="op">=</span> <span class="ident">front_car_index</span> {
                                 <span class="kw">let</span> <span class="ident">front_car</span> <span class="op">=</span> <span class="ident">stateful</span>.<span class="ident">cars</span>[<span class="ident">front_car_index</span>].<span class="ident">as_ref</span>().<span class="ident">unwrap</span>();
                                 <span class="kw">let</span> <span class="ident">front_position</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">front_car</span>.<span class="ident">location</span> {
-                                    <span class="ident">OnLane</span> { <span class="ident">position</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="ident">position</span>,
-                                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+                                    <span class="ident">OnLane</span> { <span class="ident">position</span>, .. } <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="ident">position</span>,
+                                    <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
                                 };
                                 <span class="kw">let</span> <span class="ident">velocity</span> <span class="op">=</span> <span class="ident">front_car</span>.<span class="ident">velocity</span>;
                                 <span class="ident">front_objects</span>.<span class="ident">push</span>((<span class="ident">front_position</span> <span class="op">-</span> <span class="ident">position</span>, <span class="ident">velocity</span>));
@@ -1021,9 +1022,9 @@
                                 .<span class="ident">as_ref</span>()
                                 .<span class="ident">unwrap</span>();
                             <span class="kw">match</span> <span class="ident">stateless_intersection</span> {
-                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Crossroad</span> { <span class="ident">max_speed</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Crossroad</span> { <span class="ident">max_speed</span>, .. } <span class="op">=&gt;</span> {
                                     <span class="kw">match</span> <span class="ident">stateful_intersection</span> {
-                                        <span class="ident">stateful</span>::<span class="ident">Intersection</span>::<span class="ident">Crossroad</span> { <span class="ident">current</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
+                                        <span class="ident">stateful</span>::<span class="ident">Intersection</span>::<span class="ident">Crossroad</span> { <span class="ident">current</span>, .. } <span class="op">=&gt;</span> {
                                             <span class="kw">let</span> <span class="ident">from_direction</span> <span class="op">=</span> <span class="ident">AbsoluteDirection</span>::<span class="ident">of_lane</span>(
                                                 <span class="kw-2">*</span><span class="ident">road_direction</span>,
                                                 <span class="kw-2">*</span><span class="ident">lane_direction</span>,
@@ -1037,12 +1038,12 @@
                                                 <span class="ident">front_objects</span>.<span class="ident">push</span>((<span class="ident">road_length</span> <span class="op">-</span> <span class="ident">position</span>, <span class="number">0.0</span>))
                                             }
                                         }
-                                        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+                                        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
                                     }
                                 }
-                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">TJunction</span> { <span class="ident">max_speed</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">TJunction</span> { <span class="ident">max_speed</span>, .. } <span class="op">=&gt;</span> {
                                     <span class="kw">match</span> <span class="ident">stateful_intersection</span> {
-                                        <span class="ident">stateful</span>::<span class="ident">Intersection</span>::<span class="ident">TJunction</span> { <span class="ident">current</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
+                                        <span class="ident">stateful</span>::<span class="ident">Intersection</span>::<span class="ident">TJunction</span> { <span class="ident">current</span>, .. } <span class="op">=&gt;</span> {
                                             <span class="comment">// TODO: Fix redundant code</span>
                                             <span class="kw">let</span> <span class="ident">from_direction</span> <span class="op">=</span> <span class="ident">AbsoluteDirection</span>::<span class="ident">of_lane</span>(
                                                 <span class="kw-2">*</span><span class="ident">road_direction</span>,
@@ -1057,16 +1058,16 @@
                                                 <span class="ident">front_objects</span>.<span class="ident">push</span>((<span class="ident">road_length</span> <span class="op">-</span> <span class="ident">position</span>, <span class="number">0.0</span>))
                                             }
                                         }
-                                        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+                                        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
                                     }
                                 }
-                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Turn</span> { <span class="ident">max_speed</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Turn</span> { <span class="ident">max_speed</span> } <span class="op">=&gt;</span> {
                                     <span class="ident">front_objects</span>.<span class="ident">push</span>((<span class="ident">road_length</span> <span class="op">-</span> <span class="ident">position</span>, <span class="kw-2">*</span><span class="ident">max_speed</span>))
                                 }
-                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Straight</span> <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Straight</span> <span class="op">=&gt;</span> {
                                     <span class="ident">front_objects</span>.<span class="ident">push</span>((<span class="ident">road_length</span> <span class="op">-</span> <span class="ident">position</span>, <span class="ident">lane</span>.<span class="ident">max_speed</span>))
                                 }
-                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">End</span> { <span class="ident">max_speed</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">End</span> { <span class="ident">max_speed</span> } <span class="op">=&gt;</span> {
                                     <span class="ident">front_objects</span>.<span class="ident">push</span>((<span class="ident">road_length</span> <span class="op">-</span> <span class="ident">position</span>, <span class="kw-2">*</span><span class="ident">max_speed</span>))
                                 }
                             }
@@ -1109,29 +1110,29 @@
                     <span class="ident">to_lane_index</span>,
                     <span class="ident">total_length</span>,
                     <span class="ident">position</span>,
-                } <span class="op">=</span><span class="op">&gt;</span> {
+                } <span class="op">=&gt;</span> {
                     <span class="kw">let</span> <span class="ident">stateless_intersection</span> <span class="op">=</span> <span class="ident">stateless</span>.<span class="ident">city</span>.<span class="ident">board</span>.<span class="ident">intersections</span>
                         [<span class="kw-2">*</span><span class="ident">intersection_index</span>]
                         .<span class="ident">as_ref</span>()
                         .<span class="ident">unwrap</span>();
                     <span class="kw">let</span> <span class="ident">intersection_max_speed</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">stateless_intersection</span> {
-                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Crossroad</span> { <span class="ident">max_speed</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>),
-                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">TJunction</span> { <span class="ident">max_speed</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>),
-                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Turn</span> { <span class="ident">max_speed</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>),
-                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Straight</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">End</span> { <span class="ident">max_speed</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>),
+                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Crossroad</span> { <span class="ident">max_speed</span>, .. } <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>),
+                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">TJunction</span> { <span class="ident">max_speed</span>, .. } <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>),
+                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Turn</span> { <span class="ident">max_speed</span> } <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>),
+                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">Straight</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+                        <span class="ident">stateless</span>::<span class="ident">Intersection</span>::<span class="ident">End</span> { <span class="ident">max_speed</span> } <span class="op">=&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>),
                     };
                     <span class="kw">let</span> <span class="ident">proportion</span> <span class="op">=</span> <span class="ident">position</span> <span class="op">/</span> <span class="ident">total_length</span>;
                     <span class="kw">let</span> <span class="ident">velocity</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">intersection_max_speed</span> {
-                        <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="prelude-val">Some</span>(<span class="ident">max_speed</span>) <span class="op">=&gt;</span> {
                             <span class="kw">let</span> <span class="ident">velocity_proportion</span> <span class="op">=</span> <span class="ident">proportion</span>.<span class="ident">min</span>(<span class="number">0.5</span>);
                             <span class="ident">car</span>.<span class="ident">velocity</span> <span class="op">*</span> (<span class="number">1.0</span> <span class="op">-</span> <span class="ident">velocity_proportion</span>)
                                 <span class="op">+</span> <span class="kw-2">*</span><span class="ident">max_speed</span> <span class="op">*</span> <span class="ident">velocity_proportion</span>
                         }
-                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">car</span>.<span class="ident">velocity</span>,
+                        <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="ident">car</span>.<span class="ident">velocity</span>,
                     };
                     <span class="kw">let</span> <span class="ident">position</span> <span class="op">=</span> <span class="ident">position</span> <span class="op">+</span> <span class="ident">car</span>.<span class="ident">velocity</span> <span class="op">*</span> <span class="ident">args</span>.<span class="ident">dt</span>;
-                    <span class="kw">if</span> <span class="ident">position</span> <span class="op">&gt;</span><span class="op">=</span> <span class="kw-2">*</span><span class="ident">total_length</span> {
+                    <span class="kw">if</span> <span class="ident">position</span> <span class="op">&gt;=</span> <span class="kw-2">*</span><span class="ident">total_length</span> {
                         <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">stateless</span>
                             .<span class="ident">city</span>
                             .<span class="ident">board</span>
@@ -1149,7 +1150,7 @@
                             .<span class="ident">direction_rule</span>;
                         <span class="kw">let</span> <span class="ident">about_to_turn</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">random_choose_relative_direction</span>(<span class="ident">turn_rule</span>);
                         <span class="kw">match</span> <span class="ident">about_to_turn</span> {
-                            <span class="prelude-val">Some</span>(<span class="ident">about_to_turn</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="prelude-val">Some</span>(<span class="ident">about_to_turn</span>) <span class="op">=&gt;</span> {
                                 <span class="kw">let</span> <span class="ident">updated_car</span> <span class="op">=</span> <span class="ident">OnLane</span> {
                                     <span class="ident">road_direction</span>: <span class="ident">to_direction</span>.<span class="ident">axis_direction</span>(),
                                     <span class="ident">road_index</span>: <span class="ident">out_road_index</span>,
@@ -1164,7 +1165,7 @@
                                     <span class="ident">acceleration</span>: <span class="number">0.0</span>,
                                 })
                             }
-                            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>, <span class="comment">// remove the car</span>
+                            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>, <span class="comment">// remove the car</span>
                         }
                     } <span class="kw">else</span> {
                         <span class="prelude-val">Some</span>(<span class="ident">Car</span> {
@@ -1182,12 +1183,12 @@
                         })
                     }
                 }
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unimplemented</span><span class="macro">!</span>(),
+                <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unimplemented</span><span class="macro">!</span>(),
             }
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">car_out_rank</span> <span class="op">=</span><span class="op">=</span> <span class="ident">rank</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="kw-2">*</span><span class="ident">outed</span> {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">car_out_rank</span> <span class="op">==</span> <span class="ident">rank</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="kw-2">*</span><span class="ident">outed</span> {
             <span class="kw-2">*</span><span class="ident">outed</span> <span class="op">=</span> <span class="bool-val">true</span>;
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">try_out_car</span>(<span class="ident">local_state</span>, <span class="ident">stateful</span>, <span class="ident">stateless</span>) {
-                <span class="prelude-val">Some</span>((<span class="ident">road_direction</span>, <span class="ident">road_index</span>, <span class="ident">lane_direction</span>, <span class="ident">lane_index</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Some</span>((<span class="ident">road_direction</span>, <span class="ident">road_index</span>, <span class="ident">lane_direction</span>, <span class="ident">lane_index</span>)) <span class="op">=&gt;</span> {
                     <span class="kw">let</span> <span class="ident">turn_rule</span> <span class="op">=</span> <span class="ident">stateless</span>.<span class="ident">city</span>.<span class="ident">board</span>.<span class="ident">get_roads</span>(<span class="ident">road_direction</span>)[<span class="ident">road_index</span>]
                         .<span class="ident">as_ref</span>()
                         .<span class="ident">unwrap</span>()
@@ -1195,7 +1196,7 @@
                         .<span class="ident">direction_rule</span>;
                     <span class="kw">let</span> <span class="ident">about_to_turn</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">random_choose_relative_direction</span>(<span class="ident">turn_rule</span>);
                     <span class="kw">match</span> <span class="ident">about_to_turn</span> {
-                        <span class="prelude-val">Some</span>(<span class="ident">about_to_turn</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="prelude-val">Some</span>(<span class="ident">about_to_turn</span>) <span class="op">=&gt;</span> {
                             <span class="kw">let</span> <span class="ident">car</span> <span class="op">=</span> <span class="ident">stateful</span>::<span class="ident">Car</span> {
                                 <span class="ident">location</span>: <span class="ident">stateful</span>::<span class="ident">car</span>::<span class="ident">Location</span>::<span class="ident">OnLane</span> {
                                     <span class="ident">road_direction</span>,
@@ -1211,10 +1212,10 @@
                             <span class="ident">log</span>::<span class="macro">debug</span><span class="macro">!</span>(<span class="string">&quot;Crate new car: {:?}&quot;</span>, <span class="ident">car</span>);
                             <span class="prelude-val">Some</span>(<span class="ident">car</span>)
                         }
-                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+                        <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
                     }
                 }
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
+                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
             }
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
@@ -1227,13 +1228,13 @@
         <span class="ident">driving_model</span>: <span class="kw-2">&amp;</span><span class="ident">DrivingModel</span>,
         <span class="ident">front_distance</span>: <span class="ident">f64</span>,
         <span class="ident">front_velocity</span>: <span class="ident">f64</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    ) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="kw">match</span> <span class="ident">driving_model</span> {
             <span class="ident">DrivingModel</span>::<span class="ident">Normal</span> {
                 <span class="ident">min_cushion</span>,
                 <span class="ident">cushion_velocity_factor</span>,
                 <span class="ident">prediction_time</span>,
-            } <span class="op">=</span><span class="op">&gt;</span> {
+            } <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="ident">aim_cushion</span> <span class="op">=</span> <span class="ident">min_cushion</span> <span class="op">+</span> <span class="ident">cushion_velocity_factor</span> <span class="op">*</span> <span class="ident">front_velocity</span>;
                 <span class="kw">let</span> <span class="ident">dx</span> <span class="op">=</span> <span class="ident">front_distance</span> <span class="op">-</span> <span class="ident">aim_cushion</span>; <span class="comment">// if dx is greater than 0, the car should go faster than front_velocity</span>
                 <span class="kw">let</span> <span class="ident">aim_average_velocity</span> <span class="op">=</span> <span class="ident">dx</span> <span class="op">/</span> <span class="kw-2">*</span><span class="ident">prediction_time</span>;
@@ -1250,20 +1251,20 @@
         <span class="ident">road_index</span>: <span class="ident">RoadIndex</span>,
         <span class="ident">lane_direction</span>: <span class="ident">LaneDirection</span>,
         <span class="ident">lane_index</span>: <span class="ident">LaneIndex</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CarIndex</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CarIndex</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">lane_cars</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">local_state</span>.<span class="ident">board</span>.<span class="ident">get_roads</span>(<span class="ident">road_direction</span>)[<span class="ident">road_index</span>]
             .<span class="ident">as_ref</span>()
             .<span class="ident">unwrap</span>()
             .<span class="ident">lanes_to_direction</span>(<span class="ident">lane_direction</span>)[<span class="ident">lane_index</span>];
         <span class="kw">for</span> (<span class="ident">index</span>, (<span class="kw">_</span>, <span class="ident">car_index</span>)) <span class="kw">in</span> <span class="ident">lane_cars</span>.<span class="ident">cars</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
-            <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">car_index</span> <span class="op">=</span><span class="op">=</span> <span class="ident">current_car</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">index</span> <span class="op">!</span><span class="op">=</span> <span class="ident">lane_cars</span>.<span class="ident">cars</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span> {
+            <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">car_index</span> <span class="op">==</span> <span class="ident">current_car</span> <span class="op">&amp;&amp;</span> <span class="ident">index</span> <span class="op">!=</span> <span class="ident">lane_cars</span>.<span class="ident">cars</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span> {
                 <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">lane_cars</span>.<span class="ident">cars</span>[<span class="ident">index</span> <span class="op">+</span> <span class="number">1</span>].<span class="number">1</span>);
             }
         }
         <span class="prelude-val">None</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">random_choose_relative_direction</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">turn_rule</span>: <span class="ident">TurnRule</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RelativeDirection</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">random_choose_relative_direction</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">turn_rule</span>: <span class="ident">TurnRule</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">RelativeDirection</span><span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">model</span>::<span class="ident">common</span>::<span class="ident">RelativeDirection</span>::<span class="kw-2">*</span>;
         <span class="kw">let</span> <span class="ident">all_rule</span> <span class="op">=</span> [
             <span class="ident">TurnRule</span>::<span class="ident">FRONT</span>,
@@ -1273,19 +1274,19 @@
         ];
         <span class="kw">let</span> <span class="ident">enabled_rule</span> <span class="op">=</span> <span class="ident">all_rule</span>
             .<span class="ident">iter</span>()
-            .<span class="ident">filter</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">rule</span><span class="op">|</span> (<span class="ident">turn_rule</span> <span class="op">&amp;</span> <span class="kw-2">*</span><span class="ident">rule</span>) <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="ident">rule</span>)
-            .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+            .<span class="ident">filter</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">rule</span><span class="op">|</span> (<span class="ident">turn_rule</span> <span class="op">&amp;</span> <span class="kw-2">*</span><span class="ident">rule</span>) <span class="op">==</span> <span class="kw-2">*</span><span class="ident">rule</span>)
+            .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>();
         <span class="kw">match</span> <span class="ident">enabled_rule</span>.<span class="ident">len</span>() {
-            <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-            <span class="ident">len</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="number">0</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="ident">len</span> <span class="op">=&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">rand</span>::<span class="ident">thread_rng</span>();
                 <span class="kw">let</span> <span class="ident">rule</span> <span class="op">=</span> <span class="ident">enabled_rule</span>[<span class="ident">rng</span>.<span class="ident">gen_range</span>(<span class="number">0usize</span>, <span class="ident">len</span>)];
                 <span class="prelude-val">Some</span>(<span class="kw">match</span> <span class="kw-2">*</span><span class="ident">rule</span> {
-                    <span class="ident">TurnRule</span>::<span class="ident">FRONT</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Front</span>,
-                    <span class="ident">TurnRule</span>::<span class="ident">BACK</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Back</span>,
-                    <span class="ident">TurnRule</span>::<span class="ident">LEFT</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Left</span>,
-                    <span class="ident">TurnRule</span>::<span class="ident">RIGHT</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Right</span>,
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+                    <span class="ident">TurnRule</span>::<span class="ident">FRONT</span> <span class="op">=&gt;</span> <span class="ident">Front</span>,
+                    <span class="ident">TurnRule</span>::<span class="ident">BACK</span> <span class="op">=&gt;</span> <span class="ident">Back</span>,
+                    <span class="ident">TurnRule</span>::<span class="ident">LEFT</span> <span class="op">=&gt;</span> <span class="ident">Left</span>,
+                    <span class="ident">TurnRule</span>::<span class="ident">RIGHT</span> <span class="op">=&gt;</span> <span class="ident">Right</span>,
+                    <span class="kw">_</span> <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
                 })
             }
         }
@@ -1296,7 +1297,7 @@
         <span class="ident">local_state</span>: <span class="kw-2">&amp;</span><span class="ident">ProcessLocalState</span>,
         <span class="ident">_stateful</span>: <span class="kw-2">&amp;</span><span class="ident">stateful</span>::<span class="ident">Model</span>,
         <span class="ident">stateless</span>: <span class="kw-2">&amp;</span><span class="ident">stateless</span>::<span class="ident">Model</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">AxisDirection</span>, <span class="ident">RoadIndex</span>, <span class="ident">LaneDirection</span>, <span class="ident">LaneIndex</span>)<span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">AxisDirection</span>, <span class="ident">RoadIndex</span>, <span class="ident">LaneDirection</span>, <span class="ident">LaneIndex</span>)<span class="op">&gt;</span> {
         <span class="ident">log</span>::<span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;try_out_car called&quot;</span>);
         <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="ident">stateless</span>
             .<span class="ident">city</span>
@@ -1333,7 +1334,7 @@
     ) <span class="kw">where</span>
         <span class="ident">Comm</span>: <span class="ident">CommunicatorCollectives</span>,
     {
-        <span class="kw">if</span> <span class="ident">communicator</span>.<span class="ident">rank</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">root</span> {
+        <span class="kw">if</span> <span class="ident">communicator</span>.<span class="ident">rank</span>() <span class="op">==</span> <span class="ident">root</span> {
             <span class="comment">// Update intersection first</span>
             <span class="kw">for</span> (<span class="ident">stateful_intersection</span>, <span class="ident">stateless_intersection</span>) <span class="kw">in</span> <span class="ident">stateful</span>
                 .<span class="ident">board</span>
@@ -1374,15 +1375,15 @@
                     <span class="ident">switch_rule</span>: <span class="ident">stateless</span>::<span class="ident">intersection</span>::<span class="ident">SwitchRule</span>::<span class="ident">LoopTimeout</span> { <span class="ident">times</span> },
                     ..
                 },
-            ) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">-</span><span class="op">=</span> <span class="ident">dt</span>;
+            ) <span class="op">=&gt;</span> {
+                <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">-=</span> <span class="ident">dt</span>;
                 <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">&lt;</span> <span class="number">0.0</span> {
                     <span class="comment">// Timeout</span>
-                    <span class="kw-2">*</span><span class="ident">time_index</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                    <span class="kw-2">*</span><span class="ident">time_index</span> <span class="op">%</span><span class="op">=</span> <span class="ident">times</span>.<span class="ident">len</span>();
-                    <span class="kw-2">*</span><span class="ident">rule_index</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                    <span class="kw-2">*</span><span class="ident">rule_index</span> <span class="op">%</span><span class="op">=</span> <span class="ident">rules</span>.<span class="ident">len</span>();
-                    <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">+</span><span class="op">=</span> <span class="ident">times</span>[<span class="kw-2">*</span><span class="ident">time_index</span>]; <span class="comment">// Set new timeout</span>
+                    <span class="kw-2">*</span><span class="ident">time_index</span> <span class="op">+=</span> <span class="number">1</span>;
+                    <span class="kw-2">*</span><span class="ident">time_index</span> <span class="op">%=</span> <span class="ident">times</span>.<span class="ident">len</span>();
+                    <span class="kw-2">*</span><span class="ident">rule_index</span> <span class="op">+=</span> <span class="number">1</span>;
+                    <span class="kw-2">*</span><span class="ident">rule_index</span> <span class="op">%=</span> <span class="ident">rules</span>.<span class="ident">len</span>();
+                    <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">+=</span> <span class="ident">times</span>[<span class="kw-2">*</span><span class="ident">time_index</span>]; <span class="comment">// Set new timeout</span>
                 }
             }
             (
@@ -1400,20 +1401,20 @@
                     <span class="ident">switch_rule</span>: <span class="ident">stateless</span>::<span class="ident">intersection</span>::<span class="ident">SwitchRule</span>::<span class="ident">LoopTimeout</span> { <span class="ident">times</span> },
                     ..
                 },
-            ) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">-</span><span class="op">=</span> <span class="ident">dt</span>;
+            ) <span class="op">=&gt;</span> {
+                <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">-=</span> <span class="ident">dt</span>;
                 <span class="kw">if</span> <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">&lt;</span> <span class="number">0.0</span> {
                     <span class="comment">// Timeout</span>
-                    <span class="kw-2">*</span><span class="ident">time_index</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                    <span class="kw-2">*</span><span class="ident">time_index</span> <span class="op">%</span><span class="op">=</span> <span class="ident">times</span>.<span class="ident">len</span>();
-                    <span class="kw-2">*</span><span class="ident">rule_index</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-                    <span class="kw-2">*</span><span class="ident">rule_index</span> <span class="op">%</span><span class="op">=</span> <span class="ident">rule_set</span>.<span class="ident">len</span>();
-                    <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">+</span><span class="op">=</span> <span class="ident">times</span>[<span class="kw-2">*</span><span class="ident">time_index</span>]; <span class="comment">// Set new timeout</span>
+                    <span class="kw-2">*</span><span class="ident">time_index</span> <span class="op">+=</span> <span class="number">1</span>;
+                    <span class="kw-2">*</span><span class="ident">time_index</span> <span class="op">%=</span> <span class="ident">times</span>.<span class="ident">len</span>();
+                    <span class="kw-2">*</span><span class="ident">rule_index</span> <span class="op">+=</span> <span class="number">1</span>;
+                    <span class="kw-2">*</span><span class="ident">rule_index</span> <span class="op">%=</span> <span class="ident">rule_set</span>.<span class="ident">len</span>();
+                    <span class="kw-2">*</span><span class="ident">remain_time</span> <span class="op">+=</span> <span class="ident">times</span>[<span class="kw-2">*</span><span class="ident">time_index</span>]; <span class="comment">// Set new timeout</span>
                 }
             }
-            (<span class="ident">stateful</span>::<span class="ident">Intersection</span>::<span class="ident">Crossroad</span> { .. }, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
-            (<span class="ident">stateful</span>::<span class="ident">Intersection</span>::<span class="ident">TJunction</span> { .. }, <span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (), <span class="comment">// no need to update current</span>
+            (<span class="ident">stateful</span>::<span class="ident">Intersection</span>::<span class="ident">Crossroad</span> { .. }, <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+            (<span class="ident">stateful</span>::<span class="ident">Intersection</span>::<span class="ident">TJunction</span> { .. }, <span class="kw">_</span>) <span class="op">=&gt;</span> <span class="macro">unreachable</span><span class="macro">!</span>(),
+            <span class="kw">_</span> <span class="op">=&gt;</span> (), <span class="comment">// no need to update current</span>
         }
     }
 }

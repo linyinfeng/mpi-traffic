@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/libffi-0.6.4/src/low.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>low.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../libffi/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/libffi-0.6.4/src/low.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>low.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../libffi/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -628,10 +629,10 @@
 <span class="kw">pub</span> <span class="kw">type</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">=</span> ::<span class="ident">std</span>::<span class="ident">result</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">Error</span><span class="op">&gt;</span>;
 
 <span class="comment">// Converts the raw status type to a `Result`.</span>
-<span class="kw">fn</span> <span class="ident">status_to_result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">status</span>: <span class="ident">raw</span>::<span class="ident">ffi_status</span>, <span class="ident">good</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> <span class="ident">status</span> <span class="op">=</span><span class="op">=</span> <span class="ident">raw</span>::<span class="ident">ffi_status_FFI_OK</span> { <span class="prelude-val">Ok</span>(<span class="ident">good</span>) }
-    <span class="kw">else</span> <span class="kw">if</span> <span class="ident">status</span> <span class="op">=</span><span class="op">=</span> <span class="ident">raw</span>::<span class="ident">ffi_status_FFI_BAD_TYPEDEF</span> { <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Typedef</span>) }
-    <span class="kw">else</span> <span class="kw">if</span> <span class="ident">status</span> <span class="op">=</span><span class="op">=</span> <span class="ident">raw</span>::<span class="ident">ffi_status_FFI_BAD_ABI</span> { <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Abi</span>) }
+<span class="kw">fn</span> <span class="ident">status_to_result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">status</span>: <span class="ident">raw</span>::<span class="ident">ffi_status</span>, <span class="ident">good</span>: <span class="ident">R</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> <span class="ident">status</span> <span class="op">==</span> <span class="ident">raw</span>::<span class="ident">ffi_status_FFI_OK</span> { <span class="prelude-val">Ok</span>(<span class="ident">good</span>) }
+    <span class="kw">else</span> <span class="kw">if</span> <span class="ident">status</span> <span class="op">==</span> <span class="ident">raw</span>::<span class="ident">ffi_status_FFI_BAD_TYPEDEF</span> { <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Typedef</span>) }
+    <span class="kw">else</span> <span class="kw">if</span> <span class="ident">status</span> <span class="op">==</span> <span class="ident">raw</span>::<span class="ident">ffi_status_FFI_BAD_ABI</span> { <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Abi</span>) }
     <span class="comment">// If we don&#39;t recognize the status, that is an ABI error:</span>
     <span class="kw">else</span> { <span class="prelude-val">Err</span>(<span class="ident">Error</span>::<span class="ident">Abi</span>) }
 }
@@ -652,7 +653,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is useful mainly for talking to C APIs that take untyped</span>
     <span class="doccomment">/// callbacks specified in the API as having type `void(*)()`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_fun</span>(<span class="ident">fun</span>: <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_fun</span>(<span class="ident">fun</span>: <span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">CodePtr</span>(<span class="ident">fun</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>)
     }
 
@@ -660,7 +661,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is the other common type used in APIs (or at least in</span>
     <span class="doccomment">/// libffi) for untyped callback arguments.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_ptr</span>(<span class="ident">fun</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_ptr</span>(<span class="ident">fun</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">CodePtr</span>(<span class="ident">fun</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>)
     }
 
@@ -675,7 +676,7 @@
     <span class="doccomment">/// parameter and return types of the function. Unless the C</span>
     <span class="doccomment">/// function actually has type `void(*)()`, it will need to be</span>
     <span class="doccomment">/// cast before it is called.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_fun</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>() {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_fun</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>() {
         <span class="kw">unsafe</span> {
             <span class="ident">mem</span>::<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="kw-2">&amp;</span><span class="kw">unsafe</span> <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>)
         }
@@ -696,7 +697,7 @@
     <span class="doccomment">/// parameter and return types of the function. Unless the C</span>
     <span class="doccomment">/// function actually has type `void(*)()`, it will need to be</span>
     <span class="doccomment">/// cast before it is called.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">as_safe_fun</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>() {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">as_safe_fun</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>() {
         <span class="ident">mem</span>::<span class="ident">transmute</span>::<span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>, <span class="kw-2">&amp;</span><span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span>()<span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>)
     }
 
@@ -704,7 +705,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is the other common type used in APIs (or at least in</span>
     <span class="doccomment">/// libffi) for untyped callback arguments.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 
@@ -712,7 +713,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is the other common type used in APIs (or at least in</span>
     <span class="doccomment">/// libffi) for untyped callback arguments.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_mut_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_mut_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -846,7 +847,7 @@
                        <span class="ident">nargs</span>: <span class="ident">usize</span>,
                        <span class="ident">rtype</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi_type</span>,
                        <span class="ident">atypes</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi_type</span>)
-                       <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+                       <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
 {
     <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">raw</span>::<span class="ident">ffi_prep_cif</span>(<span class="ident">cif</span>, <span class="ident">abi</span>,
                                  <span class="ident">nargs</span> <span class="kw">as</span> <span class="ident">c_uint</span>,
@@ -887,7 +888,7 @@
                            <span class="ident">ntotalargs</span>: <span class="ident">usize</span>,
                            <span class="ident">rtype</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi_type</span>,
                            <span class="ident">atypes</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi_type</span>)
-                           <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+                           <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
 {
     <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">raw</span>::<span class="ident">ffi_prep_cif_var</span>(<span class="ident">cif</span>, <span class="ident">abi</span>,
                                      <span class="ident">nfixedargs</span> <span class="kw">as</span> <span class="ident">c_uint</span>,
@@ -934,7 +935,7 @@
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">call</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">cif</span>:  <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi_cif</span>,
                       <span class="ident">fun</span>:  <span class="ident">CodePtr</span>,
-                      <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>
+                      <span class="ident">args</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>) <span class="op">-&gt;</span> <span class="ident">R</span>
 {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span>: <span class="ident">R</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">uninitialized</span>();
     <span class="ident">raw</span>::<span class="ident">ffi_call</span>(<span class="ident">cif</span>,
@@ -962,7 +963,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// let (closure_handle, code_ptr) = closure_alloc();</span>
 <span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">closure_alloc</span>() <span class="op">-</span><span class="op">&gt;</span> (<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi_closure</span>, <span class="ident">CodePtr</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">closure_alloc</span>() <span class="op">-&gt;</span> (<span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">ffi_closure</span>, <span class="ident">CodePtr</span>) {
     <span class="kw">unsafe</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">code_pointer</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">uninitialized</span>();
         <span class="kw">let</span> <span class="ident">closure</span> <span class="op">=</span> <span class="ident">raw</span>::<span class="ident">ffi_closure_alloc</span>(<span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">ffi_closure</span><span class="op">&gt;</span>(),
@@ -1101,7 +1102,7 @@
                                  <span class="ident">callback</span>: <span class="ident">Callback</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">R</span><span class="op">&gt;</span>,
                                  <span class="ident">userdata</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">U</span>,
                                  <span class="ident">code</span>:     <span class="ident">CodePtr</span>)
-    <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
 {
     <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">raw</span>::<span class="ident">ffi_prep_closure_loc</span>
         (<span class="ident">closure</span>,
@@ -1193,7 +1194,7 @@
                                      <span class="ident">callback</span>: <span class="ident">CallbackMut</span><span class="op">&lt;</span><span class="ident">U</span>, <span class="ident">R</span><span class="op">&gt;</span>,
                                      <span class="ident">userdata</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">U</span>,
                                      <span class="ident">code</span>:     <span class="ident">CodePtr</span>)
-    <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
+    <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span>
 {
     <span class="kw">let</span> <span class="ident">status</span> <span class="op">=</span> <span class="ident">raw</span>::<span class="ident">ffi_prep_closure_loc</span>
         (<span class="ident">closure</span>,

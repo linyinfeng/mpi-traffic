@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/libffi-0.6.4/src/middle/types.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>types.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../libffi/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/libffi-0.6.4/src/middle/types.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>types.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../libffi/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -540,30 +541,30 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TypeArray</span>(<span class="ident">Unique</span><span class="op">&lt;</span><span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">ffi_type</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Type</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">formatter</span>.<span class="ident">write_fmt</span>(<span class="macro">format_args</span><span class="macro">!</span>(<span class="string">&quot;Type({:?})&quot;</span>, <span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>))
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">TypeArray</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">formatter</span>.<span class="ident">write_fmt</span>(<span class="macro">format_args</span><span class="macro">!</span>(<span class="string">&quot;TypeArray({:?})&quot;</span>, <span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>))
     }
 }
 
 <span class="doccomment">/// Computes the length of a raw `TypeArray_` by searching for the</span>
 <span class="doccomment">/// null terminator.</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_array_len</span>(<span class="kw-2">mut</span> <span class="ident">array</span>: <span class="ident">TypeArray_</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_array_len</span>(<span class="kw-2">mut</span> <span class="ident">array</span>: <span class="ident">TypeArray_</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">count</span>   <span class="op">=</span> <span class="number">0</span>;
     <span class="kw">while</span> <span class="op">!</span>(<span class="kw-2">*</span><span class="ident">array</span>).<span class="ident">is_null</span>() {
-        <span class="ident">count</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
+        <span class="ident">count</span> <span class="op">+=</span> <span class="number">1</span>;
         <span class="ident">array</span> <span class="op">=</span> <span class="ident">array</span>.<span class="ident">offset</span>(<span class="number">1</span>);
     }
     <span class="ident">count</span>
 }
 
 <span class="doccomment">/// Creates an empty `TypeArray_` with null terminator.</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_array_create_empty</span>(<span class="ident">len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">TypeArray_</span><span class="op">&gt;</span> {
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_array_create_empty</span>(<span class="ident">len</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">TypeArray_</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">malloc</span>((<span class="ident">len</span> <span class="op">+</span> <span class="number">1</span>) <span class="op">*</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">Type_</span><span class="op">&gt;</span>())
                     <span class="kw">as</span> <span class="ident">TypeArray_</span>;
     <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">array</span>.<span class="ident">is_null</span>(),
@@ -574,7 +575,7 @@
 
 <span class="doccomment">/// Creates a null-terminated array of Type_. Takes ownership of</span>
 <span class="doccomment">/// the elements.</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_array_create</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">elements</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">TypeArray_</span><span class="op">&gt;</span>
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_array_create</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">elements</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">TypeArray_</span><span class="op">&gt;</span>
     <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">ExactSizeIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Type</span><span class="op">&gt;</span>
 {
     <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">elements</span>.<span class="ident">len</span>();
@@ -588,7 +589,7 @@
 
 <span class="doccomment">/// Creates a struct type from a raw array of element types.</span>
 <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_struct_create_raw</span>(<span class="ident">elements</span>: <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">TypeArray_</span><span class="op">&gt;</span>)
-    <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">Type_</span><span class="op">&gt;</span>
+    <span class="op">-&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">Type_</span><span class="op">&gt;</span>
 {
     <span class="kw">let</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">libc</span>::<span class="ident">malloc</span>(<span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">low</span>::<span class="ident">ffi_type</span><span class="op">&gt;</span>()) <span class="kw">as</span> <span class="ident">Type_</span>;
     <span class="macro">assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">new</span>.<span class="ident">is_null</span>(),
@@ -604,14 +605,14 @@
 
 <span class="doccomment">/// Creates a struct `ffi_type` with the given elements. Takes ownership</span>
 <span class="doccomment">/// of the elements.</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_struct_create</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">elements</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">Type_</span><span class="op">&gt;</span>
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_struct_create</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">elements</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">Type_</span><span class="op">&gt;</span>
     <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">ExactSizeIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Type</span><span class="op">&gt;</span>
 {
     <span class="ident">ffi_type_struct_create_raw</span>(<span class="ident">ffi_type_array_create</span>(<span class="ident">elements</span>))
 }
 
 <span class="doccomment">/// Makes a copy of a type array.</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_array_clone</span>(<span class="ident">old</span>: <span class="ident">TypeArray_</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">TypeArray_</span><span class="op">&gt;</span> {
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_array_clone</span>(<span class="ident">old</span>: <span class="ident">TypeArray_</span>) <span class="op">-&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">TypeArray_</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">ffi_type_array_len</span>(<span class="ident">old</span>);
     <span class="kw">let</span> <span class="ident">new</span>  <span class="op">=</span> <span class="ident">ffi_type_array_create_empty</span>(<span class="ident">size</span>);
 
@@ -623,8 +624,8 @@
 }
 
 <span class="doccomment">/// Makes a copy of a type.</span>
-<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_clone</span>(<span class="ident">old</span>: <span class="ident">Type_</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">Type_</span><span class="op">&gt;</span> {
-    <span class="kw">if</span> (<span class="kw-2">*</span><span class="ident">old</span>).<span class="ident">type_</span> <span class="op">=</span><span class="op">=</span> <span class="ident">low</span>::<span class="ident">type_tag</span>::<span class="ident">STRUCT</span> {
+<span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_clone</span>(<span class="ident">old</span>: <span class="ident">Type_</span>) <span class="op">-&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">Type_</span><span class="op">&gt;</span> {
+    <span class="kw">if</span> (<span class="kw-2">*</span><span class="ident">old</span>).<span class="ident">type_</span> <span class="op">==</span> <span class="ident">low</span>::<span class="ident">type_tag</span>::<span class="ident">STRUCT</span> {
         <span class="ident">ffi_type_struct_create_raw</span>(<span class="ident">ffi_type_array_clone</span>((<span class="kw-2">*</span><span class="ident">old</span>).<span class="ident">elements</span>))
     } <span class="kw">else</span> {
         <span class="ident">old</span>
@@ -644,7 +645,7 @@
 
 <span class="doccomment">/// Destroys a `Type_` if it was dynamically allocated.</span>
 <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">ffi_type_destroy</span>(<span class="ident">victim</span>: <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">Type_</span><span class="op">&gt;</span>) {
-    <span class="kw">if</span> (<span class="kw-2">*</span><span class="ident">victim</span>).<span class="ident">type_</span> <span class="op">=</span><span class="op">=</span> <span class="ident">low</span>::<span class="ident">type_tag</span>::<span class="ident">STRUCT</span> {
+    <span class="kw">if</span> (<span class="kw-2">*</span><span class="ident">victim</span>).<span class="ident">type_</span> <span class="op">==</span> <span class="ident">low</span>::<span class="ident">type_tag</span>::<span class="ident">STRUCT</span> {
         <span class="ident">ffi_type_array_destroy</span>((<span class="kw-2">*</span><span class="ident">victim</span>).<span class="ident">elements</span>);
         <span class="ident">libc</span>::<span class="ident">free</span>(<span class="ident">victim</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">libc</span>::<span class="ident">c_void</span>);
     }
@@ -663,13 +664,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Type</span> {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="ident">ffi_type_clone</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>)) })
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">TypeArray</span> {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">TypeArray</span>(<span class="kw">unsafe</span> {
             <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="ident">ffi_type_array_clone</span>(<span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>))
         })
@@ -677,25 +678,25 @@
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">match_size_signed</span> {
-    ( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span> ) <span class="op">=</span><span class="op">&gt;</span> {
+    ( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span> ) <span class="op">=&gt;</span> {
         <span class="kw">match</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">libc</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span><span class="op">&gt;</span>() {
-            <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">i8</span>(),
-            <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">i16</span>(),
-            <span class="number">4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">i32</span>(),
-            <span class="number">8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">i64</span>(),
-            <span class="kw">_</span>  <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Strange size for C type&quot;</span>),
+            <span class="number">1</span> <span class="op">=&gt;</span> <span class="self">Self</span>::<span class="ident">i8</span>(),
+            <span class="number">2</span> <span class="op">=&gt;</span> <span class="self">Self</span>::<span class="ident">i16</span>(),
+            <span class="number">4</span> <span class="op">=&gt;</span> <span class="self">Self</span>::<span class="ident">i32</span>(),
+            <span class="number">8</span> <span class="op">=&gt;</span> <span class="self">Self</span>::<span class="ident">i64</span>(),
+            <span class="kw">_</span>  <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Strange size for C type&quot;</span>),
         }
     }
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">match_size_unsigned</span> {
-    ( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span> ) <span class="op">=</span><span class="op">&gt;</span> {
+    ( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span> ) <span class="op">=&gt;</span> {
         <span class="kw">match</span> <span class="ident">mem</span>::<span class="ident">size_of</span>::<span class="op">&lt;</span><span class="ident">libc</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span><span class="op">&gt;</span>() {
-            <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">u8</span>(),
-            <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">u16</span>(),
-            <span class="number">4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">u32</span>(),
-            <span class="number">8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">u64</span>(),
-            <span class="kw">_</span>  <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Strange size for C type&quot;</span>),
+            <span class="number">1</span> <span class="op">=&gt;</span> <span class="self">Self</span>::<span class="ident">u8</span>(),
+            <span class="number">2</span> <span class="op">=&gt;</span> <span class="self">Self</span>::<span class="ident">u16</span>(),
+            <span class="number">4</span> <span class="op">=&gt;</span> <span class="self">Self</span>::<span class="ident">u32</span>(),
+            <span class="number">8</span> <span class="op">=&gt;</span> <span class="self">Self</span>::<span class="ident">u64</span>(),
+            <span class="kw">_</span>  <span class="op">=&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Strange size for C type&quot;</span>),
         }
     }
 }
@@ -705,153 +706,153 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is used only for the return type of a CIF, not for an</span>
     <span class="doccomment">/// argument or struct member.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">void</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">void</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">void</span>) })
     }
 
     <span class="doccomment">/// Returns the unsigned 8-bit numeric type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">u8</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">u8</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">uint8</span>) })
     }
 
     <span class="doccomment">/// Returns the signed 8-bit numeric type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i8</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i8</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">sint8</span>) })
     }
 
     <span class="doccomment">/// Returns the unsigned 16-bit numeric type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">u16</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">u16</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">uint16</span>) })
     }
 
     <span class="doccomment">/// Returns the signed 16-bit numeric type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i16</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i16</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">sint16</span>) })
     }
 
     <span class="doccomment">/// Returns the unsigned 32-bit numeric type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">u32</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">u32</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">uint32</span>) })
     }
 
     <span class="doccomment">/// Returns the signed 32-bit numeric type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i32</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i32</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">sint32</span>) })
     }
 
     <span class="doccomment">/// Returns the unsigned 64-bit numeric type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">u64</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">u64</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">uint64</span>) })
     }
 
     <span class="doccomment">/// Returns the signed 64-bit numeric type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i64</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">i64</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">sint64</span>) })
     }
 
     <span class="doccomment">/// Returns the C equivalent of Rust `usize` (`u16`).</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;16&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">usize</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">usize</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">u16</span>()
     }
 
     <span class="doccomment">/// Returns the C equivalent of Rust `isize` (`i16`).</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;16&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">isize</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">isize</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">i16</span>()
     }
 
     <span class="doccomment">/// Returns the C equivalent of Rust `usize` (`u32`).</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">usize</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">usize</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">u32</span>()
     }
 
     <span class="doccomment">/// Returns the C equivalent of Rust `isize` (`i32`).</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">isize</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">isize</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">i32</span>()
     }
 
     <span class="doccomment">/// Returns the C equivalent of Rust `usize` (`u64`).</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">usize</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">usize</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">u64</span>()
     }
 
     <span class="doccomment">/// Returns the C equivalent of Rust `isize` (`i64`).</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">isize</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">isize</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">i64</span>()
     }
 
     <span class="doccomment">/// Returns the C `signed char` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_schar</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_schar</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_signed</span><span class="macro">!</span>(<span class="ident">c_schar</span>)
     }
 
     <span class="doccomment">/// Returns the C `unsigned char` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_uchar</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_uchar</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_unsigned</span><span class="macro">!</span>(<span class="ident">c_uchar</span>)
     }
 
     <span class="doccomment">/// Returns the C `short` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_short</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_short</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_signed</span><span class="macro">!</span>(<span class="ident">c_short</span>)
     }
 
     <span class="doccomment">/// Returns the C `unsigned short` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_ushort</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_ushort</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_unsigned</span><span class="macro">!</span>(<span class="ident">c_ushort</span>)
     }
 
     <span class="doccomment">/// Returns the C `int` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_int</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_int</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_signed</span><span class="macro">!</span>(<span class="ident">c_int</span>)
     }
 
     <span class="doccomment">/// Returns the C `unsigned int` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_uint</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_uint</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_unsigned</span><span class="macro">!</span>(<span class="ident">c_uint</span>)
     }
 
     <span class="doccomment">/// Returns the C `long` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_long</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_long</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_signed</span><span class="macro">!</span>(<span class="ident">c_long</span>)
     }
 
     <span class="doccomment">/// Returns the C `unsigned long` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_ulong</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_ulong</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_unsigned</span><span class="macro">!</span>(<span class="ident">c_ulong</span>)
     }
 
     <span class="doccomment">/// Returns the C `longlong` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_longlong</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_longlong</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_signed</span><span class="macro">!</span>(<span class="ident">c_longlong</span>)
     }
 
     <span class="doccomment">/// Returns the C `unsigned longlong` type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_ulonglong</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c_ulonglong</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="macro">match_size_unsigned</span><span class="macro">!</span>(<span class="ident">c_ulonglong</span>)
     }
 
     <span class="doccomment">/// Returns the C `float` (32-bit floating point) type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">f32</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">f32</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">float</span>) })
     }
 
     <span class="doccomment">/// Returns the C `double` (64-bit floating point) type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">f64</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">f64</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">double</span>) })
     }
 
     <span class="doccomment">/// Returns the C `void*` type, for passing any kind of pointer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pointer</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">pointer</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">pointer</span>) })
     }
 
     <span class="doccomment">/// Returns the C `long double` (extended-precision floating point) type.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">longdouble</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">longdouble</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">longdouble</span>) })
     }
 
@@ -859,7 +860,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This item is enabled by `#[cfg(feature = &quot;complex&quot;)]`.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;complex&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c32</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c32</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">complex_float</span>) })
     }
 
@@ -867,7 +868,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This item is enabled by `#[cfg(feature = &quot;complex&quot;)]`.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;complex&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c64</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">c64</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">complex_double</span>) })
     }
 
@@ -875,12 +876,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This item is enabled by `#[cfg(feature = &quot;complex&quot;)]`.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;complex&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">complex_longdouble</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">complex_longdouble</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Type</span>(<span class="kw">unsafe</span> { <span class="ident">Unique</span>::<span class="ident">new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">types</span>::<span class="ident">complex_longdouble</span>) })
     }
 
     <span class="doccomment">/// Constructs a structure type whose fields have the given types.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">structure</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">fields</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">structure</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">fields</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
         <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Type</span><span class="op">&gt;</span>,
               <span class="ident">I</span>::<span class="ident">IntoIter</span>: <span class="ident">ExactSizeIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Type</span><span class="op">&gt;</span>
     {
@@ -895,14 +896,14 @@
     <span class="doccomment">/// This method may be useful for interacting with the</span>
     <span class="doccomment">/// [`low`](../low/index.html) and</span>
     <span class="doccomment">/// [`raw`](../raw/index.html) layers.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_raw_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">ffi_type</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_raw_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">ffi_type</span> {
         <span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">TypeArray</span> {
     <span class="doccomment">/// Constructs an array the given `Type`s.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">elements</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(<span class="ident">elements</span>: <span class="ident">I</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
         <span class="kw">where</span> <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Type</span><span class="op">&gt;</span>,
               <span class="ident">I</span>::<span class="ident">IntoIter</span>: <span class="ident">ExactSizeIterator</span><span class="op">&lt;</span><span class="ident">Item</span><span class="op">=</span><span class="ident">Type</span><span class="op">&gt;</span>
     {
@@ -919,7 +920,7 @@
     <span class="doccomment">/// This method may be useful for interacting with the</span>
     <span class="doccomment">/// [`low`](../low/index.html) and</span>
     <span class="doccomment">/// [`raw`](../raw/index.html) layers.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_raw_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">ffi_type</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_raw_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">low</span>::<span class="ident">ffi_type</span> {
         <span class="kw-2">*</span><span class="self">self</span>.<span class="number">0</span>
     }
 }

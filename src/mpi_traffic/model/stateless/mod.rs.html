@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/model/stateless/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../mpi_traffic/index.html'><div class='logo-container'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/model/stateless/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../mpi_traffic/index.html'><div class='logo-container rust-logo'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -269,7 +270,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">Default</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">City</span> {
-    <span class="kw">pub</span> <span class="ident">board</span>: <span class="ident">Board</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Intersection</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Road</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">board</span>: <span class="ident">Board</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Intersection</span><span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Road</span><span class="op">&gt;&gt;</span>,
     <span class="kw">pub</span> <span class="ident">car_out_intersection</span>: <span class="ident">IntersectionIndex</span>,
     <span class="kw">pub</span> <span class="ident">car_out_min_distance</span>: <span class="ident">f64</span>,
     <span class="kw">pub</span> <span class="ident">lane_width</span>: <span class="ident">f64</span>,
@@ -286,7 +287,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">City</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">geometry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Geometry</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">geometry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Geometry</span> {
         <span class="kw">let</span> <span class="ident">width</span> <span class="op">=</span> <span class="self">self</span>
             .<span class="ident">horizontal_road_length</span>
             .<span class="ident">iter</span>()
@@ -300,7 +301,7 @@
         <span class="ident">Geometry</span> { <span class="ident">width</span>, <span class="ident">height</span> }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersection_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">IntersectionIndex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Position</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersection_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">IntersectionIndex</span>) <span class="op">-&gt;</span> <span class="ident">Position</span> {
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">intersection_width</span>.<span class="ident">iter</span>().<span class="ident">take</span>(<span class="ident">j</span>).<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
             <span class="op">+</span> <span class="self">self</span>.<span class="ident">horizontal_road_length</span>.<span class="ident">iter</span>().<span class="ident">take</span>(<span class="ident">j</span>).<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
             <span class="op">+</span> <span class="self">self</span>.<span class="ident">intersection_width</span>[<span class="ident">j</span>] <span class="op">/</span> <span class="number">2.0</span>;
@@ -310,7 +311,7 @@
         <span class="ident">Position</span> { <span class="ident">x</span>, <span class="ident">y</span> }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">horizontal_road_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">RoadIndex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Position</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">horizontal_road_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">RoadIndex</span>) <span class="op">-&gt;</span> <span class="ident">Position</span> {
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">intersection_width</span>.<span class="ident">iter</span>().<span class="ident">take</span>(<span class="ident">j</span> <span class="op">+</span> <span class="number">1</span>).<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
             <span class="op">+</span> <span class="self">self</span>.<span class="ident">horizontal_road_length</span>.<span class="ident">iter</span>().<span class="ident">take</span>(<span class="ident">j</span>).<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
             <span class="op">+</span> <span class="self">self</span>.<span class="ident">horizontal_road_length</span>[<span class="ident">j</span>] <span class="op">/</span> <span class="number">2.0</span>;
@@ -320,7 +321,7 @@
         <span class="ident">Position</span> { <span class="ident">x</span>, <span class="ident">y</span> }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vertical_road_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">RoadIndex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Position</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vertical_road_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">RoadIndex</span>) <span class="op">-&gt;</span> <span class="ident">Position</span> {
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">intersection_width</span>.<span class="ident">iter</span>().<span class="ident">take</span>(<span class="ident">j</span>).<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
             <span class="op">+</span> <span class="self">self</span>.<span class="ident">horizontal_road_length</span>.<span class="ident">iter</span>().<span class="ident">take</span>(<span class="ident">j</span>).<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span>()
             <span class="op">+</span> <span class="self">self</span>.<span class="ident">intersection_width</span>[<span class="ident">j</span>] <span class="op">/</span> <span class="number">2.0</span>;
@@ -330,23 +331,23 @@
         <span class="ident">Position</span> { <span class="ident">x</span>, <span class="ident">y</span> }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">road_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">direction</span>: <span class="ident">AxisDirection</span>, <span class="ident">index</span>: <span class="ident">RoadIndex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Position</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">road_center</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">direction</span>: <span class="ident">AxisDirection</span>, <span class="ident">index</span>: <span class="ident">RoadIndex</span>) <span class="op">-&gt;</span> <span class="ident">Position</span> {
         <span class="kw">use</span> <span class="ident">AxisDirection</span>::<span class="kw-2">*</span>;
         <span class="kw">match</span> <span class="ident">direction</span> {
-            <span class="ident">Horizontal</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">horizontal_road_center</span>(<span class="ident">index</span>),
-            <span class="ident">Vertical</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">vertical_road_center</span>(<span class="ident">index</span>),
+            <span class="ident">Horizontal</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">horizontal_road_center</span>(<span class="ident">index</span>),
+            <span class="ident">Vertical</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">vertical_road_center</span>(<span class="ident">index</span>),
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">road_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">direction</span>: <span class="ident">AxisDirection</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">RoadIndex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">road_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">direction</span>: <span class="ident">AxisDirection</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">RoadIndex</span>) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="kw">use</span> <span class="ident">AxisDirection</span>::<span class="kw-2">*</span>;
         <span class="kw">match</span> <span class="ident">direction</span> {
-            <span class="ident">Horizontal</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">horizontal_road_length</span>[<span class="ident">j</span>],
-            <span class="ident">Vertical</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">vertical_road_length</span>[<span class="ident">i</span>],
+            <span class="ident">Horizontal</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">horizontal_road_length</span>[<span class="ident">j</span>],
+            <span class="ident">Vertical</span> <span class="op">=&gt;</span> <span class="self">self</span>.<span class="ident">vertical_road_length</span>[<span class="ident">i</span>],
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersection_geometry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">IntersectionIndex</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Geometry</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">intersection_geometry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, (<span class="ident">i</span>, <span class="ident">j</span>): <span class="ident">IntersectionIndex</span>) <span class="op">-&gt;</span> <span class="ident">Geometry</span> {
         <span class="ident">Geometry</span> {
             <span class="ident">width</span>: <span class="self">self</span>.<span class="ident">intersection_width</span>[<span class="ident">j</span>],
             <span class="ident">height</span>: <span class="self">self</span>.<span class="ident">intersection_height</span>[<span class="ident">i</span>],
@@ -360,7 +361,7 @@
         <span class="ident">direction</span>: <span class="ident">AbsoluteDirection</span>,
         <span class="ident">in_out</span>: <span class="ident">InOutDirection</span>,
         <span class="ident">lane_index</span>: <span class="ident">LaneIndex</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Position</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Position</span><span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident">AbsoluteDirection</span>::<span class="kw-2">*</span>;
         <span class="kw">let</span> <span class="ident">geometry</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">intersection_geometry</span>(<span class="ident">intersection_index</span>);
         <span class="kw">let</span> <span class="ident">context</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">board</span>.<span class="ident">context_of_intersection</span>(<span class="ident">intersection_index</span>);
@@ -370,19 +371,19 @@
         <span class="kw">let</span> <span class="ident">road</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">board</span>.<span class="ident">get_road</span>(<span class="ident">road_direction</span>, <span class="ident">road_index</span>)<span class="question-mark">?</span>.<span class="ident">as_ref</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">lane_center_offset</span>(<span class="ident">road</span>, <span class="ident">lane_direction</span>, <span class="ident">lane_index</span>);
         <span class="kw">let</span> <span class="ident">position</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">direction</span> {
-            <span class="ident">North</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Position</span> {
+            <span class="ident">North</span> <span class="op">=&gt;</span> <span class="ident">Position</span> {
                 <span class="ident">x</span>: <span class="op">-</span><span class="ident">offset</span>,
                 <span class="ident">y</span>: <span class="op">-</span><span class="ident">geometry</span>.<span class="ident">height</span> <span class="op">/</span> <span class="number">2.0</span>,
             },
-            <span class="ident">South</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Position</span> {
+            <span class="ident">South</span> <span class="op">=&gt;</span> <span class="ident">Position</span> {
                 <span class="ident">x</span>: <span class="op">-</span><span class="ident">offset</span>,
                 <span class="ident">y</span>: <span class="ident">geometry</span>.<span class="ident">height</span> <span class="op">/</span> <span class="number">2.0</span>,
             },
-            <span class="ident">East</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Position</span> {
+            <span class="ident">East</span> <span class="op">=&gt;</span> <span class="ident">Position</span> {
                 <span class="ident">x</span>: <span class="ident">geometry</span>.<span class="ident">width</span> <span class="op">/</span> <span class="number">2.0</span>,
                 <span class="ident">y</span>: <span class="ident">offset</span>,
             },
-            <span class="ident">West</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Position</span> {
+            <span class="ident">West</span> <span class="op">=&gt;</span> <span class="ident">Position</span> {
                 <span class="ident">x</span>: <span class="op">-</span><span class="ident">geometry</span>.<span class="ident">width</span> <span class="op">/</span> <span class="number">2.0</span>,
                 <span class="ident">y</span>: <span class="ident">offset</span>,
             },
@@ -398,7 +399,7 @@
         <span class="ident">from_lane_index</span>: <span class="ident">LaneIndex</span>,
         <span class="ident">to_direction</span>: <span class="ident">AbsoluteDirection</span>,
         <span class="ident">to_lane_index</span>: <span class="ident">LaneIndex</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
+    ) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">from_position</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">intersection_road_join_position</span>(
             <span class="ident">intersection_index</span>,
             <span class="ident">from_direction</span>,
@@ -419,12 +420,12 @@
         <span class="ident">road</span>: <span class="kw-2">&amp;</span><span class="ident">Road</span>,
         <span class="ident">direction</span>: <span class="ident">LaneDirection</span>,
         <span class="ident">lane_index</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">f64</span> {
+    ) <span class="op">-&gt;</span> <span class="ident">f64</span> {
         <span class="kw">let</span> <span class="ident">lane_number</span> <span class="op">=</span> <span class="ident">road</span>.<span class="ident">lane_number</span>();
         <span class="kw">let</span> <span class="ident">top</span> <span class="op">=</span> <span class="op">-</span><span class="self">self</span>.<span class="ident">lane_width</span> <span class="op">*</span> (<span class="ident">lane_number</span> <span class="op">-</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">f64</span> <span class="op">/</span> <span class="number">2.0</span>;
         <span class="kw">let</span> <span class="ident">lane_offset</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">direction</span> {
-            <span class="ident">LaneDirection</span>::<span class="ident">HighToLow</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">road</span>.<span class="ident">lane_to_low</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">lane_index</span>,
-            <span class="ident">LaneDirection</span>::<span class="ident">LowToHigh</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">road</span>.<span class="ident">lane_to_low</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="ident">lane_index</span>,
+            <span class="ident">LaneDirection</span>::<span class="ident">HighToLow</span> <span class="op">=&gt;</span> <span class="ident">road</span>.<span class="ident">lane_to_low</span>.<span class="ident">len</span>() <span class="op">-</span> <span class="number">1</span> <span class="op">-</span> <span class="ident">lane_index</span>,
+            <span class="ident">LaneDirection</span>::<span class="ident">LowToHigh</span> <span class="op">=&gt;</span> <span class="ident">road</span>.<span class="ident">lane_to_low</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="ident">lane_index</span>,
         };
         <span class="ident">top</span> <span class="op">+</span> <span class="ident">lane_offset</span> <span class="kw">as</span> <span class="ident">f64</span> <span class="op">*</span> <span class="self">self</span>.<span class="ident">lane_width</span>
     }
@@ -434,7 +435,7 @@
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
-    <span class="kw">fn</span> <span class="ident">example_city</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">City</span> {
+    <span class="kw">fn</span> <span class="ident">example_city</span>() <span class="op">-&gt;</span> <span class="ident">City</span> {
         <span class="ident">City</span> {
             <span class="ident">board</span>: <span class="ident">Board</span>::<span class="ident">with_shape</span>(<span class="prelude-val">None</span>, <span class="prelude-val">None</span>, (<span class="number">3</span>, <span class="number">3</span>)),
             <span class="ident">car_out_intersection</span>: (<span class="number">0</span>, <span class="number">0</span>),

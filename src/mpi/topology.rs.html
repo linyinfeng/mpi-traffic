@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mpi-0.5.4/src/topology.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>topology.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mpi-0.5.4/src/topology.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>topology.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -791,7 +792,7 @@
     <span class="doccomment">/// The type of the associated communicator</span>
     <span class="kw">type</span> <span class="ident">Out</span>: <span class="ident">Communicator</span>;
     <span class="doccomment">/// Returns the associated communicator.</span>
-    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span>;
+    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span>;
 }
 
 <span class="doccomment">/// Identifies a certain process within a communicator.</span>
@@ -812,14 +813,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">/// See `examples/simple.rs`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">world</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SystemCommunicator</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">world</span>() <span class="op">-&gt;</span> <span class="ident">SystemCommunicator</span> {
         <span class="ident">SystemCommunicator</span>::<span class="ident">from_raw_unchecked</span>(<span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_COMM_WORLD</span>))
     }
 
     <span class="doccomment">/// If the raw value is the null handle returns `None`</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="ident">MPI_Comm</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SystemCommunicator</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">raw</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_COMM_NULL</span>) {
+    <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="ident">MPI_Comm</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SystemCommunicator</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">raw</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_COMM_NULL</span>) {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="prelude-val">Some</span>(<span class="ident">SystemCommunicator</span>(<span class="ident">raw</span>))
@@ -827,7 +828,7 @@
     }
 
     <span class="doccomment">/// Wraps the raw value without checking for null handle</span>
-    <span class="kw">fn</span> <span class="ident">from_raw_unchecked</span>(<span class="ident">raw</span>: <span class="ident">MPI_Comm</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SystemCommunicator</span> {
+    <span class="kw">fn</span> <span class="ident">from_raw_unchecked</span>(<span class="ident">raw</span>: <span class="ident">MPI_Comm</span>) <span class="op">-&gt;</span> <span class="ident">SystemCommunicator</span> {
         <span class="macro">debug_assert_ne</span><span class="macro">!</span>(<span class="ident">raw</span>, <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_COMM_NULL</span>));
         <span class="ident">SystemCommunicator</span>(<span class="ident">raw</span>)
     }
@@ -835,7 +836,7 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">AsRaw</span> <span class="kw">for</span> <span class="ident">SystemCommunicator</span> {
     <span class="kw">type</span> <span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Comm</span>;
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -844,7 +845,7 @@
 
 <span class="kw">impl</span> <span class="ident">AsCommunicator</span> <span class="kw">for</span> <span class="ident">SystemCommunicator</span> {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="ident">SystemCommunicator</span>;
-    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>
     }
 }
@@ -858,8 +859,8 @@
 
 <span class="kw">impl</span> <span class="ident">UserCommunicator</span> {
     <span class="doccomment">/// If the raw value is the null handle returns `None`</span>
-    <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="ident">MPI_Comm</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">raw</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_COMM_NULL</span>) {
+    <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="ident">MPI_Comm</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">raw</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_COMM_NULL</span>) {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="prelude-val">Some</span>(<span class="ident">UserCommunicator</span>(<span class="ident">raw</span>))
@@ -867,7 +868,7 @@
     }
 
     <span class="doccomment">/// Wraps the raw value without checking for null handle</span>
-    <span class="kw">fn</span> <span class="ident">from_raw_unchecked</span>(<span class="ident">raw</span>: <span class="ident">MPI_Comm</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserCommunicator</span> {
+    <span class="kw">fn</span> <span class="ident">from_raw_unchecked</span>(<span class="ident">raw</span>: <span class="ident">MPI_Comm</span>) <span class="op">-&gt;</span> <span class="ident">UserCommunicator</span> {
         <span class="macro">debug_assert_ne</span><span class="macro">!</span>(<span class="ident">raw</span>, <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_COMM_NULL</span>));
         <span class="ident">UserCommunicator</span>(<span class="ident">raw</span>)
     }
@@ -875,14 +876,14 @@
 
 <span class="kw">impl</span> <span class="ident">AsCommunicator</span> <span class="kw">for</span> <span class="ident">UserCommunicator</span> {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="ident">UserCommunicator</span>;
-    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">AsRaw</span> <span class="kw">for</span> <span class="ident">UserCommunicator</span> {
     <span class="kw">type</span> <span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Comm</span>;
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -904,14 +905,14 @@
 
 <span class="kw">impl</span> <span class="ident">Color</span> {
     <span class="doccomment">/// Special color of undefined value</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">undefined</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Color</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">undefined</span>() <span class="op">-&gt;</span> <span class="ident">Color</span> {
         <span class="ident">Color</span>(<span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_UNDEFINED</span>))
     }
 
     <span class="doccomment">/// A color of a certain value</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Valid values are non-negative.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_value</span>(<span class="ident">value</span>: <span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Color</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_value</span>(<span class="ident">value</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">Color</span> {
         <span class="kw">if</span> <span class="ident">value</span> <span class="op">&lt;</span> <span class="number">0</span> {
             <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Value of color must be non-negative.&quot;</span>)
         }
@@ -919,7 +920,7 @@
     }
 
     <span class="doccomment">/// The raw value understood by the MPI C API</span>
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">c_int</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -937,7 +938,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.4.1</span>
-    <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rank</span> {
+    <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rank</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">Rank</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Comm_size</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
@@ -953,7 +954,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.4.1</span>
-    <span class="kw">fn</span> <span class="ident">rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rank</span> {
+    <span class="kw">fn</span> <span class="ident">rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rank</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">Rank</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Comm_rank</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
@@ -965,17 +966,17 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">/// See `examples/broadcast.rs` `examples/gather.rs` `examples/send_receive.rs`</span>
-    <span class="kw">fn</span> <span class="ident">process_at_rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">r</span>: <span class="ident">Rank</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Process</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">process_at_rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">r</span>: <span class="ident">Rank</span>) <span class="op">-&gt;</span> <span class="ident">Process</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Sized</span>,
     {
-        <span class="macro">assert</span><span class="macro">!</span>(<span class="number">0</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">r</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="ident">r</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">size</span>());
+        <span class="macro">assert</span><span class="macro">!</span>(<span class="number">0</span> <span class="op">&lt;=</span> <span class="ident">r</span> <span class="op">&amp;&amp;</span> <span class="ident">r</span> <span class="op">&lt;</span> <span class="self">self</span>.<span class="ident">size</span>());
         <span class="ident">Process</span>::<span class="ident">by_rank_unchecked</span>(<span class="self">self</span>, <span class="ident">r</span>)
     }
 
     <span class="doccomment">/// Returns an `AnyProcess` identifier that can be used, e.g. as a `Source` in point to point</span>
     <span class="doccomment">/// communication.</span>
-    <span class="kw">fn</span> <span class="ident">any_process</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">AnyProcess</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">any_process</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">AnyProcess</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Sized</span>,
     {
@@ -983,7 +984,7 @@
     }
 
     <span class="doccomment">/// A `Process` for the calling process</span>
-    <span class="kw">fn</span> <span class="ident">this_process</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Process</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">this_process</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Process</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Sized</span>,
     {
@@ -998,7 +999,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.4.1</span>
-    <span class="kw">fn</span> <span class="ident">compare</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CommunicatorRelation</span>
+    <span class="kw">fn</span> <span class="ident">compare</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>) <span class="op">-&gt;</span> <span class="ident">CommunicatorRelation</span>
     <span class="kw">where</span>
         <span class="ident">C</span>: <span class="ident">Communicator</span>,
     {
@@ -1018,7 +1019,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.4.2</span>
-    <span class="kw">fn</span> <span class="ident">duplicate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserCommunicator</span> {
+    <span class="kw">fn</span> <span class="ident">duplicate</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">UserCommunicator</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">newcomm</span>: <span class="ident">MPI_Comm</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Comm_dup</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">newcomm</span>);
@@ -1039,7 +1040,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.4.2</span>
-    <span class="kw">fn</span> <span class="ident">split_by_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">split_by_color</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">split_by_color_with_key</span>(<span class="ident">color</span>, <span class="ident">Key</span>::<span class="ident">default</span>())
     }
 
@@ -1051,7 +1052,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.4.2</span>
-    <span class="kw">fn</span> <span class="ident">split_by_color_with_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">split_by_color_with_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">color</span>: <span class="ident">Color</span>, <span class="ident">key</span>: <span class="ident">Key</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">newcomm</span>: <span class="ident">MPI_Comm</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Comm_split</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="ident">color</span>.<span class="ident">as_raw</span>(), <span class="ident">key</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">newcomm</span>);
@@ -1077,7 +1078,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.4.2</span>
-    <span class="kw">fn</span> <span class="ident">split_by_subgroup_collective</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">split_by_subgroup_collective</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">G</span>: <span class="ident">Group</span>,
     {
@@ -1099,7 +1100,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.4.2</span>
-    <span class="kw">fn</span> <span class="ident">split_by_subgroup</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">split_by_subgroup</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">G</span>: <span class="ident">Group</span>,
     {
@@ -1114,7 +1115,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.4.2</span>
-    <span class="kw">fn</span> <span class="ident">split_by_subgroup_with_tag</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>, <span class="ident">tag</span>: <span class="ident">Tag</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">split_by_subgroup_with_tag</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">group</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>, <span class="ident">tag</span>: <span class="ident">Tag</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">UserCommunicator</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">G</span>: <span class="ident">Group</span>,
     {
@@ -1130,7 +1131,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.2</span>
-    <span class="kw">fn</span> <span class="ident">group</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserGroup</span> {
+    <span class="kw">fn</span> <span class="ident">group</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">UserGroup</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">group</span>: <span class="ident">MPI_Group</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Comm_group</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">group</span>);
@@ -1143,7 +1144,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 8.7</span>
-    <span class="kw">fn</span> <span class="ident">abort</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">errorcode</span>: <span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="op">!</span> {
+    <span class="kw">fn</span> <span class="ident">abort</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">errorcode</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="op">!</span> {
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Abort</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="ident">errorcode</span>);
         }
@@ -1169,16 +1170,16 @@
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">c_int</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">CommunicatorRelation</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">i</span>: <span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CommunicatorRelation</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">i</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">CommunicatorRelation</span> {
         <span class="kw">use</span> <span class="self">self</span>::<span class="ident">CommunicatorRelation</span>::<span class="kw-2">*</span>;
         <span class="comment">// FIXME: Yuck! These should be made const.</span>
-        <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_IDENT</span>) {
+        <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_IDENT</span>) {
             <span class="kw">return</span> <span class="ident">Identical</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_CONGRUENT</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_CONGRUENT</span>) {
             <span class="kw">return</span> <span class="ident">Congruent</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_SIMILAR</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_SIMILAR</span>) {
             <span class="kw">return</span> <span class="ident">Similar</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_UNEQUAL</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_UNEQUAL</span>) {
             <span class="kw">return</span> <span class="ident">Unequal</span>;
         }
         <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unknown communicator relation: {}&quot;</span>, <span class="ident">i</span>)
@@ -1200,20 +1201,20 @@
     <span class="ident">C</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Communicator</span>,
 {
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">dead_code</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">by_rank</span>(<span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">C</span>, <span class="ident">r</span>: <span class="ident">Rank</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">r</span> <span class="op">!</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_PROC_NULL</span>) {
+    <span class="kw">fn</span> <span class="ident">by_rank</span>(<span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">C</span>, <span class="ident">r</span>: <span class="ident">Rank</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">r</span> <span class="op">!=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_PROC_NULL</span>) {
             <span class="prelude-val">Some</span>(<span class="ident">Process</span> { <span class="ident">comm</span>: <span class="ident">c</span>, <span class="ident">rank</span>: <span class="ident">r</span> })
         } <span class="kw">else</span> {
             <span class="prelude-val">None</span>
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">by_rank_unchecked</span>(<span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">C</span>, <span class="ident">r</span>: <span class="ident">Rank</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">by_rank_unchecked</span>(<span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">C</span>, <span class="ident">r</span>: <span class="ident">Rank</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="ident">Process</span> { <span class="ident">comm</span>: <span class="ident">c</span>, <span class="ident">rank</span>: <span class="ident">r</span> }
     }
 
     <span class="doccomment">/// The process rank</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rank</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rank</span> {
         <span class="self">self</span>.<span class="ident">rank</span>
     }
 }
@@ -1223,7 +1224,7 @@
     <span class="ident">C</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Communicator</span>,
 {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="ident">C</span>;
-    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>.<span class="ident">comm</span>
     }
 }
@@ -1239,7 +1240,7 @@
     <span class="ident">C</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Communicator</span>,
 {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="ident">C</span>;
-    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_communicator</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -1254,14 +1255,14 @@
 
 <span class="kw">impl</span> <span class="ident">SystemGroup</span> {
     <span class="doccomment">/// An empty group</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SystemGroup</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-&gt;</span> <span class="ident">SystemGroup</span> {
         <span class="ident">SystemGroup</span>(<span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_GROUP_EMPTY</span>))
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">AsRaw</span> <span class="kw">for</span> <span class="ident">SystemGroup</span> {
     <span class="kw">type</span> <span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Group</span>;
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -1286,7 +1287,7 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">AsRaw</span> <span class="kw">for</span> <span class="ident">UserGroup</span> {
     <span class="kw">type</span> <span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Group</span>;
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -1303,7 +1304,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.2</span>
-    <span class="kw">fn</span> <span class="ident">union</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserGroup</span>
+    <span class="kw">fn</span> <span class="ident">union</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-&gt;</span> <span class="ident">UserGroup</span>
     <span class="kw">where</span>
         <span class="ident">G</span>: <span class="ident">Group</span>,
     {
@@ -1322,7 +1323,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.2</span>
-    <span class="kw">fn</span> <span class="ident">intersection</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserGroup</span>
+    <span class="kw">fn</span> <span class="ident">intersection</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-&gt;</span> <span class="ident">UserGroup</span>
     <span class="kw">where</span>
         <span class="ident">G</span>: <span class="ident">Group</span>,
     {
@@ -1341,7 +1342,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.2</span>
-    <span class="kw">fn</span> <span class="ident">difference</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserGroup</span>
+    <span class="kw">fn</span> <span class="ident">difference</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-&gt;</span> <span class="ident">UserGroup</span>
     <span class="kw">where</span>
         <span class="ident">G</span>: <span class="ident">Group</span>,
     {
@@ -1360,7 +1361,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.2</span>
-    <span class="kw">fn</span> <span class="ident">include</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ranks</span>: <span class="kw-2">&amp;</span>[<span class="ident">Rank</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserGroup</span> {
+    <span class="kw">fn</span> <span class="ident">include</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ranks</span>: <span class="kw-2">&amp;</span>[<span class="ident">Rank</span>]) <span class="op">-&gt;</span> <span class="ident">UserGroup</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">newgroup</span>: <span class="ident">MPI_Group</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Group_incl</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="ident">ranks</span>.<span class="ident">count</span>(), <span class="ident">ranks</span>.<span class="ident">as_ptr</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">newgroup</span>);
@@ -1376,7 +1377,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.2</span>
-    <span class="kw">fn</span> <span class="ident">exclude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ranks</span>: <span class="kw-2">&amp;</span>[<span class="ident">Rank</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserGroup</span> {
+    <span class="kw">fn</span> <span class="ident">exclude</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ranks</span>: <span class="kw-2">&amp;</span>[<span class="ident">Rank</span>]) <span class="op">-&gt;</span> <span class="ident">UserGroup</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">newgroup</span>: <span class="ident">MPI_Group</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Group_excl</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="ident">ranks</span>.<span class="ident">count</span>(), <span class="ident">ranks</span>.<span class="ident">as_ptr</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">newgroup</span>);
@@ -1389,7 +1390,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.1</span>
-    <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rank</span> {
+    <span class="kw">fn</span> <span class="ident">size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rank</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">Rank</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Group_size</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
@@ -1402,12 +1403,12 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.1</span>
-    <span class="kw">fn</span> <span class="ident">rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rank</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rank</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">Rank</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Group_rank</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
         }
-        <span class="kw">if</span> <span class="ident">res</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_UNDEFINED</span>) {
+        <span class="kw">if</span> <span class="ident">res</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_UNDEFINED</span>) {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="prelude-val">Some</span>(<span class="ident">res</span>)
@@ -1421,7 +1422,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.1</span>
-    <span class="kw">fn</span> <span class="ident">translate_rank</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rank</span>: <span class="ident">Rank</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rank</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">translate_rank</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">rank</span>: <span class="ident">Rank</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rank</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">G</span>: <span class="ident">Group</span>,
     {
@@ -1429,7 +1430,7 @@
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Group_translate_ranks</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="number">1</span>, <span class="kw-2">&amp;</span><span class="ident">rank</span>, <span class="ident">other</span>.<span class="ident">as_raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
         }
-        <span class="kw">if</span> <span class="ident">res</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_UNDEFINED</span>) {
+        <span class="kw">if</span> <span class="ident">res</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_UNDEFINED</span>) {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="prelude-val">Some</span>(<span class="ident">res</span>)
@@ -1443,7 +1444,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.1</span>
-    <span class="kw">fn</span> <span class="ident">translate_ranks</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ranks</span>: <span class="kw-2">&amp;</span>[<span class="ident">Rank</span>], <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rank</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">translate_ranks</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ranks</span>: <span class="kw-2">&amp;</span>[<span class="ident">Rank</span>], <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Rank</span><span class="op">&gt;&gt;</span>
     <span class="kw">where</span>
         <span class="ident">G</span>: <span class="ident">Group</span>,
     {
@@ -1458,7 +1459,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 6.3.1</span>
-    <span class="kw">fn</span> <span class="ident">compare</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">GroupRelation</span>
+    <span class="kw">fn</span> <span class="ident">compare</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G</span>) <span class="op">-&gt;</span> <span class="ident">GroupRelation</span>
     <span class="kw">where</span>
         <span class="ident">G</span>: <span class="ident">Group</span>,
     {
@@ -1486,14 +1487,14 @@
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">c_int</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">GroupRelation</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">i</span>: <span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">GroupRelation</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">i</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">GroupRelation</span> {
         <span class="kw">use</span> <span class="self">self</span>::<span class="ident">GroupRelation</span>::<span class="kw-2">*</span>;
         <span class="comment">// FIXME: Yuck! These should be made const.</span>
-        <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_IDENT</span>) {
+        <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_IDENT</span>) {
             <span class="kw">return</span> <span class="ident">Identical</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_SIMILAR</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_SIMILAR</span>) {
             <span class="kw">return</span> <span class="ident">Similar</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_UNEQUAL</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_UNEQUAL</span>) {
             <span class="kw">return</span> <span class="ident">Unequal</span>;
         }
         <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unknown group relation: {}&quot;</span>, <span class="ident">i</span>)

@@ -1,4 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mpi-0.5.4/src/collective.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>collective.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mpi-0.5.4/src/collective.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>collective.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2076,7 +2077,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 5.12.1</span>
-    <span class="kw">fn</span> <span class="ident">immediate_barrier</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">StaticScope</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">immediate_barrier</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">StaticScope</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">request</span>: <span class="ident">MPI_Request</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Ibarrier</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">request</span>);
@@ -2099,7 +2100,7 @@
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -2137,7 +2138,7 @@
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">PartitionedBufferMut</span>,
@@ -2174,7 +2175,7 @@
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -2207,7 +2208,7 @@
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">PartitionedBuffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">PartitionedBufferMut</span>,
@@ -2247,7 +2248,7 @@
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
         <span class="ident">op</span>: <span class="ident">O</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -2286,7 +2287,7 @@
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
         <span class="ident">op</span>: <span class="ident">O</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -2325,7 +2326,7 @@
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
         <span class="ident">op</span>: <span class="ident">O</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -2363,7 +2364,7 @@
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
         <span class="ident">op</span>: <span class="ident">O</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -2394,7 +2395,7 @@
 <span class="doccomment">/// communication. These collective operations are implemented as default methods of this trait.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Root</span>: <span class="ident">AsCommunicator</span> {
     <span class="doccomment">/// Rank of the root process</span>
-    <span class="kw">fn</span> <span class="ident">root_rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rank</span>;
+    <span class="kw">fn</span> <span class="ident">root_rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rank</span>;
 
     <span class="doccomment">/// Broadcast of the contents of a buffer</span>
     <span class="doccomment">///</span>
@@ -2793,7 +2794,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Buf</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">Buf</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
         <span class="ident">Sc</span>: <span class="ident">Scope</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
@@ -2823,7 +2824,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 5.12.3</span>
-    <span class="kw">fn</span> <span class="ident">immediate_gather_into</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span>, <span class="ident">S</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">scope</span>: <span class="ident">Sc</span>, <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">immediate_gather_into</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span>, <span class="ident">S</span>: <span class="question-mark">?</span><span class="ident">Sized</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">scope</span>: <span class="ident">Sc</span>, <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">Sc</span>: <span class="ident">Scope</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
@@ -2862,7 +2863,7 @@
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -2902,7 +2903,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">Sc</span>: <span class="ident">Scope</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
@@ -2942,7 +2943,7 @@
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">PartitionedBufferMut</span>,
@@ -2982,7 +2983,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
         <span class="ident">Sc</span>: <span class="ident">Scope</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
@@ -3021,7 +3022,7 @@
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -3061,7 +3062,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
         <span class="ident">Sc</span>: <span class="ident">Scope</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
@@ -3101,7 +3102,7 @@
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">PartitionedBuffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -3143,7 +3144,7 @@
         <span class="ident">scope</span>: <span class="ident">Sc</span>,
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">op</span>: <span class="ident">O</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">O</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Operation</span>,
@@ -3184,7 +3185,7 @@
         <span class="ident">sendbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">S</span>,
         <span class="ident">recvbuf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">R</span>,
         <span class="ident">op</span>: <span class="ident">O</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
+    ) <span class="op">-&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Sc</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">S</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Buffer</span>,
         <span class="ident">R</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">BufferMut</span>,
@@ -3210,7 +3211,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span>: <span class="lifetime">&#39;a</span> <span class="op">+</span> <span class="ident">Communicator</span><span class="op">&gt;</span> <span class="ident">Root</span> <span class="kw">for</span> <span class="ident">Process</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">root_rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rank</span> {
+    <span class="kw">fn</span> <span class="ident">root_rank</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Rank</span> {
         <span class="self">self</span>.<span class="ident">rank</span>()
     }
 }
@@ -3222,11 +3223,11 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 5.9.7</span>
-    <span class="kw">fn</span> <span class="ident">is_commutative</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_commutative</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">commute</span> <span class="op">=</span> <span class="number">0</span>;
             <span class="ident">ffi</span>::<span class="ident">MPI_Op_commutative</span>(<span class="self">self</span>.<span class="ident">as_raw</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">commute</span>);
-            <span class="ident">commute</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
+            <span class="ident">commute</span> <span class="op">!=</span> <span class="number">0</span>
         }
     }
 }
@@ -3245,8 +3246,8 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SystemOperation</span>(<span class="ident">MPI_Op</span>);
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">system_operation_constructors</span> {
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor</span>:<span class="ident">ident</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">val</span>:<span class="ident">path</span>),<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> (
-        $(<span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SystemOperation</span> {
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor</span>:<span class="ident">ident</span> <span class="op">=&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">val</span>:<span class="ident">path</span>),<span class="kw-2">*</span>) <span class="op">=&gt;</span> (
+        $(<span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ctor</span>() <span class="op">-&gt;</span> <span class="ident">SystemOperation</span> {
             <span class="doccomment">//! A built-in operation</span>
             <span class="ident">SystemOperation</span>(<span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">val</span>))
         })<span class="op">*</span>
@@ -3255,22 +3256,22 @@
 
 <span class="kw">impl</span> <span class="ident">SystemOperation</span> {
     <span class="macro">system_operation_constructors</span><span class="macro">!</span> {
-        <span class="ident">max</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_MAX</span>,
-        <span class="ident">min</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_MIN</span>,
-        <span class="ident">sum</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_SUM</span>,
-        <span class="ident">product</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_PROD</span>,
-        <span class="ident">logical_and</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_LAND</span>,
-        <span class="ident">bitwise_and</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_BAND</span>,
-        <span class="ident">logical_or</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_LOR</span>,
-        <span class="ident">bitwise_or</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_BOR</span>,
-        <span class="ident">logical_xor</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_LXOR</span>,
-        <span class="ident">bitwise_xor</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_BXOR</span>
+        <span class="ident">max</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_MAX</span>,
+        <span class="ident">min</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_MIN</span>,
+        <span class="ident">sum</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_SUM</span>,
+        <span class="ident">product</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_PROD</span>,
+        <span class="ident">logical_and</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_LAND</span>,
+        <span class="ident">bitwise_and</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_BAND</span>,
+        <span class="ident">logical_or</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_LOR</span>,
+        <span class="ident">bitwise_or</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_BOR</span>,
+        <span class="ident">logical_xor</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_LXOR</span>,
+        <span class="ident">bitwise_xor</span> <span class="op">=&gt;</span> <span class="ident">ffi</span>::<span class="ident">RSMPI_BXOR</span>
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">AsRaw</span> <span class="kw">for</span> <span class="ident">SystemOperation</span> {
     <span class="kw">type</span> <span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Op</span>;
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -3306,7 +3307,7 @@
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;user-operations&quot;</span>)]</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">UserOperation</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;UserOperation&quot;</span>).<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">op</span>).<span class="ident">finish</span>()
     }
 }
@@ -3323,7 +3324,7 @@
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;user-operations&quot;</span>)]</span>
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsRaw</span> <span class="kw">for</span> <span class="ident">UserOperation</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Op</span>;
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
         <span class="self">self</span>.<span class="ident">op</span>
     }
 }
@@ -3337,7 +3338,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is a more readable shorthand for the `new` method.  Refer to [`new`](#method.new) for</span>
     <span class="doccomment">/// more information.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">associative</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">function</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">associative</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">function</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="ident">DynBuffer</span>, <span class="ident">DynBufferMut</span>) <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
     {
@@ -3349,7 +3350,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is a more readable shorthand for the `new` method.  Refer to [`new`](#method.new) for</span>
     <span class="doccomment">/// more information.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">commutative</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">function</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">commutative</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">function</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="ident">DynBuffer</span>, <span class="ident">DynBufferMut</span>) <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
     {
@@ -3370,7 +3371,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 5.9.5</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">commute</span>: <span class="ident">bool</span>, <span class="ident">function</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">commute</span>: <span class="ident">bool</span>, <span class="ident">function</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">F</span>: <span class="ident">Fn</span>(<span class="ident">DynBuffer</span>, <span class="ident">DynBufferMut</span>) <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;a</span>,
     {
@@ -3401,7 +3402,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Here, `anchor` is an arbitrary object that is stored alongside the `MPI_Op`.</span>
     <span class="doccomment">/// This can be used to attach finalizers to the object.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">op</span>: <span class="ident">MPI_Op</span>, <span class="ident">anchor</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">op</span>: <span class="ident">MPI_Op</span>, <span class="ident">anchor</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> { <span class="ident">op</span>, <span class="ident">anchor</span> }
     }
 }
@@ -3418,7 +3419,7 @@
 {
     <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">len</span>;
     <span class="kw">let</span> <span class="ident">datatype</span> <span class="op">=</span> <span class="ident">DatatypeRef</span>::<span class="ident">from_raw</span>(<span class="kw-2">*</span><span class="ident">datatype</span>);
-    <span class="kw">if</span> <span class="ident">len</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">len</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="comment">// precautionary measure: ensure pointers are not null</span>
         <span class="ident">invec</span> <span class="op">=</span> [].<span class="ident">as_mut_ptr</span>();
         <span class="ident">inoutvec</span> <span class="op">=</span> [].<span class="ident">as_mut_ptr</span>();
@@ -3442,7 +3443,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">UnsafeUserOperation</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_tuple</span>(<span class="string">&quot;UnsafeUserOperation&quot;</span>)
             .<span class="ident">field</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">op</span>)
             .<span class="ident">finish</span>()
@@ -3459,7 +3460,7 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">AsRaw</span> <span class="kw">for</span> <span class="ident">UnsafeUserOperation</span> {
     <span class="kw">type</span> <span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Op</span>;
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
         <span class="self">self</span>.<span class="ident">op</span>
     }
 }
@@ -3475,7 +3476,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is a more readable shorthand for the `new` method.  Refer to [`new`](#method.new) for</span>
     <span class="doccomment">/// more information.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">associative</span>(<span class="ident">function</span>: <span class="ident">UnsafeUserFunction</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">associative</span>(<span class="ident">function</span>: <span class="ident">UnsafeUserFunction</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="bool-val">false</span>, <span class="ident">function</span>)
     }
 
@@ -3484,7 +3485,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is a more readable shorthand for the `new` method.  Refer to [`new`](#method.new) for</span>
     <span class="doccomment">/// more information.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">commutative</span>(<span class="ident">function</span>: <span class="ident">UnsafeUserFunction</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">commutative</span>(<span class="ident">function</span>: <span class="ident">UnsafeUserFunction</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span>::<span class="ident">new</span>(<span class="bool-val">true</span>, <span class="ident">function</span>)
     }
 
@@ -3502,7 +3503,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 5.9.5</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">commute</span>: <span class="ident">bool</span>, <span class="ident">function</span>: <span class="ident">UnsafeUserFunction</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">commute</span>: <span class="ident">bool</span>, <span class="ident">function</span>: <span class="ident">UnsafeUserFunction</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">op</span> <span class="op">=</span> <span class="ident">mem</span>::<span class="ident">uninitialized</span>();
         <span class="ident">ffi</span>::<span class="ident">MPI_Op_create</span>(<span class="prelude-val">Some</span>(<span class="ident">function</span>), <span class="ident">commute</span> <span class="kw">as</span> <span class="kw">_</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">op</span>);
         <span class="ident">UnsafeUserOperation</span> { <span class="ident">op</span> }
