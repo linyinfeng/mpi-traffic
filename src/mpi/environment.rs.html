@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mpi-0.5.4/src/environment.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>environment.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mpi-0.5.4/src/environment.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>environment.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -322,7 +324,7 @@
 
 <span class="doccomment">/// Global context</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Universe</span> {
-    <span class="ident">buffer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;&gt;</span>,
+    <span class="ident">buffer</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Universe</span> {
@@ -332,12 +334,12 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">/// See `examples/simple.rs`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">world</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">SystemCommunicator</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">world</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SystemCommunicator</span> {
         <span class="ident">SystemCommunicator</span>::<span class="ident">world</span>()
     }
 
     <span class="doccomment">/// The size in bytes of the buffer used for buffered communication.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">buffer_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">buffer_size</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">as_ref</span>().<span class="ident">map_or</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">buffer</span><span class="op">|</span> <span class="ident">buffer</span>.<span class="ident">len</span>())
     }
 
@@ -415,39 +417,39 @@
 
 <span class="kw">impl</span> <span class="ident">Threading</span> {
     <span class="doccomment">/// The raw value understood by the MPI C API</span>
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">c_int</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">c_int</span> {
         <span class="kw">use</span> <span class="self">self</span>::<span class="ident">Threading</span>::<span class="kw-2">*</span>;
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">Single</span> <span class="op">=&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SINGLE</span>),
-            <span class="ident">Funneled</span> <span class="op">=&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_FUNNELED</span>),
-            <span class="ident">Serialized</span> <span class="op">=&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SERIALIZED</span>),
-            <span class="ident">Multiple</span> <span class="op">=&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_MULTIPLE</span>),
+            <span class="ident">Single</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SINGLE</span>),
+            <span class="ident">Funneled</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_FUNNELED</span>),
+            <span class="ident">Serialized</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SERIALIZED</span>),
+            <span class="ident">Multiple</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_MULTIPLE</span>),
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">Threading</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Threading</span> {
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Threading</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Threading</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_raw</span>().<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">as_raw</span>())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Ord</span> <span class="kw">for</span> <span class="ident">Threading</span> {
-    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Threading</span>) <span class="op">-&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Threading</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
         <span class="self">self</span>.<span class="ident">as_raw</span>().<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">as_raw</span>())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">c_int</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Threading</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">i</span>: <span class="ident">c_int</span>) <span class="op">-&gt;</span> <span class="ident">Threading</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">i</span>: <span class="ident">c_int</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Threading</span> {
         <span class="kw">use</span> <span class="self">self</span>::<span class="ident">Threading</span>::<span class="kw-2">*</span>;
-        <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SINGLE</span>) {
+        <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SINGLE</span>) {
             <span class="kw">return</span> <span class="ident">Single</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_FUNNELED</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_FUNNELED</span>) {
             <span class="kw">return</span> <span class="ident">Funneled</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SERIALIZED</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_SERIALIZED</span>) {
             <span class="kw">return</span> <span class="ident">Serialized</span>;
-        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_MULTIPLE</span>) {
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_THREAD_MULTIPLE</span>) {
             <span class="kw">return</span> <span class="ident">Multiple</span>;
         }
         <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;Unknown threading level: {}&quot;</span>, <span class="ident">i</span>)
@@ -455,12 +457,12 @@
 }
 
 <span class="doccomment">/// Whether the MPI library has been initialized</span>
-<span class="kw">fn</span> <span class="ident">is_initialized</span>() <span class="op">-&gt;</span> <span class="ident">bool</span> {
+<span class="kw">fn</span> <span class="ident">is_initialized</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
     <span class="kw">unsafe</span> {
         <span class="ident">ffi</span>::<span class="ident">MPI_Initialized</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
     }
-    <span class="ident">res</span> <span class="op">!=</span> <span class="number">0</span>
+    <span class="ident">res</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
 }
 
 <span class="doccomment">/// Initialize MPI.</span>
@@ -477,7 +479,7 @@
 <span class="doccomment">/// # Standard section(s)</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// 8.7</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Universe</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Universe</span><span class="op">&gt;</span> {
     <span class="ident">initialize_with_threading</span>(<span class="ident">Threading</span>::<span class="ident">Single</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="number">0</span>)
 }
 
@@ -494,7 +496,7 @@
 <span class="doccomment">/// # Standard section(s)</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// 12.4.3</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize_with_threading</span>(<span class="ident">threading</span>: <span class="ident">Threading</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">Universe</span>, <span class="ident">Threading</span>)<span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">initialize_with_threading</span>(<span class="ident">threading</span>: <span class="ident">Threading</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">Universe</span>, <span class="ident">Threading</span>)<span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">is_initialized</span>() {
         <span class="prelude-val">None</span>
     } <span class="kw">else</span> {
@@ -517,7 +519,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">/// See `examples/init_with_threading.rs`</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">threading_support</span>() <span class="op">-&gt;</span> <span class="ident">Threading</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">threading_support</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Threading</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
     <span class="kw">unsafe</span> {
         <span class="ident">ffi</span>::<span class="ident">MPI_Query_thread</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">res</span>);
@@ -530,7 +532,7 @@
 <span class="doccomment">/// Returns a tuple of `(version, subversion)`, e.g. `(3, 0)`.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Can be called without initializing MPI.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>() <span class="op">-&gt;</span> (<span class="ident">c_int</span>, <span class="ident">c_int</span>) {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">version</span>() <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">c_int</span>, <span class="ident">c_int</span>) {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">version</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">subversion</span>: <span class="ident">c_int</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
     <span class="kw">unsafe</span> {
@@ -544,7 +546,7 @@
 <span class="doccomment">/// Can return an `Err` if the description of the MPI library is not a UTF-8 string.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Can be called without initializing MPI.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">library_version</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FromUtf8Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">library_version</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FromUtf8Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">bufsize</span> <span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_MAX_LIBRARY_VERSION_STRING</span>)
         .<span class="ident">value_as</span>()
         .<span class="ident">expect</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
@@ -568,7 +570,7 @@
 <span class="doccomment">/// Names the processor that the calling process is running on.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Can return an `Err` if the processor name is not a UTF-8 string.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">processor_name</span>() <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FromUtf8Error</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">processor_name</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FromUtf8Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">bufsize</span> <span class="op">=</span> <span class="macro">unsafe_extern_static</span><span class="macro">!</span>(<span class="ident">ffi</span>::<span class="ident">RSMPI_MAX_PROCESSOR_NAME</span>)
         .<span class="ident">value_as</span>()
         .<span class="ident">expect</span>(<span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(
@@ -594,12 +596,12 @@
 <span class="doccomment">/// Time in seconds since an arbitrary time in the past.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The cheapest high-resolution timer available will be used.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time</span>() <span class="op">-&gt;</span> <span class="ident">c_double</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">c_double</span> {
     <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">RSMPI_Wtime</span>() }
 }
 
 <span class="doccomment">/// Resolution of timer used in `time()` in seconds</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_resolution</span>() <span class="op">-&gt;</span> <span class="ident">c_double</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">time_resolution</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">c_double</span> {
     <span class="kw">unsafe</span> { <span class="ident">ffi</span>::<span class="ident">RSMPI_Wtick</span>() }
 }
 </pre></div>

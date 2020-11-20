@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/ttf-parser-0.6.2/src/tables/os2.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>os2.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ttf_parser/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/ttf-parser-0.6.2/src/tables/os2.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>os2.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ttf_parser/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -335,43 +337,43 @@
 <span class="kw">impl</span> <span class="ident">Weight</span> {
     <span class="doccomment">/// Returns a numeric representation of a weight.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_number</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_number</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u16</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Weight</span>::<span class="ident">Thin</span>        <span class="op">=&gt;</span> <span class="number">100</span>,
-            <span class="ident">Weight</span>::<span class="ident">ExtraLight</span>  <span class="op">=&gt;</span> <span class="number">200</span>,
-            <span class="ident">Weight</span>::<span class="ident">Light</span>       <span class="op">=&gt;</span> <span class="number">300</span>,
-            <span class="ident">Weight</span>::<span class="ident">Normal</span>      <span class="op">=&gt;</span> <span class="number">400</span>,
-            <span class="ident">Weight</span>::<span class="ident">Medium</span>      <span class="op">=&gt;</span> <span class="number">500</span>,
-            <span class="ident">Weight</span>::<span class="ident">SemiBold</span>    <span class="op">=&gt;</span> <span class="number">600</span>,
-            <span class="ident">Weight</span>::<span class="ident">Bold</span>        <span class="op">=&gt;</span> <span class="number">700</span>,
-            <span class="ident">Weight</span>::<span class="ident">ExtraBold</span>   <span class="op">=&gt;</span> <span class="number">800</span>,
-            <span class="ident">Weight</span>::<span class="ident">Black</span>       <span class="op">=&gt;</span> <span class="number">900</span>,
-            <span class="ident">Weight</span>::<span class="ident">Other</span>(<span class="ident">n</span>)    <span class="op">=&gt;</span> <span class="ident">n</span>,
+            <span class="ident">Weight</span>::<span class="ident">Thin</span>        <span class="op">=</span><span class="op">&gt;</span> <span class="number">100</span>,
+            <span class="ident">Weight</span>::<span class="ident">ExtraLight</span>  <span class="op">=</span><span class="op">&gt;</span> <span class="number">200</span>,
+            <span class="ident">Weight</span>::<span class="ident">Light</span>       <span class="op">=</span><span class="op">&gt;</span> <span class="number">300</span>,
+            <span class="ident">Weight</span>::<span class="ident">Normal</span>      <span class="op">=</span><span class="op">&gt;</span> <span class="number">400</span>,
+            <span class="ident">Weight</span>::<span class="ident">Medium</span>      <span class="op">=</span><span class="op">&gt;</span> <span class="number">500</span>,
+            <span class="ident">Weight</span>::<span class="ident">SemiBold</span>    <span class="op">=</span><span class="op">&gt;</span> <span class="number">600</span>,
+            <span class="ident">Weight</span>::<span class="ident">Bold</span>        <span class="op">=</span><span class="op">&gt;</span> <span class="number">700</span>,
+            <span class="ident">Weight</span>::<span class="ident">ExtraBold</span>   <span class="op">=</span><span class="op">&gt;</span> <span class="number">800</span>,
+            <span class="ident">Weight</span>::<span class="ident">Black</span>       <span class="op">=</span><span class="op">&gt;</span> <span class="number">900</span>,
+            <span class="ident">Weight</span>::<span class="ident">Other</span>(<span class="ident">n</span>)    <span class="op">=</span><span class="op">&gt;</span> <span class="ident">n</span>,
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Weight</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">value</span>: <span class="ident">u16</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">value</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="number">100</span> <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">Thin</span>,
-            <span class="number">200</span> <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">ExtraLight</span>,
-            <span class="number">300</span> <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">Light</span>,
-            <span class="number">400</span> <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">Normal</span>,
-            <span class="number">500</span> <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">Medium</span>,
-            <span class="number">600</span> <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">SemiBold</span>,
-            <span class="number">700</span> <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">Bold</span>,
-            <span class="number">800</span> <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">ExtraBold</span>,
-            <span class="number">900</span> <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">Black</span>,
-            <span class="kw">_</span>   <span class="op">=&gt;</span> <span class="ident">Weight</span>::<span class="ident">Other</span>(<span class="ident">value</span>),
+            <span class="number">100</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">Thin</span>,
+            <span class="number">200</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">ExtraLight</span>,
+            <span class="number">300</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">Light</span>,
+            <span class="number">400</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">Normal</span>,
+            <span class="number">500</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">Medium</span>,
+            <span class="number">600</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">SemiBold</span>,
+            <span class="number">700</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">Bold</span>,
+            <span class="number">800</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">ExtraBold</span>,
+            <span class="number">900</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">Black</span>,
+            <span class="kw">_</span>   <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Weight</span>::<span class="ident">Other</span>(<span class="ident">value</span>),
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Weight</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Weight</span>::<span class="ident">Normal</span>
     }
 }
@@ -395,24 +397,24 @@
 <span class="kw">impl</span> <span class="ident">Width</span> {
     <span class="doccomment">/// Returns a numeric representation of a width.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_number</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_number</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u16</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Width</span>::<span class="ident">UltraCondensed</span>   <span class="op">=&gt;</span> <span class="number">1</span>,
-            <span class="ident">Width</span>::<span class="ident">ExtraCondensed</span>   <span class="op">=&gt;</span> <span class="number">2</span>,
-            <span class="ident">Width</span>::<span class="ident">Condensed</span>        <span class="op">=&gt;</span> <span class="number">3</span>,
-            <span class="ident">Width</span>::<span class="ident">SemiCondensed</span>    <span class="op">=&gt;</span> <span class="number">4</span>,
-            <span class="ident">Width</span>::<span class="ident">Normal</span>           <span class="op">=&gt;</span> <span class="number">5</span>,
-            <span class="ident">Width</span>::<span class="ident">SemiExpanded</span>     <span class="op">=&gt;</span> <span class="number">6</span>,
-            <span class="ident">Width</span>::<span class="ident">Expanded</span>         <span class="op">=&gt;</span> <span class="number">7</span>,
-            <span class="ident">Width</span>::<span class="ident">ExtraExpanded</span>    <span class="op">=&gt;</span> <span class="number">8</span>,
-            <span class="ident">Width</span>::<span class="ident">UltraExpanded</span>    <span class="op">=&gt;</span> <span class="number">9</span>,
+            <span class="ident">Width</span>::<span class="ident">UltraCondensed</span>   <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+            <span class="ident">Width</span>::<span class="ident">ExtraCondensed</span>   <span class="op">=</span><span class="op">&gt;</span> <span class="number">2</span>,
+            <span class="ident">Width</span>::<span class="ident">Condensed</span>        <span class="op">=</span><span class="op">&gt;</span> <span class="number">3</span>,
+            <span class="ident">Width</span>::<span class="ident">SemiCondensed</span>    <span class="op">=</span><span class="op">&gt;</span> <span class="number">4</span>,
+            <span class="ident">Width</span>::<span class="ident">Normal</span>           <span class="op">=</span><span class="op">&gt;</span> <span class="number">5</span>,
+            <span class="ident">Width</span>::<span class="ident">SemiExpanded</span>     <span class="op">=</span><span class="op">&gt;</span> <span class="number">6</span>,
+            <span class="ident">Width</span>::<span class="ident">Expanded</span>         <span class="op">=</span><span class="op">&gt;</span> <span class="number">7</span>,
+            <span class="ident">Width</span>::<span class="ident">ExtraExpanded</span>    <span class="op">=</span><span class="op">&gt;</span> <span class="number">8</span>,
+            <span class="ident">Width</span>::<span class="ident">UltraExpanded</span>    <span class="op">=</span><span class="op">&gt;</span> <span class="number">9</span>,
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Width</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="ident">Width</span>::<span class="ident">Normal</span>
     }
 }
@@ -441,11 +443,11 @@
 <span class="kw">struct</span> <span class="ident">SelectionFlags</span>(<span class="ident">u16</span>);
 
 <span class="kw">impl</span> <span class="ident">SelectionFlags</span> {
-    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">italic</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">0</span>) <span class="op">!=</span> <span class="number">0</span> }
-    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">bold</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">5</span>) <span class="op">!=</span> <span class="number">0</span> }
-    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">regular</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">6</span>) <span class="op">!=</span> <span class="number">0</span> }
-    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">use_typo_metrics</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">7</span>) <span class="op">!=</span> <span class="number">0</span> }
-    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">oblique</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">9</span>) <span class="op">!=</span> <span class="number">0</span> }
+    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">italic</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">0</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> }
+    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">bold</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">5</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> }
+    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">regular</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> }
+    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">use_typo_metrics</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">7</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> }
+    <span class="attribute">#[<span class="ident">inline</span>]</span> <span class="kw">fn</span> <span class="ident">oblique</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> { <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">9</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span> }
 }
 
 
@@ -456,21 +458,21 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Table</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new</span>(<span class="ident">data</span>);
         <span class="kw">let</span> <span class="ident">version</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">read</span>()<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">table_len</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">version</span> {
-            <span class="number">0</span> <span class="op">=&gt;</span> <span class="number">78</span>,
-            <span class="number">1</span> <span class="op">=&gt;</span> <span class="number">86</span>,
-            <span class="number">2</span> <span class="op">=&gt;</span> <span class="number">96</span>,
-            <span class="number">3</span> <span class="op">=&gt;</span> <span class="number">96</span>,
-            <span class="number">4</span> <span class="op">=&gt;</span> <span class="number">96</span>,
-            <span class="number">5</span> <span class="op">=&gt;</span> <span class="number">100</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
+            <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">78</span>,
+            <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">86</span>,
+            <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">96</span>,
+            <span class="number">3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">96</span>,
+            <span class="number">4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">96</span>,
+            <span class="number">5</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">100</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
         };
 
-        <span class="kw">if</span> <span class="ident">data</span>.<span class="ident">len</span>() <span class="op">!=</span> <span class="ident">table_len</span> {
+        <span class="kw">if</span> <span class="ident">data</span>.<span class="ident">len</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">table_len</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
 
@@ -481,43 +483,43 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">weight</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Weight</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">weight</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Weight</span> {
         <span class="ident">Weight</span>::<span class="ident">from</span>(<span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">US_WEIGHT_CLASS_OFFSET</span>).<span class="ident">unwrap_or</span>(<span class="number">0</span>))
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Width</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">width</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Width</span> {
         <span class="kw">match</span> <span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">US_WIDTH_CLASS_OFFSET</span>).<span class="ident">unwrap_or</span>(<span class="number">0</span>) {
-            <span class="number">1</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">UltraCondensed</span>,
-            <span class="number">2</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">ExtraCondensed</span>,
-            <span class="number">3</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">Condensed</span>,
-            <span class="number">4</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">SemiCondensed</span>,
-            <span class="number">5</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">Normal</span>,
-            <span class="number">6</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">SemiExpanded</span>,
-            <span class="number">7</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">Expanded</span>,
-            <span class="number">8</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">ExtraExpanded</span>,
-            <span class="number">9</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">UltraExpanded</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="ident">Width</span>::<span class="ident">Normal</span>,
+            <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">UltraCondensed</span>,
+            <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">ExtraCondensed</span>,
+            <span class="number">3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">Condensed</span>,
+            <span class="number">4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">SemiCondensed</span>,
+            <span class="number">5</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">Normal</span>,
+            <span class="number">6</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">SemiExpanded</span>,
+            <span class="number">7</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">Expanded</span>,
+            <span class="number">8</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">ExtraExpanded</span>,
+            <span class="number">9</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">UltraExpanded</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Width</span>::<span class="ident">Normal</span>,
         }
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_regular</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_regular</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">SelectionFlags</span>(<span class="self">self</span>.<span class="ident">fs_selection</span>()).<span class="ident">regular</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_italic</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_italic</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">SelectionFlags</span>(<span class="self">self</span>.<span class="ident">fs_selection</span>()).<span class="ident">italic</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_bold</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_bold</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">SelectionFlags</span>(<span class="self">self</span>.<span class="ident">fs_selection</span>()).<span class="ident">bold</span>()
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_oblique</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_oblique</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">version</span> <span class="op">&lt;</span> <span class="number">4</span> {
             <span class="bool-val">false</span>
         } <span class="kw">else</span> {
@@ -526,7 +528,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_use_typo_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_use_typo_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">version</span> <span class="op">&lt;</span> <span class="number">4</span> {
             <span class="bool-val">false</span>
         } <span class="kw">else</span> {
@@ -535,7 +537,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">x_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">x_height</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">version</span> <span class="op">&lt;</span> <span class="number">2</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
@@ -545,7 +547,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikeout_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">LineMetrics</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">strikeout_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LineMetrics</span> {
         <span class="ident">LineMetrics</span> {
             <span class="ident">thickness</span>: <span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">Y_STRIKEOUT_SIZE_OFFSET</span>).<span class="ident">unwrap_or</span>(<span class="number">0</span>),
             <span class="ident">position</span>: <span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">Y_STRIKEOUT_POSITION_OFFSET</span>).<span class="ident">unwrap_or</span>(<span class="number">0</span>),
@@ -553,7 +555,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subscript_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ScriptMetrics</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">subscript_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ScriptMetrics</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">Y_SUBSCRIPT_X_SIZE_OFFSET</span>).<span class="ident">unwrap_or_default</span>();
         <span class="ident">ScriptMetrics</span> {
             <span class="ident">x_size</span>: <span class="ident">s</span>.<span class="ident">read</span>().<span class="ident">unwrap_or</span>(<span class="number">0</span>),
@@ -564,7 +566,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">superscript_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ScriptMetrics</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">superscript_metrics</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ScriptMetrics</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">Y_SUPERSCRIPT_X_SIZE_OFFSET</span>).<span class="ident">unwrap_or_default</span>();
         <span class="ident">ScriptMetrics</span> {
             <span class="ident">x_size</span>: <span class="ident">s</span>.<span class="ident">read</span>().<span class="ident">unwrap_or</span>(<span class="number">0</span>),
@@ -575,22 +577,22 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">typo_ascender</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i16</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">typo_ascender</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i16</span> {
         <span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">S_TYPO_ASCENDER_OFFSET</span>).<span class="ident">unwrap_or</span>(<span class="number">0</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">typo_descender</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i16</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">typo_descender</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i16</span> {
         <span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">S_TYPO_DESCENDER_OFFSET</span>).<span class="ident">unwrap_or</span>(<span class="number">0</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">typo_line_gap</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">i16</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">typo_line_gap</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i16</span> {
         <span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">S_TYPO_LINE_GAP_OFFSET</span>).<span class="ident">unwrap_or</span>(<span class="number">0</span>)
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">fs_selection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">u16</span> {
+    <span class="kw">fn</span> <span class="ident">fs_selection</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u16</span> {
         <span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">FS_SELECTION_OFFSET</span>).<span class="ident">unwrap_or</span>(<span class="number">0</span>)
     }
 }

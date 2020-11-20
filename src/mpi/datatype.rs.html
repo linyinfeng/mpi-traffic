@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mpi-0.5.4/src/datatype.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>datatype.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="shortcut icon" href="../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/mpi-0.5.4/src/datatype.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>datatype.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script src="../../storage.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../mpi/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
@@ -1141,7 +1143,7 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsRaw</span> <span class="kw">for</span> <span class="ident">DatatypeRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Datatype</span>;
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
         <span class="self">self</span>.<span class="ident">datatype</span>
     }
 }
@@ -1150,7 +1152,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DatatypeRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Wrap a raw handle.  The handle must remain valid for `&#39;a`.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">datatype</span>: <span class="ident">MPI_Datatype</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">datatype</span>: <span class="ident">MPI_Datatype</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">datatype</span>,
             <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
@@ -1174,14 +1176,14 @@
     <span class="doccomment">/// The type of the equivalent MPI datatype (e.g. `SystemDatatype` or `UserDatatype`)</span>
     <span class="kw">type</span> <span class="ident">Out</span>: <span class="ident">Datatype</span>;
     <span class="doccomment">/// The MPI datatype that is equivalent to this Rust type</span>
-    <span class="kw">fn</span> <span class="ident">equivalent_datatype</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span>;
+    <span class="kw">fn</span> <span class="ident">equivalent_datatype</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span>;
 }
 
 <span class="macro">macro_rules</span><span class="macro">!</span> <span class="ident">equivalent_system_datatype</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rstype</span>:<span class="ident">path</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">mpitype</span>:<span class="ident">path</span>) <span class="op">=&gt;</span> (
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">rstype</span>:<span class="ident">path</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">mpitype</span>:<span class="ident">path</span>) <span class="op">=</span><span class="op">&gt;</span> (
         <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">Equivalence</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">rstype</span> {
             <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="ident">SystemDatatype</span>;
-            <span class="kw">fn</span> <span class="ident">equivalent_datatype</span>() <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
+            <span class="kw">fn</span> <span class="ident">equivalent_datatype</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
                 <span class="kw">unsafe</span> { <span class="ident">DatatypeRef</span>::<span class="ident">from_raw</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">mpitype</span>) }
             }
         }
@@ -1229,7 +1231,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 4.1.2</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contiguous</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">count</span>: <span class="ident">Count</span>, <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">UserDatatype</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contiguous</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">count</span>: <span class="ident">Count</span>, <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserDatatype</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Datatype</span>,
     {
@@ -1250,7 +1252,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 4.1.2</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vector</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">count</span>: <span class="ident">Count</span>, <span class="ident">blocklength</span>: <span class="ident">Count</span>, <span class="ident">stride</span>: <span class="ident">Count</span>, <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">UserDatatype</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">vector</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">count</span>: <span class="ident">Count</span>, <span class="ident">blocklength</span>: <span class="ident">Count</span>, <span class="ident">stride</span>: <span class="ident">Count</span>, <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserDatatype</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Datatype</span>,
     {
@@ -1272,7 +1274,7 @@
         <span class="ident">blocklength</span>: <span class="ident">Count</span>,
         <span class="ident">stride</span>: <span class="ident">Address</span>,
         <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">UserDatatype</span>
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserDatatype</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Datatype</span>,
     {
@@ -1291,7 +1293,7 @@
     <span class="doccomment">/// # Standard section(s)</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// 4.1.2</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indexed</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">blocklengths</span>: <span class="kw-2">&amp;</span>[<span class="ident">Count</span>], <span class="ident">displacements</span>: <span class="kw-2">&amp;</span>[<span class="ident">Count</span>], <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">UserDatatype</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">indexed</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="ident">blocklengths</span>: <span class="kw-2">&amp;</span>[<span class="ident">Count</span>], <span class="ident">displacements</span>: <span class="kw-2">&amp;</span>[<span class="ident">Count</span>], <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserDatatype</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Datatype</span>,
     {
@@ -1321,7 +1323,7 @@
         <span class="ident">blocklengths</span>: <span class="kw-2">&amp;</span>[<span class="ident">Count</span>],
         <span class="ident">displacements</span>: <span class="kw-2">&amp;</span>[<span class="ident">Address</span>],
         <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">UserDatatype</span>
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserDatatype</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Datatype</span>,
     {
@@ -1349,7 +1351,7 @@
         <span class="ident">blocklength</span>: <span class="ident">Count</span>,
         <span class="ident">displacements</span>: <span class="kw-2">&amp;</span>[<span class="ident">Count</span>],
         <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">UserDatatype</span>
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserDatatype</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Datatype</span>,
     {
@@ -1377,7 +1379,7 @@
         <span class="ident">blocklength</span>: <span class="ident">Count</span>,
         <span class="ident">displacements</span>: <span class="kw-2">&amp;</span>[<span class="ident">Address</span>],
         <span class="ident">oldtype</span>: <span class="kw-2">&amp;</span><span class="ident">D</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">UserDatatype</span>
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserDatatype</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Datatype</span>,
     {
@@ -1408,9 +1410,9 @@
         <span class="ident">blocklengths</span>: <span class="kw-2">&amp;</span>[<span class="ident">Count</span>],
         <span class="ident">displacements</span>: <span class="kw-2">&amp;</span>[<span class="ident">Address</span>],
         <span class="ident">types</span>: <span class="kw-2">&amp;</span>[<span class="kw-2">&amp;</span><span class="ident">Datatype</span><span class="op">&lt;</span><span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Datatype</span><span class="op">&gt;</span>],
-    ) <span class="op">-&gt;</span> <span class="ident">UserDatatype</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UserDatatype</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">newtype</span>: <span class="ident">MPI_Datatype</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
-        <span class="kw">let</span> <span class="ident">types</span> <span class="op">=</span> <span class="ident">types</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">t</span>.<span class="ident">as_raw</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;&gt;</span>();
+        <span class="kw">let</span> <span class="ident">types</span> <span class="op">=</span> <span class="ident">types</span>.<span class="ident">iter</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">t</span><span class="op">|</span> <span class="ident">t</span>.<span class="ident">as_raw</span>()).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
         <span class="kw">unsafe</span> {
             <span class="ident">ffi</span>::<span class="ident">MPI_Type_create_struct</span>(
                 <span class="ident">count</span>,
@@ -1436,7 +1438,7 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span> <span class="ident">AsRaw</span> <span class="kw">for</span> <span class="ident">UserDatatype</span> {
     <span class="kw">type</span> <span class="ident">Raw</span> <span class="op">=</span> <span class="ident">MPI_Datatype</span>;
-    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
+    <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Raw</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 }
@@ -1456,7 +1458,7 @@
     <span class="doccomment">/// The type of the associated MPI datatype (e.g. `SystemDatatype` or `UserDatatype`)</span>
     <span class="kw">type</span> <span class="ident">Out</span>: <span class="ident">Datatype</span>;
     <span class="doccomment">/// The associated MPI datatype</span>
-    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span>;
+    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span>;
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">AsDatatype</span> <span class="kw">for</span> <span class="ident">T</span>
@@ -1464,7 +1466,7 @@
     <span class="ident">T</span>: <span class="ident">Equivalence</span>,
 {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Equivalence</span><span class="op">&gt;</span>::<span class="ident">Out</span>;
-    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Equivalence</span><span class="op">&gt;</span>::<span class="ident">equivalent_datatype</span>()
     }
 }
@@ -1474,7 +1476,7 @@
     <span class="ident">T</span>: <span class="ident">Equivalence</span>,
 {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Equivalence</span><span class="op">&gt;</span>::<span class="ident">Out</span>;
-    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="op">&lt;</span><span class="ident">T</span> <span class="kw">as</span> <span class="ident">Equivalence</span><span class="op">&gt;</span>::<span class="ident">equivalent_datatype</span>()
     }
 }
@@ -1482,14 +1484,14 @@
 <span class="doccomment">/// A countable collection of things.</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">Collection</span> {
     <span class="doccomment">/// How many things are in this collection.</span>
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Count</span>;
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Count</span>;
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Collection</span> <span class="kw">for</span> <span class="ident">T</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Equivalence</span>,
 {
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Count</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Count</span> {
         <span class="number">1</span>
     }
 }
@@ -1498,7 +1500,7 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Equivalence</span>,
 {
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Count</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Count</span> {
         <span class="self">self</span>.<span class="ident">len</span>()
             .<span class="ident">value_as</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;Length of slice cannot be expressed as an MPI Count.&quot;</span>)
@@ -1508,14 +1510,14 @@
 <span class="doccomment">/// Provides a pointer to the starting address in memory.</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">Pointer</span> {
     <span class="doccomment">/// A pointer to the starting address in memory</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>;
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Pointer</span> <span class="kw">for</span> <span class="ident">T</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Equivalence</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
         <span class="kw">let</span> <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span> <span class="op">=</span> <span class="self">self</span>;
         <span class="ident">p</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span>
     }
@@ -1525,7 +1527,7 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Equivalence</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
         <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>())
     }
 }
@@ -1533,14 +1535,14 @@
 <span class="doccomment">/// Provides a mutable pointer to the starting address in memory.</span>
 <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">trait</span> <span class="ident">PointerMut</span> {
     <span class="doccomment">/// A mutable pointer to the starting address in memory</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>;
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">PointerMut</span> <span class="kw">for</span> <span class="ident">T</span>
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Equivalence</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
         <span class="kw">let</span> <span class="ident">p</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span> <span class="op">=</span> <span class="self">self</span>;
         <span class="ident">p</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span>
     }
@@ -1550,7 +1552,7 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Equivalence</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
         <span class="ident">mem</span>::<span class="ident">transmute</span>(<span class="self">self</span>.<span class="ident">as_mut_ptr</span>())
     }
 }
@@ -1600,20 +1602,20 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">DynBuffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {}
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Collection</span> <span class="kw">for</span> <span class="ident">DynBuffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Count</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Count</span> {
         <span class="self">self</span>.<span class="ident">len</span>
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Pointer</span> <span class="kw">for</span> <span class="ident">DynBuffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">ptr</span>
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsDatatype</span> <span class="kw">for</span> <span class="ident">DynBuffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="ident">DatatypeRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>.<span class="ident">datatype</span>
     }
 }
@@ -1622,7 +1624,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DynBuffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a buffer from a slice with whose type has an MPI equivalent.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">T</span>]) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">T</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">datatype</span> <span class="op">=</span> <span class="ident">DatatypeRef</span>::<span class="ident">from_raw</span>(<span class="ident">T</span>::<span class="ident">equivalent_datatype</span>().<span class="ident">as_raw</span>());
             <span class="self">Self</span>::<span class="ident">from_raw</span>(<span class="ident">buf</span>.<span class="ident">as_ptr</span>(), <span class="ident">buf</span>.<span class="ident">count</span>(), <span class="ident">datatype</span>)
@@ -1630,12 +1632,12 @@
     }
 
     <span class="doccomment">/// Tests whether the buffer type matches `T`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">as_datatype</span>().<span class="ident">as_raw</span>() <span class="op">==</span> <span class="ident">T</span>::<span class="ident">equivalent_datatype</span>().<span class="ident">as_raw</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">as_datatype</span>().<span class="ident">as_raw</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">equivalent_datatype</span>().<span class="ident">as_raw</span>()
     }
 
     <span class="doccomment">/// Returns some slice if the type matches `T`, or `None` if it doesn&#39;t.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">downcast</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">T</span>]<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">downcast</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">T</span>]<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>() {
             <span class="kw">unsafe</span> { <span class="prelude-val">Some</span>(<span class="ident">slice</span>::<span class="ident">from_raw_parts</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw">_</span>, <span class="self">self</span>.<span class="ident">len</span>())) }
         } <span class="kw">else</span> {
@@ -1645,7 +1647,7 @@
 
     <span class="doccomment">/// Creates a buffer from its raw components.  The buffer must remain valid for `&#39;a` and the</span>
     <span class="doccomment">/// pointer must not be null.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>, <span class="ident">len</span>: <span class="ident">Count</span>, <span class="ident">datatype</span>: <span class="ident">DatatypeRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>, <span class="ident">len</span>: <span class="ident">Count</span>, <span class="ident">datatype</span>: <span class="ident">DatatypeRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">ptr</span>.<span class="ident">is_null</span>());
         <span class="self">Self</span> {
             <span class="ident">ptr</span>: <span class="ident">ptr</span> <span class="kw">as</span> <span class="kw">_</span>,
@@ -1655,19 +1657,19 @@
     }
 
     <span class="doccomment">/// Returns the number of elements in the buffer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">count</span>()
             .<span class="ident">value_as</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;Length of DynBuffer cannot be expressed as a usize&quot;</span>)
     }
 
     <span class="doccomment">/// Returns `true` if the buffer is empty</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
     }
 
     <span class="doccomment">/// Returns the underlying raw pointer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">ptr</span>
     }
 }
@@ -1689,19 +1691,19 @@
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Sync</span> <span class="kw">for</span> <span class="ident">DynBufferMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {}
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Collection</span> <span class="kw">for</span> <span class="ident">DynBufferMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Count</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Count</span> {
         <span class="self">self</span>.<span class="ident">len</span>
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Pointer</span> <span class="kw">for</span> <span class="ident">DynBufferMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">ptr</span>
     }
 }
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">PointerMut</span> <span class="kw">for</span> <span class="ident">DynBufferMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">ptr</span>
     }
 }
@@ -1712,14 +1714,14 @@
 
 <span class="kw">unsafe</span> <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">AsDatatype</span> <span class="kw">for</span> <span class="ident">DynBufferMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="ident">DatatypeRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
-    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>.<span class="ident">datatype</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">DynBufferMut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Creates a mutable buffer from a mutable slice with whose type has an MPI equivalent.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">T</span>]) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">T</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> {
             <span class="kw">let</span> <span class="ident">datatype</span> <span class="op">=</span> <span class="ident">DatatypeRef</span>::<span class="ident">from_raw</span>(<span class="ident">T</span>::<span class="ident">equivalent_datatype</span>().<span class="ident">as_raw</span>());
             <span class="self">Self</span>::<span class="ident">from_raw</span>(<span class="ident">buf</span>.<span class="ident">as_mut_ptr</span>(), <span class="ident">buf</span>.<span class="ident">count</span>(), <span class="ident">datatype</span>)
@@ -1727,12 +1729,12 @@
     }
 
     <span class="doccomment">/// Tests whether the buffer type matches `T`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">as_datatype</span>().<span class="ident">as_raw</span>() <span class="op">==</span> <span class="ident">T</span>::<span class="ident">equivalent_datatype</span>().<span class="ident">as_raw</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">as_datatype</span>().<span class="ident">as_raw</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">T</span>::<span class="ident">equivalent_datatype</span>().<span class="ident">as_raw</span>()
     }
 
     <span class="doccomment">/// Returns some mutable slice if the type matches `T`, or `None` if it doesn&#39;t.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">downcast</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">T</span>]<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">downcast</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Equivalence</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> [<span class="ident">T</span>]<span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>() {
             <span class="kw">unsafe</span> {
                 <span class="prelude-val">Some</span>(<span class="ident">slice</span>::<span class="ident">from_raw_parts_mut</span>(
@@ -1747,7 +1749,7 @@
 
     <span class="doccomment">/// Creates a buffer from its raw components.  The buffer must remain valid for `&#39;a` and the</span>
     <span class="doccomment">/// pointer must not be null.</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">len</span>: <span class="ident">Count</span>, <span class="ident">datatype</span>: <span class="ident">DatatypeRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>, <span class="ident">len</span>: <span class="ident">Count</span>, <span class="ident">datatype</span>: <span class="ident">DatatypeRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="macro">debug_assert</span><span class="macro">!</span>(<span class="op">!</span><span class="ident">ptr</span>.<span class="ident">is_null</span>());
         <span class="self">Self</span> {
             <span class="ident">ptr</span>: <span class="ident">ptr</span> <span class="kw">as</span> <span class="kw">_</span>,
@@ -1757,39 +1759,39 @@
     }
 
     <span class="doccomment">/// Returns the number of elements in the buffer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">count</span>()
             .<span class="ident">value_as</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;Length of DynBufferMut cannot be expressed as a usize&quot;</span>)
     }
 
     <span class="doccomment">/// Returns `true` if the buffer is empty</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">0</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
     }
 
     <span class="doccomment">/// Returns the underlying raw pointer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">ptr</span>
     }
 
     <span class="doccomment">/// Returns the underlying raw pointer.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_mut_ptr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_mut_ptr</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">ptr</span>
     }
 
     <span class="doccomment">/// Reborrows the buffer with a shorter lifetime.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reborrow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DynBuffer</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reborrow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DynBuffer</span> {
         <span class="kw">unsafe</span> { <span class="ident">DynBuffer</span>::<span class="ident">from_raw</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="self">self</span>.<span class="ident">count</span>(), <span class="self">self</span>.<span class="ident">as_datatype</span>()) }
     }
 
     <span class="doccomment">/// Reborrows the buffer mutably with a shorter lifetime.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reborrow_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DynBufferMut</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reborrow_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DynBufferMut</span> {
         <span class="kw">unsafe</span> { <span class="ident">DynBufferMut</span>::<span class="ident">from_raw</span>(<span class="self">self</span>.<span class="ident">as_mut_ptr</span>(), <span class="self">self</span>.<span class="ident">count</span>(), <span class="self">self</span>.<span class="ident">as_datatype</span>()) }
     }
 
     <span class="doccomment">/// Makes the buffer immutable.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">downgrade</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">DynBuffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">downgrade</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">DynBuffer</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">DynBuffer</span>::<span class="ident">from_raw</span>(<span class="self">self</span>.<span class="ident">as_ptr</span>(), <span class="self">self</span>.<span class="ident">count</span>(), <span class="self">self</span>.<span class="ident">as_datatype</span>()) }
     }
 }
@@ -1824,7 +1826,7 @@
         <span class="ident">buffer</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="ident">B</span>,
         <span class="ident">count</span>: <span class="ident">Count</span>,
         <span class="ident">datatype</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;d</span> <span class="ident">D</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">View</span><span class="op">&lt;</span><span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;b</span>, <span class="ident">D</span>, <span class="ident">B</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">View</span><span class="op">&lt;</span><span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;b</span>, <span class="ident">D</span>, <span class="ident">B</span><span class="op">&gt;</span> {
         <span class="ident">View</span> {
             <span class="ident">datatype</span>,
             <span class="ident">count</span>,
@@ -1839,7 +1841,7 @@
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">Pointer</span>,
 {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;d</span> <span class="ident">D</span>;
-    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>.<span class="ident">datatype</span>
     }
 }
@@ -1849,7 +1851,7 @@
     <span class="ident">D</span>: <span class="lifetime">&#39;d</span> <span class="op">+</span> <span class="ident">Datatype</span>,
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">Pointer</span>,
 {
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Count</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Count</span> {
         <span class="self">self</span>.<span class="ident">count</span>
     }
 }
@@ -1859,7 +1861,7 @@
     <span class="ident">D</span>: <span class="lifetime">&#39;d</span> <span class="op">+</span> <span class="ident">Datatype</span>,
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">Pointer</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">pointer</span>()
     }
 }
@@ -1901,7 +1903,7 @@
         <span class="ident">buffer</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;b</span> <span class="kw-2">mut</span> <span class="ident">B</span>,
         <span class="ident">count</span>: <span class="ident">Count</span>,
         <span class="ident">datatype</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;d</span> <span class="ident">D</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">MutView</span><span class="op">&lt;</span><span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;b</span>, <span class="ident">D</span>, <span class="ident">B</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MutView</span><span class="op">&lt;</span><span class="lifetime">&#39;d</span>, <span class="lifetime">&#39;b</span>, <span class="ident">D</span>, <span class="ident">B</span><span class="op">&gt;</span> {
         <span class="ident">MutView</span> {
             <span class="ident">datatype</span>,
             <span class="ident">count</span>,
@@ -1916,7 +1918,7 @@
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">PointerMut</span>,
 {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;d</span> <span class="ident">D</span>;
-    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>.<span class="ident">datatype</span>
     }
 }
@@ -1926,7 +1928,7 @@
     <span class="ident">D</span>: <span class="lifetime">&#39;d</span> <span class="op">+</span> <span class="ident">Datatype</span>,
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">PointerMut</span>,
 {
-    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Count</span> {
+    <span class="kw">fn</span> <span class="ident">count</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Count</span> {
         <span class="self">self</span>.<span class="ident">count</span>
     }
 }
@@ -1936,7 +1938,7 @@
     <span class="ident">D</span>: <span class="lifetime">&#39;d</span> <span class="op">+</span> <span class="ident">Datatype</span>,
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">PointerMut</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">buffer</span>.<span class="ident">pointer_mut</span>()
     }
 }
@@ -1952,16 +1954,16 @@
 <span class="doccomment">/// from the start of the buffer for each partition.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Partitioned</span> {
     <span class="doccomment">/// The count of elements in each partition.</span>
-    <span class="kw">fn</span> <span class="ident">counts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>];
+    <span class="kw">fn</span> <span class="ident">counts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>];
     <span class="doccomment">/// The displacement from the start of the buffer for each partition.</span>
-    <span class="kw">fn</span> <span class="ident">displs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>];
+    <span class="kw">fn</span> <span class="ident">displs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>];
 
     <span class="doccomment">/// A pointer to `counts()`</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">counts_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Count</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">counts_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Count</span> {
         <span class="self">self</span>.<span class="ident">counts</span>().<span class="ident">as_ptr</span>()
     }
     <span class="doccomment">/// A pointer to `displs()`</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">displs_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Count</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">displs_ptr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Count</span> {
         <span class="self">self</span>.<span class="ident">displs</span>().<span class="ident">as_ptr</span>()
     }
 }
@@ -1986,14 +1988,14 @@
     <span class="ident">D</span>: <span class="ident">Borrow</span><span class="op">&lt;</span>[<span class="ident">Count</span>]<span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Partition `buf` using `counts` and `displs`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>, <span class="ident">counts</span>: <span class="ident">C</span>, <span class="ident">displs</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">Partition</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="ident">B</span>, <span class="ident">counts</span>: <span class="ident">C</span>, <span class="ident">displs</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Partition</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">count</span>();
         <span class="macro">assert</span><span class="macro">!</span>(
             <span class="ident">counts</span>
                 .<span class="ident">borrow</span>()
                 .<span class="ident">iter</span>()
                 .<span class="ident">zip</span>(<span class="ident">displs</span>.<span class="ident">borrow</span>().<span class="ident">iter</span>())
-                .<span class="ident">all</span>(<span class="op">|</span>(<span class="kw-2">&amp;</span><span class="ident">c</span>, <span class="kw-2">&amp;</span><span class="ident">d</span>)<span class="op">|</span> <span class="ident">c</span> <span class="op">+</span> <span class="ident">d</span> <span class="op">&lt;=</span> <span class="ident">n</span>)
+                .<span class="ident">all</span>(<span class="op">|</span>(<span class="kw-2">&amp;</span><span class="ident">c</span>, <span class="kw-2">&amp;</span><span class="ident">d</span>)<span class="op">|</span> <span class="ident">c</span> <span class="op">+</span> <span class="ident">d</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">n</span>)
         );
 
         <span class="ident">Partition</span> {
@@ -2009,7 +2011,7 @@
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">AsDatatype</span>,
 {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">B</span> <span class="kw">as</span> <span class="ident">AsDatatype</span><span class="op">&gt;</span>::<span class="ident">Out</span>;
-    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">as_datatype</span>()
     }
 }
@@ -2018,7 +2020,7 @@
 <span class="kw">where</span>
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">Pointer</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">pointer</span>()
     }
 }
@@ -2029,10 +2031,10 @@
     <span class="ident">C</span>: <span class="ident">Borrow</span><span class="op">&lt;</span>[<span class="ident">Count</span>]<span class="op">&gt;</span>,
     <span class="ident">D</span>: <span class="ident">Borrow</span><span class="op">&lt;</span>[<span class="ident">Count</span>]<span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">counts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>] {
+    <span class="kw">fn</span> <span class="ident">counts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>] {
         <span class="self">self</span>.<span class="ident">counts</span>.<span class="ident">borrow</span>()
     }
-    <span class="kw">fn</span> <span class="ident">displs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>] {
+    <span class="kw">fn</span> <span class="ident">displs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>] {
         <span class="self">self</span>.<span class="ident">displs</span>.<span class="ident">borrow</span>()
     }
 }
@@ -2059,14 +2061,14 @@
     <span class="ident">D</span>: <span class="ident">Borrow</span><span class="op">&lt;</span>[<span class="ident">Count</span>]<span class="op">&gt;</span>,
 {
     <span class="doccomment">/// Partition `buf` using `counts` and `displs`</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">B</span>, <span class="ident">counts</span>: <span class="ident">C</span>, <span class="ident">displs</span>: <span class="ident">D</span>) <span class="op">-&gt;</span> <span class="ident">PartitionMut</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">buf</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">B</span>, <span class="ident">counts</span>: <span class="ident">C</span>, <span class="ident">displs</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PartitionMut</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">C</span>, <span class="ident">D</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">count</span>();
         <span class="macro">assert</span><span class="macro">!</span>(
             <span class="ident">counts</span>
                 .<span class="ident">borrow</span>()
                 .<span class="ident">iter</span>()
                 .<span class="ident">zip</span>(<span class="ident">displs</span>.<span class="ident">borrow</span>().<span class="ident">iter</span>())
-                .<span class="ident">all</span>(<span class="op">|</span>(<span class="kw-2">&amp;</span><span class="ident">c</span>, <span class="kw-2">&amp;</span><span class="ident">d</span>)<span class="op">|</span> <span class="ident">c</span> <span class="op">+</span> <span class="ident">d</span> <span class="op">&lt;=</span> <span class="ident">n</span>)
+                .<span class="ident">all</span>(<span class="op">|</span>(<span class="kw-2">&amp;</span><span class="ident">c</span>, <span class="kw-2">&amp;</span><span class="ident">d</span>)<span class="op">|</span> <span class="ident">c</span> <span class="op">+</span> <span class="ident">d</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">n</span>)
         );
 
         <span class="ident">PartitionMut</span> {
@@ -2082,7 +2084,7 @@
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">AsDatatype</span>,
 {
     <span class="kw">type</span> <span class="ident">Out</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">B</span> <span class="kw">as</span> <span class="ident">AsDatatype</span><span class="op">&gt;</span>::<span class="ident">Out</span>;
-    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
+    <span class="kw">fn</span> <span class="ident">as_datatype</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>::<span class="ident">Out</span> {
         <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">as_datatype</span>()
     }
 }
@@ -2091,7 +2093,7 @@
 <span class="kw">where</span>
     <span class="ident">B</span>: <span class="lifetime">&#39;b</span> <span class="op">+</span> <span class="ident">PointerMut</span>,
 {
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">pointer_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">c_void</span> {
         <span class="self">self</span>.<span class="ident">buf</span>.<span class="ident">pointer_mut</span>()
     }
 }
@@ -2102,10 +2104,10 @@
     <span class="ident">C</span>: <span class="ident">Borrow</span><span class="op">&lt;</span>[<span class="ident">Count</span>]<span class="op">&gt;</span>,
     <span class="ident">D</span>: <span class="ident">Borrow</span><span class="op">&lt;</span>[<span class="ident">Count</span>]<span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">counts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>] {
+    <span class="kw">fn</span> <span class="ident">counts</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>] {
         <span class="self">self</span>.<span class="ident">counts</span>.<span class="ident">borrow</span>()
     }
-    <span class="kw">fn</span> <span class="ident">displs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>] {
+    <span class="kw">fn</span> <span class="ident">displs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">Count</span>] {
         <span class="self">self</span>.<span class="ident">displs</span>.<span class="ident">borrow</span>()
     }
 }
@@ -2126,7 +2128,7 @@
 <span class="doccomment">/// # Standard section(s)</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// 4.1.5</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">address_of</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-&gt;</span> <span class="ident">Address</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">address_of</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">x</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Address</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">address</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">mem</span>::<span class="ident">uninitialized</span>() };
     <span class="kw">let</span> <span class="ident">x</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span> <span class="op">=</span> <span class="ident">x</span>;
     <span class="kw">unsafe</span> {

@@ -1,4 +1,6 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/ttf-parser-0.6.2/src/tables/kern.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>kern.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ttf_parser/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/ttf-parser-0.6.2/src/tables/kern.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>kern.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../ttf_parser/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><span class="help-button">?</span>
                 <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
@@ -598,13 +600,13 @@ But we still try to keep the API as high-level as possible.
 
 <span class="kw">impl</span> <span class="ident">OTCoverage</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_horizontal</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">0</span>) <span class="op">!=</span> <span class="number">0</span>
+    <span class="kw">fn</span> <span class="ident">is_horizontal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">0</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">has_cross_stream</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">2</span>) <span class="op">!=</span> <span class="number">0</span>
+    <span class="kw">fn</span> <span class="ident">has_cross_stream</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">2</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
     }
 }
 
@@ -612,7 +614,7 @@ But we still try to keep the API as high-level as possible.
     <span class="kw">const</span> <span class="ident">SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">data</span>.<span class="ident">get</span>(<span class="number">0</span>).<span class="ident">copied</span>().<span class="ident">map</span>(<span class="ident">OTCoverage</span>)
     }
 }
@@ -623,18 +625,18 @@ But we still try to keep the API as high-level as possible.
 
 <span class="kw">impl</span> <span class="ident">AATCoverage</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_horizontal</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">7</span>) <span class="op">==</span> <span class="number">0</span>
+    <span class="kw">fn</span> <span class="ident">is_horizontal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">7</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">has_cross_stream</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">6</span>) <span class="op">!=</span> <span class="number">0</span>
+    <span class="kw">fn</span> <span class="ident">has_cross_stream</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">6</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">is_variable</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;&lt;</span> <span class="number">5</span>) <span class="op">!=</span> <span class="number">0</span>
+    <span class="kw">fn</span> <span class="ident">is_variable</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="number">0</span> <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">5</span>) <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
     }
 }
 
@@ -642,7 +644,7 @@ But we still try to keep the API as high-level as possible.
     <span class="kw">const</span> <span class="ident">SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">data</span>.<span class="ident">get</span>(<span class="number">0</span>).<span class="ident">copied</span>().<span class="ident">map</span>(<span class="ident">AATCoverage</span>)
     }
 }
@@ -660,7 +662,7 @@ But we still try to keep the API as high-level as possible.
     <span class="kw">const</span> <span class="ident">SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">6</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new</span>(<span class="ident">data</span>);
         <span class="prelude-val">Some</span>(<span class="ident">KerningRecord</span> {
             <span class="ident">pair</span>: <span class="ident">s</span>.<span class="ident">read</span>()<span class="question-mark">?</span>,
@@ -686,19 +688,19 @@ But we still try to keep the API as high-level as possible.
 
     <span class="doccomment">/// Checks that subtable is for horizontal text.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_horizontal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_horizontal</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">is_horizontal</span>
     }
 
     <span class="doccomment">/// Checks that subtable is variable.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_variable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_variable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">is_variable</span>
     }
 
     <span class="doccomment">/// Checks that subtable has a cross-stream values.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_cross_stream</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_cross_stream</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">has_cross_stream</span>
     }
 
@@ -707,26 +709,26 @@ But we still try to keep the API as high-level as possible.
     <span class="doccomment">/// In this case `glyphs_kerning()` will return `None` and you have to use</span>
     <span class="doccomment">/// `state_machine()` instead.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_state_machine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">format</span> <span class="op">==</span> <span class="number">1</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_state_machine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">format</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>
     }
 
     <span class="doccomment">/// Returns kerning for a pair of glyphs.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Returns `None` in case of state machine based subtable.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">glyphs_kerning</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">left</span>: <span class="ident">GlyphId</span>, <span class="ident">right</span>: <span class="ident">GlyphId</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">glyphs_kerning</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">left</span>: <span class="ident">GlyphId</span>, <span class="ident">right</span>: <span class="ident">GlyphId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">format</span> {
-            <span class="number">0</span> <span class="op">=&gt;</span> <span class="ident">parse_format0</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">left</span>, <span class="ident">right</span>),
-            <span class="number">2</span> <span class="op">=&gt;</span> <span class="ident">parse_format2</span>(<span class="ident">left</span>, <span class="ident">right</span>, <span class="self">self</span>.<span class="ident">header_size</span>, <span class="self">self</span>.<span class="ident">data</span>),
-            <span class="number">3</span> <span class="op">=&gt;</span> <span class="ident">parse_format3</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">left</span>, <span class="ident">right</span>),
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+            <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">parse_format0</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">left</span>, <span class="ident">right</span>),
+            <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">parse_format2</span>(<span class="ident">left</span>, <span class="ident">right</span>, <span class="self">self</span>.<span class="ident">header_size</span>, <span class="self">self</span>.<span class="ident">data</span>),
+            <span class="number">3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">parse_format3</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">left</span>, <span class="ident">right</span>),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
         }
     }
 
     <span class="doccomment">/// Returns subtable&#39;s state machine if there is one.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">state_machine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">state_machine</span>::<span class="ident">Machine</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">state_machine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">state_machine</span>::<span class="ident">Machine</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">has_state_machine</span>() {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
@@ -736,7 +738,7 @@ But we still try to keep the API as high-level as possible.
 }
 
 <span class="kw">impl</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Subtable</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
         <span class="comment">// TODO: finish_non_exhaustive</span>
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Subtable&quot;</span>)
             .<span class="ident">field</span>(<span class="string">&quot;is_horizontal&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">is_horizontal</span>())
@@ -765,8 +767,8 @@ But we still try to keep the API as high-level as possible.
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">Subtables</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">Subtable</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">table_index</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">number_of_tables</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span>::<span class="ident">Item</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">table_index</span> <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">number_of_tables</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
 
@@ -807,12 +809,12 @@ But we still try to keep the API as high-level as possible.
             <span class="kw">let</span> <span class="ident">format</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">stream</span>.<span class="ident">read</span>()<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">coverage</span>: <span class="ident">OTCoverage</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">stream</span>.<span class="ident">read</span>()<span class="question-mark">?</span>;
 
-            <span class="kw">if</span> <span class="ident">format</span> <span class="op">!=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">format</span> <span class="op">!=</span> <span class="number">2</span> {
+            <span class="kw">if</span> <span class="ident">format</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">format</span> <span class="op">!</span><span class="op">=</span> <span class="number">2</span> {
                 <span class="comment">// Unknown format.</span>
                 <span class="kw">return</span> <span class="prelude-val">None</span>;
             }
 
-            <span class="kw">let</span> <span class="ident">data_len</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">number_of_tables</span> <span class="op">==</span> <span class="number">1</span> {
+            <span class="kw">let</span> <span class="ident">data_len</span> <span class="op">=</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">number_of_tables</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
                 <span class="comment">// An OpenType `kern` table with just one subtable is a special case.</span>
                 <span class="comment">// The `table_len` property is mainly required to jump to the next subtable,</span>
                 <span class="comment">// but if there is only one subtable, this property can be ignored.</span>
@@ -835,7 +837,7 @@ But we still try to keep the API as high-level as possible.
     }
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Subtables</span><span class="op">&gt;</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Subtables</span><span class="op">&gt;</span> {
     <span class="comment">// The `kern` table has two variants: OpenType one and Apple one.</span>
     <span class="comment">// And they both have different headers.</span>
     <span class="comment">// There are no robust way to distinguish them, so we have to guess.</span>
@@ -846,7 +848,7 @@ But we still try to keep the API as high-level as possible.
     <span class="comment">// and 0x0001 in case of an Apple format.</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new</span>(<span class="ident">data</span>);
     <span class="kw">let</span> <span class="ident">version</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">read</span>()<span class="question-mark">?</span>;
-    <span class="kw">if</span> <span class="ident">version</span> <span class="op">==</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">version</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
         <span class="kw">let</span> <span class="ident">number_of_tables</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">read</span>()<span class="question-mark">?</span>;
         <span class="prelude-val">Some</span>(<span class="ident">Subtables</span> {
             <span class="ident">is_aat</span>: <span class="bool-val">false</span>,
@@ -869,19 +871,19 @@ But we still try to keep the API as high-level as possible.
 
 <span class="doccomment">/// A *Format 0 Kerning Subtable (Ordered List of Kerning Pairs)* implementation</span>
 <span class="doccomment">/// from https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6kern.html</span>
-<span class="kw">fn</span> <span class="ident">parse_format0</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">left</span>: <span class="ident">GlyphId</span>, <span class="ident">right</span>: <span class="ident">GlyphId</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">parse_format0</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">left</span>: <span class="ident">GlyphId</span>, <span class="ident">right</span>: <span class="ident">GlyphId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new</span>(<span class="ident">data</span>);
     <span class="kw">let</span> <span class="ident">number_of_pairs</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">read</span>()<span class="question-mark">?</span>;
     <span class="ident">s</span>.<span class="ident">advance</span>(<span class="number">6</span>); <span class="comment">// search_range (u16) + entry_selector (u16) + range_shift (u16)</span>
     <span class="kw">let</span> <span class="ident">pairs</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">read_array16</span>::<span class="op">&lt;</span><span class="ident">KerningRecord</span><span class="op">&gt;</span>(<span class="ident">number_of_pairs</span>)<span class="question-mark">?</span>;
 
-    <span class="kw">let</span> <span class="ident">needle</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">left</span>.<span class="number">0</span>) <span class="op">&lt;&lt;</span> <span class="number">16</span> <span class="op">|</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">right</span>.<span class="number">0</span>);
+    <span class="kw">let</span> <span class="ident">needle</span> <span class="op">=</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">left</span>.<span class="number">0</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">16</span> <span class="op">|</span> <span class="ident">u32</span>::<span class="ident">from</span>(<span class="ident">right</span>.<span class="number">0</span>);
     <span class="ident">pairs</span>.<span class="ident">binary_search_by</span>(<span class="op">|</span><span class="ident">v</span><span class="op">|</span> <span class="ident">v</span>.<span class="ident">pair</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">needle</span>)).<span class="ident">map</span>(<span class="op">|</span>(<span class="kw">_</span>, <span class="ident">v</span>)<span class="op">|</span> <span class="ident">v</span>.<span class="ident">value</span>)
 }
 
 <span class="doccomment">/// A *Format 2 Kerning Table (Simple n x m Array of Kerning Values)* implementation</span>
 <span class="doccomment">/// from https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6kern.html</span>
-<span class="kw">fn</span> <span class="ident">parse_format2</span>(<span class="ident">left</span>: <span class="ident">GlyphId</span>, <span class="ident">right</span>: <span class="ident">GlyphId</span>, <span class="ident">header_len</span>: <span class="ident">u8</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">parse_format2</span>(<span class="ident">left</span>: <span class="ident">GlyphId</span>, <span class="ident">right</span>: <span class="ident">GlyphId</span>, <span class="ident">header_len</span>: <span class="ident">u8</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new</span>(<span class="ident">data</span>);
     <span class="ident">s</span>.<span class="ident">skip</span>::<span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>(); <span class="comment">// row_width</span>
 
@@ -910,7 +912,7 @@ But we still try to keep the API as high-level as possible.
     <span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="ident">data</span>, <span class="ident">value_offset</span>)
 }
 
-<span class="kw">fn</span> <span class="ident">get_format2_class</span>(<span class="ident">glyph_id</span>: <span class="ident">u16</span>, <span class="ident">offset</span>: <span class="ident">usize</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">get_format2_class</span>(<span class="ident">glyph_id</span>: <span class="ident">u16</span>, <span class="ident">offset</span>: <span class="ident">usize</span>, <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new_at</span>(<span class="ident">data</span>, <span class="ident">offset</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">first_glyph</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">read</span>()<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">glyph_id</span>.<span class="ident">checked_sub</span>(<span class="ident">first_glyph</span>)<span class="question-mark">?</span>;
@@ -922,7 +924,7 @@ But we still try to keep the API as high-level as possible.
 
 <span class="doccomment">/// A *Format 3 Kerning Table (Simple n x m Array of Kerning Indices)* implementation</span>
 <span class="doccomment">/// from https://developer.apple.com/fonts/TrueType-Reference-Manual/RM06/Chap6kern.html</span>
-<span class="kw">fn</span> <span class="ident">parse_format3</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">left</span>: <span class="ident">GlyphId</span>, <span class="ident">right</span>: <span class="ident">GlyphId</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">parse_format3</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">left</span>: <span class="ident">GlyphId</span>, <span class="ident">right</span>: <span class="ident">GlyphId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new</span>(<span class="ident">data</span>);
     <span class="kw">let</span> <span class="ident">glyph_count</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">read</span>()<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">kerning_values_count</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">read</span>()<span class="question-mark">?</span>;
@@ -939,7 +941,7 @@ But we still try to keep the API as high-level as possible.
     <span class="kw">let</span> <span class="ident">left_class</span> <span class="op">=</span> <span class="ident">left_hand_classes</span>.<span class="ident">get</span>(<span class="ident">left</span>.<span class="number">0</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">right_class</span> <span class="op">=</span> <span class="ident">right_hand_classes</span>.<span class="ident">get</span>(<span class="ident">right</span>.<span class="number">0</span>)<span class="question-mark">?</span>;
 
-    <span class="kw">if</span> <span class="ident">left_class</span> <span class="op">&gt;</span> <span class="ident">left_hand_classes_count</span> <span class="op">||</span> <span class="ident">right_class</span> <span class="op">&gt;</span> <span class="ident">right_hand_classes_count</span> {
+    <span class="kw">if</span> <span class="ident">left_class</span> <span class="op">&gt;</span> <span class="ident">left_hand_classes_count</span> <span class="op">|</span><span class="op">|</span> <span class="ident">right_class</span> <span class="op">&gt;</span> <span class="ident">right_hand_classes_count</span> {
         <span class="kw">return</span> <span class="prelude-val">None</span>;
     }
 
@@ -992,7 +994,7 @@ But we still try to keep the API as high-level as possible.
         <span class="doccomment">///</span>
         <span class="doccomment">/// After reaching u16::MAX will start from 0.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next</span>(<span class="self">self</span>) <span class="op">-&gt;</span> <span class="self">Self</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">next</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
             <span class="ident">ValueOffset</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">wrapping_add</span>(<span class="ident">u16</span>::<span class="ident">SIZE</span> <span class="kw">as</span> <span class="ident">u16</span>))
         }
     }
@@ -1008,32 +1010,32 @@ But we still try to keep the API as high-level as possible.
     <span class="kw">impl</span> <span class="ident">Entry</span> {
         <span class="doccomment">/// Returns a new state.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">State</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">State</span> {
             <span class="ident">State</span>(<span class="self">self</span>.<span class="ident">new_state</span>)
         }
 
         <span class="doccomment">/// Checks that entry has an offset.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-            <span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="number">0x3FFF</span> <span class="op">!=</span> <span class="number">0</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="number">0x3FFF</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
         }
 
         <span class="doccomment">/// Returns a value offset.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value_offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">ValueOffset</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">value_offset</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ValueOffset</span> {
             <span class="ident">ValueOffset</span>(<span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="number">0x3FFF</span>)
         }
 
         <span class="doccomment">/// If set, push this glyph on the kerning stack.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_push</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-            <span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="number">0x8000</span> <span class="op">!=</span> <span class="number">0</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_push</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="number">0x8000</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>
         }
 
         <span class="doccomment">/// If set, advance to the next glyph before going to the new state.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_advance</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-            <span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="number">0x4000</span> <span class="op">==</span> <span class="number">0</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">has_advance</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="number">0x4000</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
         }
     }
 
@@ -1041,7 +1043,7 @@ But we still try to keep the API as high-level as possible.
         <span class="kw">const</span> <span class="ident">SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">4</span>;
 
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new</span>(<span class="ident">data</span>);
             <span class="prelude-val">Some</span>(<span class="ident">Entry</span> {
                 <span class="ident">new_state</span>: <span class="ident">s</span>.<span class="ident">read</span>()<span class="question-mark">?</span>,
@@ -1063,7 +1065,7 @@ But we still try to keep the API as high-level as possible.
     }
 
     <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Machine</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
-        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">data</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Stream</span>::<span class="ident">new</span>(<span class="ident">data</span>);
 
             <span class="kw">let</span> <span class="ident">number_of_classes</span>: <span class="ident">u16</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">read</span>::<span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
@@ -1101,8 +1103,8 @@ But we still try to keep the API as high-level as possible.
 
         <span class="doccomment">/// Returns a glyph class.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glyph_id</span>: <span class="ident">GlyphId</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
-            <span class="kw">if</span> <span class="ident">glyph_id</span>.<span class="number">0</span> <span class="op">==</span> <span class="number">0xFFFF</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">class</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">glyph_id</span>: <span class="ident">GlyphId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+            <span class="kw">if</span> <span class="ident">glyph_id</span>.<span class="number">0</span> <span class="op">=</span><span class="op">=</span> <span class="number">0xFFFF</span> {
                 <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">class</span>::<span class="ident">DELETED_GLYPH</span>);
             }
 
@@ -1112,8 +1114,8 @@ But we still try to keep the API as high-level as possible.
 
         <span class="doccomment">/// Returns a class entry.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">entry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="ident">State</span>, <span class="kw-2">mut</span> <span class="ident">class</span>: <span class="ident">u8</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
-            <span class="kw">if</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">class</span>) <span class="op">&gt;=</span> <span class="self">self</span>.<span class="ident">number_of_classes</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">entry</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="ident">State</span>, <span class="kw-2">mut</span> <span class="ident">class</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Entry</span><span class="op">&gt;</span> {
+            <span class="kw">if</span> <span class="ident">u16</span>::<span class="ident">from</span>(<span class="ident">class</span>) <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">number_of_classes</span> {
                 <span class="ident">class</span> <span class="op">=</span> <span class="ident">class</span>::<span class="ident">OUT_OF_BOUNDS</span>;
             }
 
@@ -1126,13 +1128,13 @@ But we still try to keep the API as high-level as possible.
 
         <span class="doccomment">/// Returns kerning at offset.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">kerning</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">offset</span>: <span class="ident">ValueOffset</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">kerning</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">offset</span>: <span class="ident">ValueOffset</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i16</span><span class="op">&gt;</span> {
             <span class="ident">Stream</span>::<span class="ident">read_at</span>(<span class="self">self</span>.<span class="ident">actions</span>, <span class="ident">usize</span>::<span class="ident">from</span>(<span class="ident">offset</span>.<span class="number">0</span>))
         }
 
         <span class="doccomment">/// Produces a new state.</span>
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="ident">State</span>) <span class="op">-&gt;</span> <span class="ident">State</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_state</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="ident">State</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">State</span> {
             <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> (<span class="ident">i32</span>::<span class="ident">from</span>(<span class="ident">state</span>.<span class="number">0</span>) <span class="op">-</span> <span class="ident">i32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">state_array_offset</span>))
                         <span class="op">/</span> <span class="ident">i32</span>::<span class="ident">from</span>(<span class="self">self</span>.<span class="ident">number_of_classes</span>);
 
@@ -1143,7 +1145,7 @@ But we still try to keep the API as high-level as possible.
 
     <span class="kw">impl</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">Machine</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
+        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="ident">Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">core</span>::<span class="ident">fmt</span>::<span class="prelude-ty">Result</span> {
             <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;Machine(...)&quot;</span>)
         }
     }
