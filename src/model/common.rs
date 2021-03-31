@@ -144,7 +144,7 @@ pub enum LaneDirection {
 impl Distribution<LaneDirection> for Standard {
     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> LaneDirection {
         use LaneDirection::*;
-        match rng.gen_range(0, 2) {
+        match rng.gen_range(0..=1) {
             0 => LowToHigh,
             1 => HighToLow,
             _ => unreachable!(),
@@ -229,7 +229,7 @@ impl AbsoluteDirection {
 impl Distribution<AbsoluteDirection> for Standard {
     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> AbsoluteDirection {
         use AbsoluteDirection::*;
-        match rng.gen_range(0, 4) {
+        match rng.gen_range(0..=3) {
             0 => North,
             1 => South,
             2 => East,

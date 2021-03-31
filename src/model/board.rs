@@ -106,7 +106,7 @@ impl<I, R> Board<I, R> {
     // pub fn random_intersection(&self) -> IntersectionIndex {
     //     let mut rng = rand::thread_rng();
     //     let (m, n) = self.shape();
-    //     (rng.gen_range(0, m), rng.gen_range(0, n));
+    //     (rng.gen_range(0..m), rng.gen_range(0..n));
     //     unimplemented!()
     // }
 

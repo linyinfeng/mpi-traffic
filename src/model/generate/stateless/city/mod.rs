@@ -53,7 +53,7 @@ fn generate_car_out_intersection(
 fn rand_road_length(road_num: usize, settings: &StatelessModelGenerationSettings) -> Vec<f64> {
     let mut rng = rand::thread_rng();
     (0..road_num)
-        .map(|_| rng.gen_range(settings.min_road_length, settings.max_road_length))
+        .map(|_| rng.gen_range(settings.min_road_length..=settings.max_road_length))
         .collect()
 }
 

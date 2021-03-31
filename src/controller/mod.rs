@@ -248,7 +248,7 @@ impl UpdateController {
                                 .as_ref()
                                 .unwrap();
                             let size = road.lanes_to_direction(lane_direction).len();
-                            rng.gen_range(0, size)
+                            rng.gen_range(0..size)
                         };
                         let total_length = stateless
                             .city
@@ -569,7 +569,7 @@ impl UpdateController {
             0 => None,
             len => {
                 let mut rng = rand::thread_rng();
-                let rule = enabled_rule[rng.gen_range(0usize, len)];
+                let rule = enabled_rule[rng.gen_range(0..len)];
                 Some(match *rule {
                     TurnRule::FRONT => Front,
                     TurnRule::BACK => Back,
