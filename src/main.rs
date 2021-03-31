@@ -56,20 +56,17 @@ fn main() {
                 Event::Input(e, _) => {
                     controller.input(&mut info, &mut stateful_model, &stateless_model, e);
                 }
-                Event::Loop(e) => {
-                    if let Loop::Update(args) = e {
-                        let mut send_args = Some(args);
-                        communication::bincode_broadcast(world.rank(), root, &mut send_args)
-                            .unwrap();
-                        controller.update(
-                            ROOT,
-                            world,
-                            &mut info,
-                            &mut stateful_model,
-                            &stateless_model,
-                            args,
-                        );
-                    }
+                Event::Loop(Loop::Update(args)) => {
+                    let mut send_args = Some(args);
+                    communication::bincode_broadcast(world.rank(), root, &mut send_args).unwrap();
+                    controller.update(
+                        ROOT,
+                        world,
+                        &mut info,
+                        &mut stateful_model,
+                        &stateless_model,
+                        args,
+                    );
                 }
                 _ => {}
             }

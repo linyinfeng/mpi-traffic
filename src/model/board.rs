@@ -151,11 +151,8 @@ impl<I, R> Board<I, Option<R>> {
         let check_and_convert = |o| {
             let (axis, index) = o?;
             match self.get_road(axis, index) {
-                Some(option) => match option {
-                    Some(_) => Some(index),
-                    None => None,
-                },
-                None => None,
+                Some(Some(_)) => Some(index),
+                _ => None,
             }
         };
 

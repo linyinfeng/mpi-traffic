@@ -17,17 +17,14 @@ fn generate_car(settings: &StatelessModelGenerationSettings) -> Car {
         max_velocity: rng.gen_range(settings.min_max_velocity..=settings.max_max_velocity),
         max_acceleration: rng
             .gen_range(settings.min_max_acceleration..=settings.max_max_acceleration),
-        max_break_acceleration: rng.gen_range(
-            settings.min_max_break_acceleration..=
-            settings.max_max_break_acceleration,
-        ),
+        max_break_acceleration: rng
+            .gen_range(settings.min_max_break_acceleration..=settings.max_max_break_acceleration),
         lane_change_time: rng
             .gen_range(settings.min_lane_change_time..=settings.max_lane_change_time),
         driving_model: DrivingModel::Normal {
             min_cushion: settings.min_cushion,
             cushion_velocity_factor: rng.gen_range(
-                settings.min_cushion_velocity_factor..=
-                settings.max_cushion_velocity_factor,
+                settings.min_cushion_velocity_factor..=settings.max_cushion_velocity_factor,
             ),
             prediction_time: settings.prediction_time,
         },
