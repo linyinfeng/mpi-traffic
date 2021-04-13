@@ -12,7 +12,7 @@ authors = [
 edition = "2018"
 
 [dependencies]
-piston_window = "0.118.0"
+piston_window = "0.119.0"
 log = "0.4.14"
 env_logger = "0.8.3"
 bitflags = "1.2.1"
